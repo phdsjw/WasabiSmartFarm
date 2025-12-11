@@ -1,0 +1,10 @@
+# 회로도 디렉토리
+
+이 폴더에는 전기 회로도 및 설계 파일이 위치합니다.
+
+## 예정된 파일
+
+- `main_circuit.pdf` - 메인 제어 회로도
+- `sensor_connections.pdf` - 센서 연결 회로도
+- `power_supply.pdf` - 전원 공급 회로도
+- `relay_module.pdf` - 릴레이 모듈 연결도

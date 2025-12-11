@@ -1,0 +1,66 @@
+# Arduino
+*.hex
+*.elf
+*.o
+*.a
+*.d
+*.lst
+*.map
+*.sym
+.DS_Store
+__pycache__/
+*.pyc
+
+# Node-RED
+.config.json
+.config.runtime.json
+.sessions.json
+node_modules/
+.npm/
+flows_cred.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.cproject
+.settings/
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# Environment variables
+.env
+.env.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Compiled files
+*.o
+*.so
+*.exe
+
+# Documentation build
+_build/
+build/
+dist/
+
+# Test coverage
+coverage/
+.nyc_output/

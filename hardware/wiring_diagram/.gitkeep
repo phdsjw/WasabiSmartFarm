@@ -1,0 +1,9 @@
+# 배선도 디렉토리
+
+이 폴더에는 실제 설치를 위한 배선도가 위치합니다.
+
+## 예정된 파일
+
+- `field_wiring.pdf` - 현장 배선도
+- `control_box_layout.pdf` - 제어 박스 레이아웃
+- `sensor_placement.pdf` - 센서 설치 위치도
