@@ -54,7 +54,7 @@
 // Modbus RTU 설정 (SEN0604)
 // ============================================
 #define MODBUS_SLAVE_ID        1       // SEN0604 기본 Slave ID (변경 가능)
-#define MODBUS_BAUDRATE        4800    // SEN0604 기본 보드레이트
+#define MODBUS_BAUDRATE        4800    // SEN0604 보드레이트 (지원: 2400/4800/9600, 공장 기본 9600)
 #define MODBUS_TIMEOUT         1000    // Modbus 응답 타임아웃 (1초)
 
 // RS485 핀 설정 (Arduino Uno R4 + DFR0259)
@@ -80,8 +80,8 @@
 // ============================================
 struct SoilSensorData {
     float soil_moisture;    // 토양 습도 (%)
-    float soil_temp;        // 토양 온도 (°C)
-    float soil_ec;          // 토양 EC (mS/cm)
+    float soil_temp;        // 토양 온도 (°C) - 음수 지원
+    float soil_ec;          // 토양 EC (μS/cm)
     float soil_ph;          // 토양 pH
     bool valid;             // 데이터 유효성
     unsigned long timestamp; // 측정 시간

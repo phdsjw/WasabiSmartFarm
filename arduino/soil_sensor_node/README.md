@@ -225,7 +225,10 @@ sensor/soil/tank{01~18}/heartbeat
 - RS485 배선 확인 (A, B 연결)
 - SEN0604 전원 확인 (12V)
 - Modbus Slave ID 확인 (`MODBUS_SLAVE_ID` 설정)
-- 보드레이트 확인 (`MODBUS_BAUDRATE` = 4800)
+- **보드레이트 확인** (`MODBUS_BAUDRATE`)
+  - 공장 기본값: **9600** bps
+  - 지원: 2400 / 4800 / 9600
+  - config.h에서 `#define MODBUS_BAUDRATE 9600`으로 변경 시도
 
 ### 4. Modbus 통신 오류
 **증상**: `[SEN0604] Modbus error: 4`

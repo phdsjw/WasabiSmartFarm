@@ -64,9 +64,13 @@ SoilSensorData SEN0604Modbus::readSensorData() {
     if (readHoldingRegisters(REG_SOIL_MOISTURE, NUM_REGISTERS, buffer)) {
         // 데이터 변환
         data.soil_moisture = buffer[0] * 0.1;           // 0.1% 단위
-        data.soil_temp = buffer[1] * 0.1;               // 0.1°C 단위
+        
+        // 온도: int16_t로 캐스팅 (음수 온도 처리 - 2의 보수)
+        int16_t temp_raw = (int16_t)buffer[1];
+        data.soil_temp = temp_raw * 0.1;                // 0.1°C 단위
+        
         data.soil_ec = buffer[2] * 1.0;                 // 1 μS/cm 단위
-        data.soil_ph = buffer[3] * 0.01;                // 0.01 pH 단위
+        data.soil_ph = buffer[3] * 0.1;                 // 0.1 pH 단위 (수정: 0.01 → 0.1)
         
         data.valid = true;
         _lastReadTime = millis();
@@ -93,7 +97,10 @@ float SEN0604Modbus::readSoilMoisture() {
 float SEN0604Modbus::readSoilTemp() {
     uint16_t value = readHoldingRegister(REG_SOIL_TEMP);
     if (value == 0xFFFF) return -999.0;
-    return value * 0.1;  // 0.1°C 단위
+    
+    // int16_t로 캐스팅 (음수 온도 처리)
+    int16_t temp_raw = (int16_t)value;
+    return temp_raw * 0.1;  // 0.1°C 단위
 }
 
 float SEN0604Modbus::readSoilEC() {
@@ -105,7 +112,7 @@ float SEN0604Modbus::readSoilEC() {
 float SEN0604Modbus::readSoilPH() {
     uint16_t value = readHoldingRegister(REG_SOIL_PH);
     if (value == 0xFFFF) return -999.0;
-    return value * 0.01;  // 0.01 pH 단위
+    return value * 0.1;  // 0.1 pH 단위
 }
 
 uint16_t SEN0604Modbus::readHoldingRegister(uint16_t address) {
