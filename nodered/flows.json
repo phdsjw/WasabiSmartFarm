@@ -516,7 +516,8 @@
         "x": 580,
         "y": 100,
         "wires": [
-            []\n        ]
+            []
+        ]
     },
     {
         "id": "save_to_influx_air",
