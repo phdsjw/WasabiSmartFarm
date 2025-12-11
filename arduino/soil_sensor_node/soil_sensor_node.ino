@@ -11,7 +11,7 @@
  * - RS485 확장보드 (DFR0259)
  * - SEN0604 4-in-1 토양 센서
  * 
- * Author: Wasabi SmartFarm Team
+ * Author: 서준원
  * Version: 1.0.0
  * Date: 2024-12-11
  */

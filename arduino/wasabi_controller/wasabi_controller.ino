@@ -3,7 +3,7 @@
  * Step 1: 기초 통신 인프라 구축 및 센서 데이터 수집
  * 
  * Hardware: Arduino Uno R4 WiFi
- * Author: Wasabi SmartFarm Team
+ * Author: 서준원
  * Version: 1.0.0 - Step 1
  */
 

@@ -253,7 +253,7 @@ node-red
 
 ## 📧 연락처
 
-**프로젝트 관리자**: Wasabi SmartFarm Team
+**프로젝트 관리자**: 서준원
 
 **GitHub**: [https://github.com/phdsjw/WasabiSmartFarm](https://github.com/phdsjw/WasabiSmartFarm)
 
