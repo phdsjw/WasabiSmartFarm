@@ -111,15 +111,15 @@
 | 측정 대상 | 센서 모델명 | 통신 방식 | 수량 | 설치 위치 | 비고 |
 |---------|----------|----------|-----|---------|------|
 | **대기 온습도** | SHT30 (P4422-3) | I2C | 1 | 재배상 중앙 상단 | 고정밀 측정 |
-| **토양 온도** | SEN0604 (4-in-1) | RS485 (Modbus) | 6 | 각 재배상 토양 | 탱크별 개별 설치 |
-| **토양 수분** | SEN0604 (4-in-1) | RS485 (Modbus) | 6 | 각 재배상 토양 | 토양 온도와 동일 센서 |
-| **토양 EC** | SEN0604 (4-in-1) | RS485 (Modbus) | 6 | 각 재배상 토양 | 토양 온도와 동일 센서 |
-| **토양 pH** | SEN0604 (4-in-1) | RS485 (Modbus) | 6 | 각 재배상 토양 | 토양 온도와 동일 센서 |
+| **토양 온도** | SEN0604 (4-in-1) | RS485 (Modbus) | 18 | 각 재배상 토양 | 탱크별 개별 설치 |
+| **토양 수분** | SEN0604 (4-in-1) | RS485 (Modbus) | 18 | 각 재배상 토양 | 토양 온도와 동일 센서 |
+| **토양 EC** | SEN0604 (4-in-1) | RS485 (Modbus) | 18 | 각 재배상 토양 | 토양 온도와 동일 센서 |
+| **토양 pH** | SEN0604 (4-in-1) | RS485 (Modbus) | 18 | 각 재배상 토양 | 토양 온도와 동일 센서 |
 | **수온** | DS18B20 (DFR0198) | Digital (1-Wire) | 1 | 물탱크 내부 | 방수 타입 |
 | **물탱크 pH** | SEN0161 | Analog | 1 | 물탱크 내부 | 주기적 보정 필요 |
 | **물탱크 TDS** | SEN0244 | Analog | 1 | 물탱크 내부 | 전도도 측정 |
 | **물탱크 EC (정밀)** | SEN0451 (Pro) | Analog | 1 | 물탱크 내부 | 고정밀 측정 |
-| **수위 센서** | 초음파/압력 센서 | Analog/Digital | 6 | 각 재배상 탱크 | 급수/퇴수 제어용 |
+| **수위 센서** | 초음파/압력 센서 | Analog/Digital | 18 | 각 재배상 탱크 | 급수/퇴수 제어용 |
 
 ### 3.2 제어 구동기 하드웨어
 
@@ -128,8 +128,8 @@
 | **급수 펌프** | 220V, 2HP | ON/OFF | 1 | 전자개폐기(MC) + SSR | 과전류 차단기 |
 | **퇴수 펌프** | 220V, 1HP | ON/OFF | 1 | 전자개폐기(MC) + SSR | 과전류 차단기 |
 | **보조 펌프** | 220V, 0.5HP | ON/OFF | 1 | 릴레이 모듈 (10A) | 수압 조절용 |
-| **급수 솔레노이드** | 12V DC | ON/OFF | 6 | 릴레이 모듈 (각 탱크) | 개별 제어 |
-| **퇴수 솔레노이드** | 12V DC | ON/OFF | 6 | 릴레이 모듈 (각 탱크) | 개별 제어 |
+| **급수 솔레노이드** | 12V DC | ON/OFF | 18 | 릴레이 모듈 (각 탱크) | 개별 제어 |
+| **퇴수 솔레노이드** | 12V DC | ON/OFF | 18 | 릴레이 모듈 (각 탱크) | 개별 제어 |
 | **천장 환풍기** | 220V AC | ON/OFF | 1 | 릴레이 모듈 (10A) | 온습도 연동 |
 | **측창 모터 (개폐)** | 220V AC | 정/역회전 | 4 | 4채널 릴레이 + 타이머 | 개폐 시간 제어 |
 | **LED 보광등** | DC 12V/24V | PWM Dimming | 1 | MOSFET 드라이버 | 광주기 제어 |
@@ -300,7 +300,7 @@ if (운전모드 === 'auto' && 비상정지 === false) {
 // 급수 종료 조건 (개별 탱크)
 setInterval(() => {
     if (flow.get('phase') === 'filling') {
-        for (let tank = 1; tank <= 6; tank++) {
+        for (let tank = 1; tank <= 18; tank++) {
             let tankNum = ('0' + tank).slice(-2);
             
             // 목표 수위 도달 시 해당 탱크 솔레노이드만 OFF
@@ -312,7 +312,7 @@ setInterval(() => {
         }
         
         // 모든 탱크 완료 시 펌프 OFF
-        if (closedSolenoids.length >= 6) {
+        if (closedSolenoids.length >= 18) {
             MQTT.publish('watering/watering_pump/off', 'OFF');
             node.warn('전체 급수 완료. 30초 후 퇴수 시작');
             
@@ -354,7 +354,7 @@ setInterval(() => {
     if (flow.get('phase') === 'draining') {
         let closedSolenoids = flow.get('draining_solenoids_closed') || [];
         
-        for (let tank = 1; tank <= 6; tank++) {
+        for (let tank = 1; tank <= 18; tank++) {
             let tankNum = ('0' + tank).slice(-2);
             
             // 목표 수위 도달 시 해당 탱크 솔레노이드만 OFF
@@ -368,7 +368,7 @@ setInterval(() => {
         flow.set('draining_solenoids_closed', closedSolenoids);
         
         // 모든 탱크 완료 시 펌프 OFF
-        if (closedSolenoids.length >= 6) {
+        if (closedSolenoids.length >= 18) {
             MQTT.publish('draining/draining_pump/off', 'OFF');
             MQTT.publish('draining/extra_pump/off', 'OFF');
             node.warn('전체 퇴수 완료. 30초 후 다음 급수 시작');
@@ -420,7 +420,7 @@ setInterval(() => {
 ```javascript
 // 관수장비 제어 (토양 습도, EC, 온도 기반)
 setInterval(() => {
-    for (let tank = 1; tank <= 6; tank++) {
+    for (let tank = 1; tank <= 18; tank++) {
         let 토양습도 = sensor_data[`tank${tank}`].soil_moisture;
         let 토양EC = sensor_data[`tank${tank}`].soil_ec;
         let 토양온도 = sensor_data[`tank${tank}`].soil_temp;
@@ -568,7 +568,7 @@ function emergencyStop() {
     ];
     
     // 모든 탱크 솔레노이드 정지
-    for (let tank = 1; tank <= 6; tank++) {
+    for (let tank = 1; tank <= 18; tank++) {
         let tankNum = ('0' + tank).slice(-2);
         stopCommands.push(`watering/tank${tankNum}/watering_sol_${tankNum}/off`);
         stopCommands.push(`draining/tank${tankNum}/draining_sol_${tankNum}/off`);
@@ -1653,17 +1653,17 @@ sudo ufw enable
 | **메인 MCU** | Arduino Uno R4 WiFi | 45,000 | 1 | 45,000 | WiFi 내장 |
 | **RS485 확장보드** | DFR0259 | 25,000 | 1 | 25,000 | Modbus RTU |
 | **대기 온습도 센서** | SHT30 (P4422-3) | 35,000 | 1 | 35,000 | 고정밀 I2C |
-| **토양 센서 (4-in-1)** | SEN0604 | 120,000 | 6 | 720,000 | Modbus, 온도/수분/EC/pH |
+| **토양 센서 (4-in-1)** | SEN0604 | 120,000 | 18 | 2,160,000 | Modbus, 온도/수분/EC/pH |
 | **수온 센서** | DS18B20 (DFR0198) | 12,000 | 1 | 12,000 | 방수 1-Wire |
 | **물탱크 pH 센서** | SEN0161 | 60,000 | 1 | 60,000 | 아날로그 |
 | **물탱크 TDS 센서** | SEN0244 | 25,000 | 1 | 25,000 | 아날로그 |
 | **물탱크 EC 센서 (Pro)** | SEN0451 | 80,000 | 1 | 80,000 | 고정밀 아날로그 |
-| **수위 센서** | 초음파/압력 센서 | 15,000 | 6 | 90,000 | 탱크별 |
-| **릴레이 모듈 (8채널)** | 5V 릴레이 모듈 | 20,000 | 2 | 40,000 | 솔레노이드 제어용 |
+| **수위 센서** | 초음파/압력 센서 | 15,000 | 18 | 270,000 | 탱크별 |
+| **릴레이 모듈 (8채널)** | 5V 릴레이 모듈 | 20,000 | 5 | 100,000 | 솔레노이드 제어용 (36개 제어) |
 | **SSR (Solid State Relay)** | 40A SSR | 30,000 | 2 | 60,000 | 펌프 제어용 |
 | **전자개폐기 (MC)** | LS MC-18b | 50,000 | 1 | 50,000 | 2HP 펌프용 |
 | **전자개폐기 (MC)** | LS MC-12b | 40,000 | 1 | 40,000 | 1HP 펌프용 |
-| **솔레노이드 밸브** | 12V DC 솔레노이드 | 25,000 | 12 | 300,000 | 급수/퇴수 각 6개 |
+| **솔레노이드 밸브** | 12V DC 솔레노이드 | 25,000 | 36 | 900,000 | 급수/퇴수 각 18개 |
 | **전원 공급장치** | 12V/5A | 25,000 | 1 | 25,000 | Arduino, 센서, 솔레노이드 |
 | **전원 공급장치** | 5V/3A | 15,000 | 1 | 15,000 | Arduino 백업 |
 | **제어 박스** | 방수 박스 (IP54) | 50,000 | 1 | 50,000 | 릴레이 수납 |
@@ -1671,7 +1671,7 @@ sudo ufw enable
 | **Raspberry Pi** | Raspberry Pi 4 (4GB) | 80,000 | 1 | 80,000 | 서버용 |
 | **SD 카드** | 64GB Class 10 | 15,000 | 2 | 30,000 | OS + 백업 |
 | **기타 부품** | 예비 부품, 공구 등 | - | - | 100,000 | 일괄 |
-| **총계** | | | | **1,982,000** | 약 200만원 |
+| **총계** | | | | **4,322,000** | 약 432만원 |
 
 ### 13.2 소프트웨어 비용
 
