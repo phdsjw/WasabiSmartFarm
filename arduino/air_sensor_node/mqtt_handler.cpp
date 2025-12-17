@@ -9,20 +9,18 @@
 #include "mqtt_handler.h"
 
 // ============================================
-// 메모리 체크 함수 (Arduino Uno R4 WiFi용)
+// 메모리 체크 함수 (Arduino Uno R4 WiFi용 - ARM Cortex-M4)
 // ============================================
 int freeMemory() {
-  extern char __heap_start;
-  extern char *__brkval;
-  int free_memory;
-  
-  if (__brkval == 0) {
-    free_memory = ((int)&free_memory) - ((int)&__heap_start);
-  } else {
-    free_memory = ((int)&free_memory) - ((int)__brkval);
-  }
-  
-  return free_memory;
+  // Arduino Uno R4 WiFi (Renesas RA4M1 - ARM Cortex-M4)는
+  // AVR의 __heap_start, __brkval 심볼이 없음
+  // 
+  // 해결 방법:
+  // 1. 정확한 메모리 측정 불가능 → 더미 값 반환
+  // 2. 또는 외부 라이브러리 필요 (예: MemoryFree 라이브러리)
+  //
+  // 현재는 하트비트 전송을 위해 0 반환 (참고용)
+  return 0;  // 메모리 측정 불가 (ARM 아키텍처)
 }
 
 // ============================================
