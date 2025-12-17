@@ -82,7 +82,10 @@ bool SHT30Sensor::readData(uint8_t *data, uint8_t len) {
   uint8_t bytesReceived = Wire.requestFrom(_i2c_address, len);
   
   if (bytesReceived != len) {
-    DEBUG_PRINTF("[SHT30] ERROR: Expected %d bytes, got %d\n", len, bytesReceived);
+    DEBUG_PRINT(F("[SHT30] ERROR: Expected "));
+    DEBUG_PRINT(len);
+    DEBUG_PRINT(F(" bytes, got "));
+    DEBUG_PRINTLN(bytesReceived);
     return false;
   }
   
@@ -140,16 +143,22 @@ bool SHT30Sensor::readTempHumidity(float &temp, float &humidity) {
   // CRC 검증 (온도)
   uint8_t temp_crc = calculateCRC8(data, 2);
   if (temp_crc != data[2]) {
-    DEBUG_PRINTF("[SHT30] ERROR: Temperature CRC mismatch (expected: 0x%02X, got: 0x%02X)\n", 
-                 temp_crc, data[2]);
+    DEBUG_PRINT(F("[SHT30] ERROR: Temperature CRC mismatch (expected: 0x"));
+    DEBUG_PRINT(temp_crc, HEX);
+    DEBUG_PRINT(F(", got: 0x"));
+    DEBUG_PRINT(data[2], HEX);
+    DEBUG_PRINTLN(F(")"));
     return false;
   }
   
   // CRC 검증 (습도)
   uint8_t hum_crc = calculateCRC8(data + 3, 2);
   if (hum_crc != data[5]) {
-    DEBUG_PRINTF("[SHT30] ERROR: Humidity CRC mismatch (expected: 0x%02X, got: 0x%02X)\n", 
-                 hum_crc, data[5]);
+    DEBUG_PRINT(F("[SHT30] ERROR: Humidity CRC mismatch (expected: 0x"));
+    DEBUG_PRINT(hum_crc, HEX);
+    DEBUG_PRINT(F(", got: 0x"));
+    DEBUG_PRINT(data[5], HEX);
+    DEBUG_PRINTLN(F(")"));
     return false;
   }
   
@@ -163,14 +172,22 @@ bool SHT30Sensor::readTempHumidity(float &temp, float &humidity) {
   
   // 범위 체크
   if (temp < SHT30_TEMP_MIN || temp > SHT30_TEMP_MAX) {
-    DEBUG_PRINTF("[SHT30] WARNING: Temperature out of range: %.2f°C\n", temp);
+    DEBUG_PRINT(F("[SHT30] WARNING: Temperature out of range: "));
+    DEBUG_PRINT(temp, 2);
+    DEBUG_PRINTLN(F("°C"));
   }
   
   if (humidity < SHT30_HUMIDITY_MIN || humidity > SHT30_HUMIDITY_MAX) {
-    DEBUG_PRINTF("[SHT30] WARNING: Humidity out of range: %.2f%%\n", humidity);
+    DEBUG_PRINT(F("[SHT30] WARNING: Humidity out of range: "));
+    DEBUG_PRINT(humidity, 2);
+    DEBUG_PRINTLN(F("%"));
   }
   
-  DEBUG_PRINTF("[SHT30] Temp: %.2f°C, Humidity: %.2f%%\n", temp, humidity);
+  DEBUG_PRINT(F("[SHT30] Temp: "));
+  DEBUG_PRINT(temp, 2);
+  DEBUG_PRINT(F("°C, Humidity: "));
+  DEBUG_PRINT(humidity, 2);
+  DEBUG_PRINTLN(F("%"));
   
   return true;
 }
@@ -221,7 +238,8 @@ bool SHT30Sensor::softReset() {
 bool SHT30Sensor::enableHeater(bool enable) {
   uint16_t command = enable ? SHT30_CMD_HEATER_ENABLE : SHT30_CMD_HEATER_DISABLE;
   
-  DEBUG_PRINTF("[SHT30] Heater %s\n", enable ? "ENABLED" : "DISABLED");
+  DEBUG_PRINT(F("[SHT30] Heater "));
+  DEBUG_PRINTLN(enable ? F("ENABLED") : F("DISABLED"));
   
   return sendCommand(command);
 }

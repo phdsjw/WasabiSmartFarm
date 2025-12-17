@@ -9,6 +9,23 @@
 #include "mqtt_handler.h"
 
 // ============================================
+// 메모리 체크 함수 (Arduino Uno R4 WiFi용)
+// ============================================
+int freeMemory() {
+  extern char __heap_start;
+  extern char *__brkval;
+  int free_memory;
+  
+  if (__brkval == 0) {
+    free_memory = ((int)&free_memory) - ((int)&__heap_start);
+  } else {
+    free_memory = ((int)&free_memory) - ((int)__brkval);
+  }
+  
+  return free_memory;
+}
+
+// ============================================
 // 생성자
 // ============================================
 MQTTHandler::MQTTHandler() 
