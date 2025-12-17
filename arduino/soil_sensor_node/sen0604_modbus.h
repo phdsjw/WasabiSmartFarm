@@ -6,7 +6,7 @@
 #define SEN0604_MODBUS_H
 
 #include <Arduino.h>
-#include <ArduinoModbus.h>
+#include <ModbusMaster.h>
 #include "config.h"
 
 class SEN0604Modbus {
@@ -15,6 +15,10 @@ public:
     
     // 초기화
     bool begin();
+    
+    // RS485 송수신 제어 (ModbusMaster 콜백용)
+    static void preTransmission();
+    static void postTransmission();
     
     // 센서 데이터 읽기
     SoilSensorData readSensorData();
@@ -29,6 +33,9 @@ public:
     bool isConnected();
     
 private:
+    // ModbusMaster 객체
+    ModbusMaster _modbus;
+    
     // Modbus 레지스터 읽기 헬퍼 함수
     uint16_t readHoldingRegister(uint16_t address);
     bool readHoldingRegisters(uint16_t startAddress, uint16_t count, uint16_t* buffer);

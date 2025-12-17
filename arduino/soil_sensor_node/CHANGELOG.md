@@ -1,5 +1,124 @@
 # 변경 이력 (Changelog)
 
+## v2.0.0 (2024-12-17) - ModbusMaster 라이브러리로 전환 ⭐⭐⭐
+
+### 🔧 중대 변경 (Breaking Changes)
+
+#### 1. **ArduinoModbus → ModbusMaster 라이브러리 전환** ⭐⭐⭐ (중요)
+- **문제**: ArduinoModbus 라이브러리가 Arduino Uno R4 WiFi (renesas_uno)와 호환되지 않음
+- **증상**: 
+  ```
+  error: field 'it_interval' has incomplete type 'timeval'
+  error: 'fd_set' has not been declared
+  Compilation error: exit status 1
+  ```
+- **원인**: ArduinoModbus가 `sys/time.h` 타입 정의 오류 발생
+- **해결**: **ModbusMaster 라이브러리** (by Doc Walker) 사용으로 전환
+- **장점**:
+  - ✅ Arduino Uno R4 WiFi 완벽 지원
+  - ✅ 간단한 API
+  - ✅ RS485 송수신 제어 콜백 지원
+  - ✅ 안정적인 Modbus RTU 통신
+
+#### 2. **DEBUG 매크로 가변 인자 지원** ⭐⭐
+- **문제**: `DEBUG_PRINT(value, precision)` 호출 시 컴파일 에러
+- **수정**: 
+  ```cpp
+  // 수정 전
+  #define DEBUG_PRINT(x) Serial.print(x)
+  
+  // 수정 후
+  #define DEBUG_PRINT(...) Serial.print(__VA_ARGS__)
+  ```
+- **효과**: 소수점 자릿수 지정 가능 (`DEBUG_PRINT(data.soil_temp, 1)`)
+
+### 📝 코드 변경 사항
+
+#### sen0604_modbus.h
+```cpp
+// 라이브러리 변경
+#include <ModbusMaster.h>  // ArduinoModbus 대신
+
+class SEN0604Modbus {
+public:
+    // RS485 송수신 제어 콜백 추가
+    static void preTransmission();
+    static void postTransmission();
+    
+private:
+    ModbusMaster _modbus;  // ModbusMaster 객체 추가
+};
+```
+
+#### sen0604_modbus.cpp
+```cpp
+// 생성자에서 Slave ID 설정
+SEN0604Modbus::SEN0604Modbus() : _modbus(MODBUS_SLAVE_ID) {
+}
+
+// RS485 제어 콜백 구현
+void SEN0604Modbus::preTransmission() {
+    digitalWrite(RS485_TX_ENABLE_PIN, HIGH);
+    delayMicroseconds(100);
+}
+
+void SEN0604Modbus::postTransmission() {
+    delayMicroseconds(100);
+    digitalWrite(RS485_TX_ENABLE_PIN, LOW);
+}
+
+// Modbus 읽기 API 변경
+uint8_t result = _modbus.readHoldingRegisters(address, count);
+if (result == _modbus.ku8MBSuccess) {
+    return _modbus.getResponseBuffer(0);
+}
+```
+
+### 📦 라이브러리 설치
+
+**필수 라이브러리:**
+- ❌ ~~ArduinoModbus~~ (제거)
+- ✅ **ModbusMaster** (by Doc Walker, v2.0.1 이상)
+
+**설치 방법:**
+```
+Arduino IDE → 도구 → 라이브러리 관리 → "ModbusMaster" 검색 → 설치
+```
+
+### 📚 문서 추가
+
+- `MODBUSMASTER_MIGRATION_GUIDE.md` - ModbusMaster 마이그레이션 가이드
+- `COMPILATION_FIX_GUIDE.md` - 컴파일 오류 해결 가이드 (업데이트)
+
+### 🔄 마이그레이션 가이드
+
+#### v1.0.x → v2.0.0 업그레이드
+
+**필수 조치:**
+
+1. **라이브러리 교체**
+   ```
+   ArduinoModbus 제거 → ModbusMaster 설치
+   ```
+
+2. **최신 코드 다운로드**
+   ```
+   GitHub: https://github.com/phdsjw/WasabiSmartFarm
+   또는: git pull origin main
+   ```
+
+3. **펌웨어 재업로드**
+   - Arduino IDE에서 펌웨어 검증 (Ctrl+R)
+   - 보드에 업로드 (Ctrl+U)
+
+**하위 호환성:**
+- ✅ `config.h` 설정 그대로 사용 가능
+- ✅ MQTT 메시지 포맷 변경 없음
+- ✅ 기존 Node-RED 플로우 그대로 사용 가능
+- ✅ WiFi/MQTT 설정 호환
+
+---
+
 ## v1.0.1 (2024-12-11) - 공식 문서 기반 개선
 
 ### 🐛 버그 수정
@@ -110,4 +229,4 @@
 
 **문서 정보**  
 **작성자**: 서준원  
-**최종 수정**: 2024-12-11
+**최종 수정**: 2024-12-17

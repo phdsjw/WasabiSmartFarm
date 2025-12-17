@@ -59,8 +59,20 @@ SEN0604 토양 센서
 다음 라이브러리를 Arduino IDE에서 설치하세요:
 - `WiFiS3` (Arduino Uno R4 WiFi 내장)
 - `PubSubClient` (by Nick O'Leary) - MQTT 클라이언트
-- `ArduinoModbus` (by Arduino) - Modbus RTU
+- **`ModbusMaster` (by Doc Walker)** - Modbus RTU (Arduino Uno R4 WiFi 호환)
 - `ArduinoJson` (by Benoit Blanchon) - JSON 파싱
+
+> **⚠️ 중요**: `ArduinoModbus` 라이브러리는 Arduino Uno R4 WiFi (renesas_uno)와 호환되지 않습니다.
+> 대신 `ModbusMaster` 라이브러리를 사용합니다.
+
+**라이브러리 설치 방법:**
+```
+Arduino IDE → 도구 → 라이브러리 관리
+- 검색: "ModbusMaster"
+- 작성자: Doc Walker
+- 버전: 2.0.1 이상
+- 설치 클릭
+```
 
 #### 보드 설정
 - **보드**: Arduino Uno R4 WiFi

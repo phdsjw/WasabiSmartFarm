@@ -1,29 +1,47 @@
 /*
  * SEN0604 토양 센서 Modbus RTU 통신 구현
+ * ModbusMaster 라이브러리 사용 (Arduino Uno R4 WiFi 호환)
+ * 
+ * 작성자: 서준원
+ * 버전: v2.0.0
+ * 날짜: 2024-12-17
  */
 
 #include "sen0604_modbus.h"
 
-SEN0604Modbus::SEN0604Modbus() {
+SEN0604Modbus::SEN0604Modbus() : _modbus(MODBUS_SLAVE_ID) {
     _initialized = false;
     _lastReadTime = 0;
 }
 
+// RS485 송신 전 콜백 (TX Enable ON)
+void SEN0604Modbus::preTransmission() {
+    digitalWrite(RS485_TX_ENABLE_PIN, HIGH);
+    delayMicroseconds(100);
+}
+
+// RS485 수신 전 콜백 (TX Enable OFF)
+void SEN0604Modbus::postTransmission() {
+    delayMicroseconds(100);
+    digitalWrite(RS485_TX_ENABLE_PIN, LOW);
+}
+
 bool SEN0604Modbus::begin() {
-    DEBUG_PRINTLN(F("[SEN0604] Initializing Modbus RTU..."));
+    DEBUG_PRINTLN(F("[SEN0604] Initializing Modbus RTU with ModbusMaster..."));
     
     // RS485 TX Enable 핀 설정
     pinMode(RS485_TX_ENABLE_PIN, OUTPUT);
     digitalWrite(RS485_TX_ENABLE_PIN, LOW);  // 수신 모드
     
-    // Modbus RTU 시작 (Serial1, 보드레이트)
-    if (!ModbusRTUClient.begin(MODBUS_BAUDRATE)) {
-        DEBUG_PRINTLN(F("[SEN0604] Failed to start Modbus RTU!"));
-        return false;
-    }
+    // Serial1 시작 (Modbus RTU는 Serial1 사용)
+    Serial1.begin(MODBUS_BAUDRATE);
     
-    // Modbus 타임아웃 설정
-    ModbusRTUClient.setTimeout(MODBUS_TIMEOUT);
+    // ModbusMaster 시작 (Serial1 사용)
+    _modbus.begin(MODBUS_BAUDRATE, Serial1);
+    
+    // RS485 송수신 제어 콜백 등록
+    _modbus.preTransmission(preTransmission);
+    _modbus.postTransmission(postTransmission);
     
     _initialized = true;
     DEBUG_PRINTLN(F("[SEN0604] Modbus RTU initialized successfully"));
@@ -70,7 +88,7 @@ SoilSensorData SEN0604Modbus::readSensorData() {
         data.soil_temp = temp_raw * 0.1;                // 0.1°C 단위
         
         data.soil_ec = buffer[2] * 1.0;                 // 1 μS/cm 단위
-        data.soil_ph = buffer[3] * 0.1;                 // 0.1 pH 단위 (수정: 0.01 → 0.1)
+        data.soil_ph = buffer[3] * 0.1;                 // 0.1 pH 단위
         
         data.valid = true;
         _lastReadTime = millis();
@@ -116,49 +134,33 @@ float SEN0604Modbus::readSoilPH() {
 }
 
 uint16_t SEN0604Modbus::readHoldingRegister(uint16_t address) {
-    // TX Enable ON (송신 모드)
-    digitalWrite(RS485_TX_ENABLE_PIN, HIGH);
-    delayMicroseconds(100);
+    // Modbus Function Code 0x03: Read Holding Registers
+    uint8_t result = _modbus.readHoldingRegisters(address, 1);
     
-    // Modbus RTU Read Holding Registers (Function Code 0x03)
-    ModbusRTUClient.requestFrom(MODBUS_SLAVE_ID, HOLDING_REGISTERS, address, 1);
-    
-    // TX Enable OFF (수신 모드)
-    delayMicroseconds(100);
-    digitalWrite(RS485_TX_ENABLE_PIN, LOW);
-    
-    // 응답 대기
-    if (ModbusRTUClient.available()) {
-        return ModbusRTUClient.read();
+    if (result == _modbus.ku8MBSuccess) {
+        return _modbus.getResponseBuffer(0);
+    } else {
+        DEBUG_PRINT(F("[SEN0604] Modbus error: 0x"));
+        DEBUG_PRINTLN(result, HEX);
+        return 0xFFFF;  // 읽기 실패
     }
-    
-    return 0xFFFF;  // 읽기 실패
 }
 
 bool SEN0604Modbus::readHoldingRegisters(uint16_t startAddress, uint16_t count, uint16_t* buffer) {
-    // TX Enable ON (송신 모드)
-    digitalWrite(RS485_TX_ENABLE_PIN, HIGH);
-    delayMicroseconds(100);
+    // Modbus Function Code 0x03: Read Holding Registers
+    uint8_t result = _modbus.readHoldingRegisters(startAddress, count);
     
-    // Modbus RTU Read Holding Registers (Function Code 0x03)
-    ModbusRTUClient.requestFrom(MODBUS_SLAVE_ID, HOLDING_REGISTERS, startAddress, count);
-    
-    // TX Enable OFF (수신 모드)
-    delayMicroseconds(100);
-    digitalWrite(RS485_TX_ENABLE_PIN, LOW);
-    
-    // 응답 대기 및 읽기
-    if (ModbusRTUClient.available() >= count) {
+    if (result == _modbus.ku8MBSuccess) {
+        // 응답 버퍼에서 데이터 복사
         for (uint16_t i = 0; i < count; i++) {
-            buffer[i] = ModbusRTUClient.read();
+            buffer[i] = _modbus.getResponseBuffer(i);
         }
         return true;
+    } else {
+        DEBUG_PRINT(F("[SEN0604] Modbus error: 0x"));
+        DEBUG_PRINTLN(result, HEX);
+        return false;
     }
-    
-    DEBUG_PRINT(F("[SEN0604] Modbus error: "));
-    DEBUG_PRINTLN(ModbusRTUClient.lastError());
-    
-    return false;
 }
 
 float SEN0604Modbus::convertToFloat(uint16_t rawValue, float scale) {
