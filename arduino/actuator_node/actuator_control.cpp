@@ -36,10 +36,14 @@ void ActuatorControl::begin() {
   digitalWrite(RELAY_CH4_PIN, RELAY_OFF);
   
   DEBUG_PRINTLN(F("[ACTUATOR] Relay pins configured:"));
-  DEBUG_PRINTF("[ACTUATOR]   CH1 (Irrigation): D%d\n", RELAY_CH1_PIN);
-  DEBUG_PRINTF("[ACTUATOR]   CH2 (Drainage): D%d\n", RELAY_CH2_PIN);
-  DEBUG_PRINTF("[ACTUATOR]   CH3 (Fan): D%d\n", RELAY_CH3_PIN);
-  DEBUG_PRINTF("[ACTUATOR]   CH4 (LED): D%d\n", RELAY_CH4_PIN);
+  DEBUG_PRINT(F("[ACTUATOR]   CH1 (Irrigation): D"));
+  DEBUG_PRINTLN(RELAY_CH1_PIN);
+  DEBUG_PRINT(F("[ACTUATOR]   CH2 (Drainage): D"));
+  DEBUG_PRINTLN(RELAY_CH2_PIN);
+  DEBUG_PRINT(F("[ACTUATOR]   CH3 (Fan): D"));
+  DEBUG_PRINTLN(RELAY_CH3_PIN);
+  DEBUG_PRINT(F("[ACTUATOR]   CH4 (LED): D"));
+  DEBUG_PRINTLN(RELAY_CH4_PIN);
   DEBUG_PRINTLN(F("[ACTUATOR] All actuators initialized (OFF state)"));
 }
 
@@ -48,7 +52,10 @@ void ActuatorControl::begin() {
 // ============================================
 void ActuatorControl::setRelay(uint8_t pin, bool state) {
   digitalWrite(pin, state ? RELAY_ON : RELAY_OFF);
-  DEBUG_PRINTF("[ACTUATOR] Relay D%d set to %s\n", pin, state ? "ON" : "OFF");
+  DEBUG_PRINT(F("[ACTUATOR] Relay D"));
+  DEBUG_PRINT(pin);
+  DEBUG_PRINT(F(" set to "));
+  DEBUG_PRINTLN(state ? F("ON") : F("OFF"));
 }
 
 // ============================================
@@ -105,7 +112,9 @@ bool ActuatorControl::startIrrigationPump() {
   _state.irrigation_count++;
   
   DEBUG_PRINTLN(F("[ACTUATOR] ✓ Irrigation pump STARTED"));
-  DEBUG_PRINTF("[ACTUATOR]   Timeout: %lu seconds\n", IRRIGATION_TIMEOUT / 1000);
+  DEBUG_PRINT(F("[ACTUATOR]   Timeout: "));
+  DEBUG_PRINT(IRRIGATION_TIMEOUT / 1000);
+  DEBUG_PRINTLN(F(" seconds"));
   
   return true;
 }
@@ -123,8 +132,11 @@ bool ActuatorControl::stopIrrigationPump() {
   if (_state.irrigation_start_time > 0) {
     unsigned long runTime = millis() - _state.irrigation_start_time;
     if (runTime < MIN_ON_TIME) {
-      DEBUG_PRINTF("[ACTUATOR] WARNING: Irrigation pump ran for only %lu ms (min: %lu ms)\n", 
-                   runTime, MIN_ON_TIME);
+      DEBUG_PRINT(F("[ACTUATOR] WARNING: Irrigation pump ran for only "));
+      DEBUG_PRINT(runTime);
+      DEBUG_PRINT(F(" ms (min: "));
+      DEBUG_PRINT(MIN_ON_TIME);
+      DEBUG_PRINTLN(F(" ms)"));
     }
     _state.total_irrigation_time += runTime;
   }
@@ -135,8 +147,9 @@ bool ActuatorControl::stopIrrigationPump() {
   _state.irrigation_start_time = 0;
   
   DEBUG_PRINTLN(F("[ACTUATOR] ✓ Irrigation pump STOPPED"));
-  DEBUG_PRINTF("[ACTUATOR]   Total irrigation time: %lu seconds\n", 
-               _state.total_irrigation_time / 1000);
+  DEBUG_PRINT(F("[ACTUATOR]   Total irrigation time: "));
+  DEBUG_PRINT(_state.total_irrigation_time / 1000);
+  DEBUG_PRINTLN(F(" seconds"));
   
   return true;
 }
@@ -169,7 +182,9 @@ bool ActuatorControl::startDrainagePump() {
   _state.drainage_count++;
   
   DEBUG_PRINTLN(F("[ACTUATOR] ✓ Drainage pump STARTED"));
-  DEBUG_PRINTF("[ACTUATOR]   Timeout: %lu seconds\n", DRAINAGE_TIMEOUT / 1000);
+  DEBUG_PRINT(F("[ACTUATOR]   Timeout: "));
+  DEBUG_PRINT(DRAINAGE_TIMEOUT / 1000);
+  DEBUG_PRINTLN(F(" seconds"));
   
   return true;
 }
@@ -187,8 +202,11 @@ bool ActuatorControl::stopDrainagePump() {
   if (_state.drainage_start_time > 0) {
     unsigned long runTime = millis() - _state.drainage_start_time;
     if (runTime < MIN_ON_TIME) {
-      DEBUG_PRINTF("[ACTUATOR] WARNING: Drainage pump ran for only %lu ms (min: %lu ms)\n", 
-                   runTime, MIN_ON_TIME);
+      DEBUG_PRINT(F("[ACTUATOR] WARNING: Drainage pump ran for only "));
+      DEBUG_PRINT(runTime);
+      DEBUG_PRINT(F(" ms (min: "));
+      DEBUG_PRINT(MIN_ON_TIME);
+      DEBUG_PRINTLN(F(" ms)"));
     }
     _state.total_drainage_time += runTime;
   }
@@ -199,8 +217,9 @@ bool ActuatorControl::stopDrainagePump() {
   _state.drainage_start_time = 0;
   
   DEBUG_PRINTLN(F("[ACTUATOR] ✓ Drainage pump STOPPED"));
-  DEBUG_PRINTF("[ACTUATOR]   Total drainage time: %lu seconds\n", 
-               _state.total_drainage_time / 1000);
+  DEBUG_PRINT(F("[ACTUATOR]   Total drainage time: "));
+  DEBUG_PRINT(_state.total_drainage_time / 1000);
+  DEBUG_PRINTLN(F(" seconds"));
   
   return true;
 }
@@ -300,7 +319,9 @@ void ActuatorControl::emergencyStop() {
   stopAll();
   
   DEBUG_PRINTLN(F("[ACTUATOR] All actuators have been stopped"));
-  DEBUG_PRINTF("[ACTUATOR] System locked for %lu seconds\n", EMERGENCY_COOLDOWN / 1000);
+  DEBUG_PRINT(F("[ACTUATOR] System locked for "));
+  DEBUG_PRINT(EMERGENCY_COOLDOWN / 1000);
+  DEBUG_PRINTLN(F(" seconds"));
 }
 
 // ============================================
@@ -311,8 +332,9 @@ void ActuatorControl::resetEmergencyStop() {
   if (_state.emergency_stop && _state.emergency_stop_time > 0) {
     unsigned long elapsed = millis() - _state.emergency_stop_time;
     if (elapsed < EMERGENCY_COOLDOWN) {
-      DEBUG_PRINTF("[ACTUATOR] ERROR: Cannot reset yet. Wait %lu more seconds\n", 
-                   (EMERGENCY_COOLDOWN - elapsed) / 1000);
+      DEBUG_PRINT(F("[ACTUATOR] ERROR: Cannot reset yet. Wait "));
+      DEBUG_PRINT((EMERGENCY_COOLDOWN - elapsed) / 1000);
+      DEBUG_PRINTLN(F(" more seconds"));
       return;
     }
   }

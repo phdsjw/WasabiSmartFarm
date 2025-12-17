@@ -119,15 +119,13 @@
 #define DEBUG_MODE true              // 디버그 모드 (true: 활성화, false: 비활성화)
 #define SERIAL_BAUDRATE 115200       // 시리얼 통신 속도
 
-// 디버그 매크로
+// 디버그 매크로 (가변 인자 지원)
 #if DEBUG_MODE
-  #define DEBUG_PRINT(x) Serial.print(x)
-  #define DEBUG_PRINTLN(x) Serial.println(x)
-  #define DEBUG_PRINTF(x, y) Serial.printf(x, y)
+  #define DEBUG_PRINT(...) Serial.print(__VA_ARGS__)
+  #define DEBUG_PRINTLN(...) Serial.println(__VA_ARGS__)
 #else
-  #define DEBUG_PRINT(x)
-  #define DEBUG_PRINTLN(x)
-  #define DEBUG_PRINTF(x, y)
+  #define DEBUG_PRINT(...)
+  #define DEBUG_PRINTLN(...)
 #endif
 
 // ============================================
