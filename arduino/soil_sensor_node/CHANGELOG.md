@@ -1,5 +1,27 @@
 # 변경 이력 (Changelog)
 
+## v2.0.1 (2024-12-17) - ModbusMaster 생성자 오류 수정
+
+### 🐛 버그 수정
+
+#### 1. **ModbusMaster 생성자 호출 오류 수정** ⭐⭐⭐
+- **문제**: `no matching function for call to 'ModbusMaster::ModbusMaster(int)'`
+- **원인**: ModbusMaster는 파라미터가 없는 기본 생성자만 제공
+- **수정**: 
+  ```cpp
+  // 수정 전 (오류)
+  SEN0604Modbus::SEN0604Modbus() : _modbus(MODBUS_SLAVE_ID) { }
+  
+  // 수정 후 (정상)
+  SEN0604Modbus::SEN0604Modbus() { }
+  
+  // begin()에서 Slave ID 설정
+  _modbus.begin(MODBUS_SLAVE_ID, Serial1);
+  ```
+- **참고**: ModbusMaster API는 `begin(uint8_t slave, Stream &serial)` 사용
+
+---
+
 ## v2.0.0 (2024-12-17) - ModbusMaster 라이브러리로 전환 ⭐⭐⭐
 
 ### 🔧 중대 변경 (Breaking Changes)

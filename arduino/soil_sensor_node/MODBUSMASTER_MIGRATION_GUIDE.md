@@ -187,7 +187,8 @@ uint16_t SEN0604Modbus::readHoldingRegister(uint16_t address) {
 ```cpp
 #include "sen0604_modbus.h"
 
-SEN0604Modbus::SEN0604Modbus() : _modbus(MODBUS_SLAVE_ID) {
+SEN0604Modbus::SEN0604Modbus() {
+    // ModbusMaster는 기본 생성자만 제공 (파라미터 없음)
     _initialized = false;
     _lastReadTime = 0;
 }
@@ -211,8 +212,8 @@ bool SEN0604Modbus::begin() {
     // Serial1 시작 (Modbus RTU는 Serial1 사용)
     Serial1.begin(MODBUS_BAUDRATE);
     
-    // ModbusMaster 시작
-    _modbus.begin(MODBUS_BAUDRATE, Serial1);
+    // ModbusMaster 시작 (Slave ID와 Serial 포트 설정)
+    _modbus.begin(MODBUS_SLAVE_ID, Serial1);
     
     // RS485 송수신 제어 콜백 등록
     _modbus.preTransmission(preTransmission);
