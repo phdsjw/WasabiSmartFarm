@@ -109,6 +109,7 @@ bool MQTTHandler::connectMQTT() {
     _mqttClient.subscribe(MQTT_TOPIC_LED_ON);
     _mqttClient.subscribe(MQTT_TOPIC_LED_OFF);
     _mqttClient.subscribe(MQTT_TOPIC_EMERGENCY_STOP);
+    _mqttClient.subscribe(MQTT_TOPIC_EMERGENCY_RELEASE);
     _mqttClient.subscribe(MQTT_TOPIC_RESET);
     
     DEBUG_PRINTLN(F("[MQTT] Subscribed to all command topics"));
@@ -208,7 +209,14 @@ void MQTTHandler::handleCommand(const char* topic, const char* message) {
     _actuatorControl->emergencyStop();
     publishStatus("emergency_stop_activated");
   }
-  // 리셋
+  // 긴급 정지 해제
+  else if (strcmp(topic, MQTT_TOPIC_EMERGENCY_RELEASE) == 0) {
+    DEBUG_PRINTLN(F("[MQTT] Emergency release command received"));
+    _actuatorControl->resetEmergencyStop();
+    publishStatus("emergency_stop_released");
+    DEBUG_PRINTLN(F("[ACTUATOR] ✅ 긴급 정지 해제 - 시스템 대기 상태"));
+  }
+  // 리셋 (하위 호환성 유지)
   else if (strcmp(topic, MQTT_TOPIC_RESET) == 0) {
     _actuatorControl->resetEmergencyStop();
     publishStatus("emergency_stop_reset");

@@ -33,6 +33,7 @@
 #define MQTT_TOPIC_LED_ON "actuator/led/on"
 #define MQTT_TOPIC_LED_OFF "actuator/led/off"
 #define MQTT_TOPIC_EMERGENCY_STOP "actuator/emergency_stop"
+#define MQTT_TOPIC_EMERGENCY_RELEASE "actuator/emergency_release"
 #define MQTT_TOPIC_RESET "actuator/reset"
 
 // MQTT 발행 토픽 (상태 전송)

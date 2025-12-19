@@ -960,5 +960,48 @@
         "wires": [
             ["mqtt_out_actuator"]
         ]
+    },
+    {
+        "id": "ui_button_emergency_release",
+        "type": "ui_button",
+        "z": "main_tab",
+        "name": "긴급 정지 해제",
+        "group": "ui_group_control",
+        "order": 7,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "✅ 긴급 정지 해제",
+        "tooltip": "시스템을 정상 상태로 복구합니다",
+        "color": "#ffffff",
+        "bgcolor": "#388e3c",
+        "className": "",
+        "icon": "",
+        "payload": "RELEASE",
+        "payloadType": "str",
+        "topic": "emergency_release",
+        "topicType": "str",
+        "x": 140,
+        "y": 720,
+        "wires": [
+            ["emergency_release_function"]
+        ]
+    },
+    {
+        "id": "emergency_release_function",
+        "type": "function",
+        "z": "main_tab",
+        "name": "긴급 정지 해제",
+        "func": "// 긴급 정지 해제 로직\nmsg.topic = 'actuator/emergency_release';\nmsg.payload = 'RELEASED';\n\n// 모든 관수 관련 컨텍스트 변수 초기화\ncontext.set('autoMode', false);           // 자동 모드는 수동으로 다시 켜도록\ncontext.set('isIrrigating', false);       // 관수 중 상태 해제\ncontext.set('irrigationStartTime', 0);    // 관수 시작 시간 초기화\n// lastIrrigationTime은 유지 (1시간 대기 시간 로직 보존)\n\n// 상태 알림\nnode.warn('✅ 긴급 정지가 해제되었습니다. 시스템이 대기 상태로 전환됩니다.');\nnode.warn('⚠️ 자동 모드를 다시 활성화하려면 \"자동 모드 ON\" 버튼을 눌러주세요.');\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 720,
+        "wires": [
+            ["mqtt_out_actuator"]
+        ]
     }
 ]
