@@ -47,7 +47,7 @@ bool MQTTHandler::begin() {
 }
 
 // ============================================
-// WiFi 연결
+// WiFi 연결 (개선된 재시도 로직)
 // ============================================
 bool MQTTHandler::connectWiFi() {
   if (WiFi.status() == WL_CONNECTED) {
@@ -57,26 +57,45 @@ bool MQTTHandler::connectWiFi() {
   DEBUG_PRINT(F("[WiFi] Connecting to: "));
   DEBUG_PRINTLN(WIFI_SSID);
   
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  int retryCount = 0;
   
-  unsigned long startTime = millis();
-  while (WiFi.status() != WL_CONNECTED) {
-    if (millis() - startTime > WIFI_TIMEOUT) {
-      DEBUG_PRINTLN(F("\n[WiFi] ERROR: Connection timeout!"));
-      return false;
+  while (retryCount < WIFI_MAX_RETRY) {
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    
+    unsigned long startTime = millis();
+    while (WiFi.status() != WL_CONNECTED) {
+      if (millis() - startTime > WIFI_TIMEOUT) {
+        retryCount++;
+        DEBUG_PRINT(F("\n[WiFi] Timeout. Retry "));
+        DEBUG_PRINT(retryCount);
+        DEBUG_PRINT(F("/"));
+        DEBUG_PRINTLN(WIFI_MAX_RETRY);
+        break;
+      }
+      delay(500);
+      DEBUG_PRINT(F("."));
     }
-    delay(500);
-    DEBUG_PRINT(F("."));
+    
+    if (WiFi.status() == WL_CONNECTED) {
+      DEBUG_PRINTLN(F("\n[WiFi] Connected!"));
+      DEBUG_PRINT(F("[WiFi] IP Address: "));
+      DEBUG_PRINTLN(WiFi.localIP());
+      DEBUG_PRINT(F("[WiFi] RSSI: "));
+      DEBUG_PRINT(WiFi.RSSI());
+      DEBUG_PRINTLN(F(" dBm"));
+      return true;
+    }
+    
+    if (retryCount < WIFI_MAX_RETRY) {
+      DEBUG_PRINT(F("[WiFi] Waiting "));
+      DEBUG_PRINT(WIFI_RETRY_INTERVAL / 1000);
+      DEBUG_PRINTLN(F("s before retry..."));
+      delay(WIFI_RETRY_INTERVAL);
+    }
   }
   
-  DEBUG_PRINTLN(F("\n[WiFi] Connected!"));
-  DEBUG_PRINT(F("[WiFi] IP Address: "));
-  DEBUG_PRINTLN(WiFi.localIP());
-  DEBUG_PRINT(F("[WiFi] RSSI: "));
-  DEBUG_PRINT(WiFi.RSSI());
-  DEBUG_PRINTLN(F(" dBm"));
-  
-  return true;
+  DEBUG_PRINTLN(F("[WiFi] ERROR: Max retry reached. Continuing without WiFi..."));
+  return false;
 }
 
 // ============================================

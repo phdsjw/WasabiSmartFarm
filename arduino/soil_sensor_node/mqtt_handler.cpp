@@ -23,25 +23,42 @@ bool MQTTHandler::connectWiFi() {
     DEBUG_PRINTLN(F("[WiFi] Connecting..."));
     DEBUG_PRINT(F("[WiFi] SSID: ")); DEBUG_PRINTLN(WIFI_SSID);
     
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    int retryCount = 0;
     
-    unsigned long startAttemptTime = millis();
-    
-    while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < WIFI_TIMEOUT) {
-        delay(500);
-        DEBUG_PRINT(F("."));
+    while (retryCount < WIFI_MAX_RETRY) {
+        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+        
+        unsigned long startAttemptTime = millis();
+        
+        while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < WIFI_TIMEOUT) {
+            delay(500);
+            DEBUG_PRINT(F("."));
+        }
+        DEBUG_PRINTLN();
+        
+        if (WiFi.status() == WL_CONNECTED) {
+            DEBUG_PRINTLN(F("[WiFi] Connected!"));
+            DEBUG_PRINT(F("[WiFi] IP Address: "));
+            DEBUG_PRINTLN(WiFi.localIP());
+            return true;
+        } else {
+            retryCount++;
+            DEBUG_PRINT(F("[WiFi] Connection failed. Retry "));
+            DEBUG_PRINT(retryCount);
+            DEBUG_PRINT(F("/"));
+            DEBUG_PRINTLN(WIFI_MAX_RETRY);
+            
+            if (retryCount < WIFI_MAX_RETRY) {
+                DEBUG_PRINT(F("[WiFi] Waiting "));
+                DEBUG_PRINT(WIFI_RETRY_INTERVAL / 1000);
+                DEBUG_PRINTLN(F("s before retry..."));
+                delay(WIFI_RETRY_INTERVAL);
+            }
+        }
     }
-    DEBUG_PRINTLN();
     
-    if (WiFi.status() == WL_CONNECTED) {
-        DEBUG_PRINTLN(F("[WiFi] Connected!"));
-        DEBUG_PRINT(F("[WiFi] IP Address: "));
-        DEBUG_PRINTLN(WiFi.localIP());
-        return true;
-    } else {
-        DEBUG_PRINTLN(F("[WiFi] Connection failed!"));
-        return false;
-    }
+    DEBUG_PRINTLN(F("[WiFi] ERROR: Max retry reached. Continuing without WiFi..."));
+    return false;
 }
 
 bool MQTTHandler::connectMQTT() {

@@ -13,6 +13,9 @@
 // ============================================
 #define WIFI_SSID        "YOUR_WIFI_SSID"      // WiFi SSID로 변경하세요
 #define WIFI_PASSWORD    "YOUR_WIFI_PASSWORD"  // WiFi 비밀번호로 변경하세요
+#define WIFI_TIMEOUT     10000                 // WiFi 연결 타임아웃 (10초)
+#define WIFI_MAX_RETRY   5                     // 최대 재시도 횟수
+#define WIFI_RETRY_INTERVAL 10000              // 재시도 간격 (10초)
 
 // ============================================
 // MQTT 설정

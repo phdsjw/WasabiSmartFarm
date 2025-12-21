@@ -17,22 +17,46 @@ void connectWiFi() {
   DEBUG_PRINT(F("Connecting to WiFi: "));
   DEBUG_PRINTLN(WIFI_SSID);
   
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  int retryCount = 0;
   
-  int attempts = 0;
-  while (WiFi.status() != WL_CONNECTED && attempts < 30) {
-    delay(500);
-    DEBUG_PRINT(F("."));
-    attempts++;
+  while (retryCount < WIFI_MAX_RETRY) {
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    
+    unsigned long startTime = millis();
+    int attempts = 0;
+    while (WiFi.status() != WL_CONNECTED) {
+      if (millis() - startTime > WIFI_TIMEOUT) {
+        retryCount++;
+        DEBUG_PRINT(F("\n[WiFi] Timeout. Retry "));
+        DEBUG_PRINT(retryCount);
+        DEBUG_PRINT(F("/"));
+        DEBUG_PRINTLN(WIFI_MAX_RETRY);
+        break;
+      }
+      delay(500);
+      DEBUG_PRINT(F("."));
+      attempts++;
+    }
+    
+    if (WiFi.status() == WL_CONNECTED) {
+      DEBUG_PRINTLN(F("\n[OK] WiFi connected!"));
+      DEBUG_PRINT(F("IP Address: "));
+      DEBUG_PRINTLN(WiFi.localIP());
+      DEBUG_PRINT(F("RSSI: "));
+      DEBUG_PRINT(WiFi.RSSI());
+      DEBUG_PRINTLN(F(" dBm"));
+      return;
+    }
+    
+    if (retryCount < WIFI_MAX_RETRY) {
+      DEBUG_PRINT(F("[WiFi] Waiting "));
+      DEBUG_PRINT(WIFI_RETRY_INTERVAL / 1000);
+      DEBUG_PRINTLN(F("s before retry..."));
+      delay(WIFI_RETRY_INTERVAL);
+    }
   }
   
-  if (WiFi.status() == WL_CONNECTED) {
-    DEBUG_PRINTLN(F("\n[OK] WiFi connected!"));
-    DEBUG_PRINT(F("IP Address: "));
-    DEBUG_PRINTLN(WiFi.localIP());
-  } else {
-    DEBUG_PRINTLN(F("\n[ERROR] WiFi connection failed!"));
-  }
+  DEBUG_PRINTLN(F("\n[ERROR] WiFi connection failed after max retries!"));
 }
 
 // ============================================
