@@ -1,0 +1,1386 @@
+[
+    {
+        "id": "main_tab",
+        "type": "tab",
+        "label": "와사비 스마트팜 메인",
+        "disabled": false,
+        "info": "와사비 스마트팜 메인 제어 플로우\n\n기능:\n- 센서 데이터 수집 (22개 노드)\n- 평균값 계산\n- 자동 관수 제어\n- Dashboard UI (개선된 시계열 차트)\n- InfluxDB 저장\n- 알림",
+        "env": []
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "name": "Mosquitto Broker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "nodered_wasabi_farm",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "nodered/status",
+        "birthQos": "0",
+        "birthPayload": "online",
+        "closeTopic": "nodered/status",
+        "closeQos": "0",
+        "closePayload": "offline",
+        "willTopic": "nodered/status",
+        "willQos": "0",
+        "willPayload": "offline"
+    },
+    {
+        "id": "ui_tab_overview",
+        "type": "ui_tab",
+        "name": "실시간 모니터링",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_tab_soil_trend",
+        "type": "ui_tab",
+        "name": "토양 센서 트렌드",
+        "icon": "fa-chart-line",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_tab_soil_heatmap",
+        "type": "ui_tab",
+        "name": "토양 센서 히트맵",
+        "icon": "fa-fire",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_tab_env_trend",
+        "type": "ui_tab",
+        "name": "환경 센서 트렌드",
+        "icon": "fa-cloud",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_tab_control",
+        "type": "ui_tab",
+        "name": "제어 및 알림",
+        "icon": "fa-sliders",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_group_soil_avg",
+        "type": "ui_group",
+        "name": "토양 센서 평균",
+        "tab": "ui_tab_overview",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_air_avg",
+        "type": "ui_group",
+        "name": "대기 센서 평균",
+        "tab": "ui_tab_overview",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_water_tank",
+        "type": "ui_group",
+        "name": "수조 센서",
+        "tab": "ui_tab_overview",
+        "order": 3,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_soil_temp_chart",
+        "type": "ui_group",
+        "name": "토양 온도 트렌드",
+        "tab": "ui_tab_soil_trend",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_soil_moisture_chart",
+        "type": "ui_group",
+        "name": "토양 습도 트렌드",
+        "tab": "ui_tab_soil_trend",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_soil_ec_chart",
+        "type": "ui_group",
+        "name": "토양 EC 트렌드",
+        "tab": "ui_tab_soil_trend",
+        "order": 3,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_soil_ph_chart",
+        "type": "ui_group",
+        "name": "토양 pH 트렌드",
+        "tab": "ui_tab_soil_trend",
+        "order": 4,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_air_temp_chart",
+        "type": "ui_group",
+        "name": "대기 온도 트렌드",
+        "tab": "ui_tab_env_trend",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_air_humidity_chart",
+        "type": "ui_group",
+        "name": "대기 습도 트렌드",
+        "tab": "ui_tab_env_trend",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_water_temp_chart",
+        "type": "ui_group",
+        "name": "수조 수온 트렌드",
+        "tab": "ui_tab_env_trend",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_water_ph_ec_chart",
+        "type": "ui_group",
+        "name": "수조 pH/EC 트렌드",
+        "tab": "ui_tab_env_trend",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_control",
+        "type": "ui_group",
+        "name": "자동 관수 제어",
+        "tab": "ui_tab_control",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "mqtt_soil_sensors",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "토양 센서 데이터 수신",
+        "topic": "sensor/soil/+/data",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [
+                "parse_soil_data",
+                "avg_soil_calc"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_air_sensors",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "대기 센서 데이터 수신",
+        "topic": "sensor/air/+/data",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "parse_air_data",
+                "avg_air_calc"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_water_sensor",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "수조 센서 데이터 수신",
+        "topic": "sensor/water_tank/data",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "parse_water_data",
+                "water_chart_prep"
+            ]
+        ]
+    },
+    {
+        "id": "parse_soil_data",
+        "type": "function",
+        "z": "main_tab",
+        "name": "토양 데이터 파싱",
+        "func": "// 토양 센서 데이터 파싱 및 차트 준비\nconst data = msg.payload;\nconst tankId = msg.topic.split('/')[2];\n\n// 개별 센서 데이터를 차트용으로 변환\nmsg.soil_temp = {\n    topic: `Tank ${tankId}`,\n    payload: data.soil_temp\n};\n\nmsg.soil_moisture = {\n    topic: `Tank ${tankId}`,\n    payload: data.soil_moisture\n};\n\nmsg.soil_ec = {\n    topic: `Tank ${tankId}`,\n    payload: data.soil_ec\n};\n\nmsg.soil_ph = {\n    topic: `Tank ${tankId}`,\n    payload: data.soil_ph\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 100,
+        "wires": [
+            [
+                "chart_soil_temp",
+                "chart_soil_moisture",
+                "chart_soil_ec",
+                "chart_soil_ph"
+            ]
+        ]
+    },
+    {
+        "id": "parse_air_data",
+        "type": "function",
+        "z": "main_tab",
+        "name": "대기 데이터 파싱",
+        "func": "// 대기 센서 데이터 파싱 및 차트 준비\nconst data = msg.payload;\nconst zoneId = msg.topic.split('/')[2];\n\nmsg.air_temp = {\n    topic: `Zone ${zoneId}`,\n    payload: data.air_temp\n};\n\nmsg.air_humidity = {\n    topic: `Zone ${zoneId}`,\n    payload: data.air_humidity\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 200,
+        "wires": [
+            [
+                "chart_air_temp",
+                "chart_air_humidity"
+            ]
+        ]
+    },
+    {
+        "id": "parse_water_data",
+        "type": "function",
+        "z": "main_tab",
+        "name": "수조 데이터 파싱",
+        "func": "// 수조 센서 데이터 파싱\nconst data = msg.payload;\n\nmsg.water_temp = {\n    topic: \"수온\",\n    payload: data.water_temp\n};\n\nmsg.water_ph = {\n    topic: \"pH\",\n    payload: data.water_ph\n};\n\nmsg.water_ec = {\n    topic: \"EC\",\n    payload: data.water_ec\n};\n\nmsg.water_tds = {\n    topic: \"TDS\",\n    payload: data.water_tds\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 300,
+        "wires": [
+            [
+                "chart_water_temp",
+                "chart_water_ph_ec",
+                "gauge_water_tds"
+            ]
+        ]
+    },
+    {
+        "id": "avg_soil_calc",
+        "type": "function",
+        "z": "main_tab",
+        "name": "토양 평균값 계산",
+        "func": "// 토양 센서 18개의 평균값 계산\nconst data = msg.payload;\nconst tankId = msg.topic.split('/')[2];\n\n// Context에 센서 데이터 저장 (18개)\nlet soilData = context.get('soilData', 'default') || {};\nsoilData[tankId] = {\n    soil_temp: data.soil_temp,\n    soil_moisture: data.soil_moisture,\n    soil_ec: data.soil_ec,\n    soil_ph: data.soil_ph,\n    timestamp: Date.now()\n};\ncontext.set('soilData', soilData, 'default');\n\n// 10분 이상 오래된 데이터 제거\nconst now = Date.now();\nfor (let key in soilData) {\n    if (now - soilData[key].timestamp > 600000) {\n        delete soilData[key];\n    }\n}\n\n// 평균값 계산\nconst keys = Object.keys(soilData);\nif (keys.length === 0) return null;\n\nlet avgTemp = 0, avgMoisture = 0, avgEC = 0, avgPH = 0;\nfor (let key of keys) {\n    avgTemp += soilData[key].soil_temp;\n    avgMoisture += soilData[key].soil_moisture;\n    avgEC += soilData[key].soil_ec;\n    avgPH += soilData[key].soil_ph;\n}\n\nconst count = keys.length;\nmsg.payload = {\n    soil_temp_avg: Math.round(avgTemp / count * 10) / 10,\n    soil_moisture_avg: Math.round(avgMoisture / count * 10) / 10,\n    soil_ec_avg: Math.round(avgEC / count * 10) / 10,\n    soil_ph_avg: Math.round(avgPH / count * 100) / 100,\n    sensor_count: count\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "display_soil_avg",
+                "auto_irrigation_check"
+            ]
+        ]
+    },
+    {
+        "id": "avg_air_calc",
+        "type": "function",
+        "z": "main_tab",
+        "name": "대기 평균값 계산",
+        "func": "// 대기 센서 3개의 평균값 계산\nconst data = msg.payload;\nconst zoneId = msg.topic.split('/')[2];\n\n// Context에 센서 데이터 저장 (3개)\nlet airData = context.get('airData', 'default') || {};\nairData[zoneId] = {\n    air_temp: data.air_temp,\n    air_humidity: data.air_humidity,\n    timestamp: Date.now()\n};\ncontext.set('airData', airData, 'default');\n\n// 10분 이상 오래된 데이터 제거\nconst now = Date.now();\nfor (let key in airData) {\n    if (now - airData[key].timestamp > 600000) {\n        delete airData[key];\n    }\n}\n\n// 평균값 계산\nconst keys = Object.keys(airData);\nif (keys.length === 0) return null;\n\nlet avgTemp = 0, avgHumidity = 0;\nfor (let key of keys) {\n    avgTemp += airData[key].air_temp;\n    avgHumidity += airData[key].air_humidity;\n}\n\nconst count = keys.length;\nmsg.payload = {\n    air_temp_avg: Math.round(avgTemp / count * 10) / 10,\n    air_humidity_avg: Math.round(avgHumidity / count * 10) / 10,\n    sensor_count: count\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 220,
+        "wires": [
+            [
+                "display_air_avg"
+            ]
+        ]
+    },
+    {
+        "id": "water_chart_prep",
+        "type": "function",
+        "z": "main_tab",
+        "name": "수조 차트 준비",
+        "func": "const data = msg.payload;\n\n// 수온 차트\nmsg.water_temp_chart = {\n    payload: data.water_temp\n};\n\n// pH/EC 듀얼 축 차트\nmsg.water_ph_chart = {\n    topic: \"pH\",\n    payload: data.water_ph\n};\n\nmsg.water_ec_chart = {\n    topic: \"EC\",\n    payload: data.water_ec\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "chart_soil_temp",
+        "type": "ui_chart",
+        "z": "main_tab",
+        "name": "토양 온도 차트",
+        "group": "ui_group_soil_temp_chart",
+        "order": 1,
+        "width": "12",
+        "height": "5",
+        "label": "토양 온도 (°C) - 최근 1시간",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "데이터 수신 대기 중...",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "40",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c",
+            "#d62728",
+            "#9467bd",
+            "#8c564b",
+            "#e377c2",
+            "#7f7f7f",
+            "#bcbd22",
+            "#17becf",
+            "#aec7e8",
+            "#ffbb78",
+            "#98df8a",
+            "#ff9896",
+            "#c5b0d5",
+            "#c49c94",
+            "#f7b6d2",
+            "#c7c7c7"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 620,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "chart_soil_moisture",
+        "type": "ui_chart",
+        "z": "main_tab",
+        "name": "토양 습도 차트",
+        "group": "ui_group_soil_moisture_chart",
+        "order": 1,
+        "width": "12",
+        "height": "5",
+        "label": "토양 습도 (%) - 최근 1시간",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "데이터 수신 대기 중...",
+        "dot": false,
+        "ymin": "85",
+        "ymax": "100",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c",
+            "#d62728",
+            "#9467bd",
+            "#8c564b",
+            "#e377c2",
+            "#7f7f7f",
+            "#bcbd22",
+            "#17becf",
+            "#aec7e8",
+            "#ffbb78",
+            "#98df8a",
+            "#ff9896",
+            "#c5b0d5",
+            "#c49c94",
+            "#f7b6d2",
+            "#c7c7c7"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 620,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "chart_soil_ec",
+        "type": "ui_chart",
+        "z": "main_tab",
+        "name": "토양 EC 차트",
+        "group": "ui_group_soil_ec_chart",
+        "order": 1,
+        "width": "12",
+        "height": "5",
+        "label": "토양 EC (mS/cm) - 최근 1시간",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "데이터 수신 대기 중...",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "10",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c",
+            "#d62728",
+            "#9467bd",
+            "#8c564b",
+            "#e377c2",
+            "#7f7f7f",
+            "#bcbd22",
+            "#17becf",
+            "#aec7e8",
+            "#ffbb78",
+            "#98df8a",
+            "#ff9896",
+            "#c5b0d5",
+            "#c49c94",
+            "#f7b6d2",
+            "#c7c7c7"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 620,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "chart_soil_ph",
+        "type": "ui_chart",
+        "z": "main_tab",
+        "name": "토양 pH 차트",
+        "group": "ui_group_soil_ph_chart",
+        "order": 1,
+        "width": "12",
+        "height": "5",
+        "label": "토양 pH - 최근 1시간",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "데이터 수신 대기 중...",
+        "dot": false,
+        "ymin": "5",
+        "ymax": "8",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c",
+            "#d62728",
+            "#9467bd",
+            "#8c564b",
+            "#e377c2",
+            "#7f7f7f",
+            "#bcbd22",
+            "#17becf",
+            "#aec7e8",
+            "#ffbb78",
+            "#98df8a",
+            "#ff9896",
+            "#c5b0d5",
+            "#c49c94",
+            "#f7b6d2",
+            "#c7c7c7"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 620,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "chart_air_temp",
+        "type": "ui_chart",
+        "z": "main_tab",
+        "name": "대기 온도 차트",
+        "group": "ui_group_air_temp_chart",
+        "order": 1,
+        "width": "12",
+        "height": "5",
+        "label": "대기 온도 (°C) - Zone 01/02/03",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "데이터 수신 대기 중...",
+        "dot": false,
+        "ymin": "10",
+        "ymax": "35",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 620,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "chart_air_humidity",
+        "type": "ui_chart",
+        "z": "main_tab",
+        "name": "대기 습도 차트",
+        "group": "ui_group_air_humidity_chart",
+        "order": 1,
+        "width": "12",
+        "height": "5",
+        "label": "대기 습도 (%) - Zone 01/02/03",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "데이터 수신 대기 중...",
+        "dot": false,
+        "ymin": "30",
+        "ymax": "100",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 620,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "chart_water_temp",
+        "type": "ui_chart",
+        "z": "main_tab",
+        "name": "수조 수온 차트",
+        "group": "ui_group_water_temp_chart",
+        "order": 1,
+        "width": "6",
+        "height": "5",
+        "label": "수조 수온 (°C)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "데이터 수신 대기 중...",
+        "dot": false,
+        "ymin": "10",
+        "ymax": "30",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 620,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "chart_water_ph_ec",
+        "type": "ui_chart",
+        "z": "main_tab",
+        "name": "수조 pH/EC 차트",
+        "group": "ui_group_water_ph_ec_chart",
+        "order": 1,
+        "width": "6",
+        "height": "5",
+        "label": "수조 pH / EC",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "데이터 수신 대기 중...",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#2ca02c",
+            "#ff7f0e"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 620,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "display_soil_avg",
+        "type": "ui_template",
+        "z": "main_tab",
+        "group": "ui_group_soil_avg",
+        "name": "토양 평균값 표시",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "format": "<div style=\"padding: 10px;\">\n    <h3 style=\"margin-top: 0;\">🌱 토양 센서 평균 ({{msg.payload.sensor_count}}개)</h3>\n    <hr>\n    <div style=\"font-size: 18px; margin: 10px 0;\">\n        <span style=\"color: #ff7f0e;\">🌡️ 온도:</span> <b>{{msg.payload.soil_temp_avg}}°C</b>\n    </div>\n    <div style=\"font-size: 18px; margin: 10px 0;\">\n        <span style=\"color: #1f77b4;\">💧 습도:</span> <b>{{msg.payload.soil_moisture_avg}}%</b>\n    </div>\n    <div style=\"font-size: 18px; margin: 10px 0;\">\n        <span style=\"color: #2ca02c;\">⚡ EC:</span> <b>{{msg.payload.soil_ec_avg}} mS/cm</b>\n    </div>\n    <div style=\"font-size: 18px; margin: 10px 0;\">\n        <span style=\"color: #d62728;\">🧪 pH:</span> <b>{{msg.payload.soil_ph_avg}}</b>\n    </div>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 620,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "display_air_avg",
+        "type": "ui_template",
+        "z": "main_tab",
+        "group": "ui_group_air_avg",
+        "name": "대기 평균값 표시",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "format": "<div style=\"padding: 10px;\">\n    <h3 style=\"margin-top: 0;\">🌡️ 대기 센서 평균 ({{msg.payload.sensor_count}}개)</h3>\n    <hr>\n    <div style=\"font-size: 18px; margin: 10px 0;\">\n        <span style=\"color: #ff7f0e;\">🌡️ 온도:</span> <b>{{msg.payload.air_temp_avg}}°C</b>\n    </div>\n    <div style=\"font-size: 18px; margin: 10px 0;\">\n        <span style=\"color: #1f77b4;\">💧 습도:</span> <b>{{msg.payload.air_humidity_avg}}%</b>\n    </div>\n    <div style=\"font-size: 14px; margin-top: 20px; color: #666;\">\n        📍 Zone 01, 02, 03\n    </div>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 620,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "gauge_water_tds",
+        "type": "ui_gauge",
+        "z": "main_tab",
+        "name": "수조 TDS 게이지",
+        "group": "ui_group_water_tank",
+        "order": 3,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "TDS (ppm)",
+        "label": "ppm",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "300",
+        "seg2": "600",
+        "className": "",
+        "x": 620,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "auto_irrigation_check",
+        "type": "function",
+        "z": "main_tab",
+        "name": "자동 관수 조건 체크",
+        "func": "const avg = msg.payload;\n\n// 자동 모드 확인\nconst autoMode = context.get('autoMode', 'default') || false;\nif (!autoMode) return null;\n\n// 관수 중인지 확인\nconst isIrrigating = context.get('isIrrigating', 'default') || false;\n\n// 마지막 관수 시간 확인 (1시간 간격)\nconst lastIrrigationTime = context.get('lastIrrigationTime', 'default') || 0;\nconst now = Date.now();\nif (now - lastIrrigationTime < 3600000) return null; // 1시간 = 3600000ms\n\n// 관수 시작 조건 (OR)\nif (!isIrrigating) {\n    if (avg.soil_moisture_avg <= 95 || avg.soil_ec_avg >= 5.0 || avg.soil_temp_avg >= 22) {\n        msg.payload = {command: 'start'};\n        context.set('isIrrigating', true, 'default');\n        context.set('irrigationStartTime', now, 'default');\n        node.warn('자동 관수 시작: 습도=' + avg.soil_moisture_avg + '%, EC=' + avg.soil_ec_avg + ', 온도=' + avg.soil_temp_avg + '°C');\n        return msg;\n    }\n}\n\n// 관수 정지 조건 (AND)\nif (isIrrigating) {\n    const irrigationDuration = now - (context.get('irrigationStartTime', 'default') || now);\n    \n    // 4분 타임아웃 또는 조건 충족 시 정지\n    if (irrigationDuration >= 240000 || (avg.soil_moisture_avg > 97 && avg.soil_ec_avg < 3.0)) {\n        msg.payload = {command: 'stop'};\n        context.set('isIrrigating', false, 'default');\n        context.set('lastIrrigationTime', now, 'default');\n        node.warn('자동 관수 정지: 습도=' + avg.soil_moisture_avg + '%, EC=' + avg.soil_ec_avg);\n        return msg;\n    }\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 140,
+        "wires": [
+            [
+                "mqtt_irrigation_control"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_irrigation_control",
+        "type": "function",
+        "z": "main_tab",
+        "name": "MQTT 관수 명령 발행",
+        "func": "const command = msg.payload.command;\n\nif (command === 'start') {\n    msg.topic = 'actuator/irrigation_pump/on';\n    msg.payload = '';\n} else if (command === 'stop') {\n    msg.topic = 'actuator/irrigation_pump/off';\n    msg.payload = '';\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 140,
+        "wires": [
+            [
+                "mqtt_out_actuator"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_out_actuator",
+        "type": "mqtt out",
+        "z": "main_tab",
+        "name": "액추에이터 명령 전송",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "mqtt_broker",
+        "x": 1140,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ui_button_auto_on",
+        "type": "ui_button",
+        "z": "main_tab",
+        "name": "자동 모드 ON",
+        "group": "ui_group_control",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "자동 모드 ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#4CAF50",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "autoMode",
+        "topicType": "str",
+        "x": 140,
+        "y": 500,
+        "wires": [
+            [
+                "set_auto_mode"
+            ]
+        ]
+    },
+    {
+        "id": "ui_button_auto_off",
+        "type": "ui_button",
+        "z": "main_tab",
+        "name": "자동 모드 OFF",
+        "group": "ui_group_control",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "자동 모드 OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#f44336",
+        "className": "",
+        "icon": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "topic": "autoMode",
+        "topicType": "str",
+        "x": 140,
+        "y": 540,
+        "wires": [
+            [
+                "set_auto_mode"
+            ]
+        ]
+    },
+    {
+        "id": "set_auto_mode",
+        "type": "function",
+        "z": "main_tab",
+        "name": "자동 모드 설정",
+        "func": "const autoMode = msg.payload;\ncontext.set('autoMode', autoMode, 'default');\n\nmsg.payload = {\n    text: autoMode ? '✅ 자동 모드 활성화' : '⏸️ 자동 모드 비활성화',\n    autoMode: autoMode\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 520,
+        "wires": [
+            [
+                "display_auto_status"
+            ]
+        ]
+    },
+    {
+        "id": "display_auto_status",
+        "type": "ui_text",
+        "z": "main_tab",
+        "group": "ui_group_control",
+        "order": 3,
+        "width": "6",
+        "height": "1",
+        "name": "자동 모드 상태",
+        "label": "현재 상태:",
+        "format": "{{msg.payload.text}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 620,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "ui_button_manual_start",
+        "type": "ui_button",
+        "z": "main_tab",
+        "name": "수동 관수 시작",
+        "group": "ui_group_control",
+        "order": 4,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "관수 시작",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#2196F3",
+        "className": "",
+        "icon": "",
+        "payload": "on",
+        "payloadType": "str",
+        "topic": "manual",
+        "topicType": "str",
+        "x": 140,
+        "y": 600,
+        "wires": [
+            [
+                "manual_irrigation_start"
+            ]
+        ]
+    },
+    {
+        "id": "ui_button_manual_stop",
+        "type": "ui_button",
+        "z": "main_tab",
+        "name": "수동 관수 정지",
+        "group": "ui_group_control",
+        "order": 5,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "관수 정지",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#FF9800",
+        "className": "",
+        "icon": "",
+        "payload": "off",
+        "payloadType": "str",
+        "topic": "manual",
+        "topicType": "str",
+        "x": 140,
+        "y": 640,
+        "wires": [
+            [
+                "manual_irrigation_stop"
+            ]
+        ]
+    },
+    {
+        "id": "ui_button_emergency",
+        "type": "ui_button",
+        "z": "main_tab",
+        "name": "긴급 정지",
+        "group": "ui_group_control",
+        "order": 6,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🚨 긴급 정지",
+        "tooltip": "",
+        "color": "#ffffff",
+        "bgcolor": "#d32f2f",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "emergency",
+        "topicType": "str",
+        "x": 140,
+        "y": 680,
+        "wires": [
+            [
+                "emergency_stop"
+            ]
+        ]
+    },
+    {
+        "id": "manual_irrigation_start",
+        "type": "function",
+        "z": "main_tab",
+        "name": "수동 관수 시작",
+        "func": "msg.topic = 'actuator/irrigation_pump/on';\nmsg.payload = '';\nnode.warn('수동 관수 시작');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 600,
+        "wires": [
+            [
+                "mqtt_out_actuator"
+            ]
+        ]
+    },
+    {
+        "id": "manual_irrigation_stop",
+        "type": "function",
+        "z": "main_tab",
+        "name": "수동 관수 정지",
+        "func": "msg.topic = 'actuator/irrigation_pump/off';\nmsg.payload = '';\nnode.warn('수동 관수 정지');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 640,
+        "wires": [
+            [
+                "mqtt_out_actuator"
+            ]
+        ]
+    },
+    {
+        "id": "emergency_stop",
+        "type": "function",
+        "z": "main_tab",
+        "name": "긴급 정지",
+        "func": "msg.topic = 'actuator/emergency_stop';\nmsg.payload = '';\ncontext.set('autoMode', false, 'default');\ncontext.set('isIrrigating', false, 'default');\nnode.error('🚨 긴급 정지 활성화!');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 680,
+        "wires": [
+            [
+                "mqtt_out_actuator"
+            ]
+        ]
+    },
+    {
+        "id": "ui_button_emergency_release",
+        "type": "ui_button",
+        "z": "main_tab",
+        "name": "긴급 정지 해제",
+        "group": "ui_group_control",
+        "order": 7,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "✅ 긴급 정지 해제",
+        "tooltip": "시스템을 정상 상태로 복구합니다",
+        "color": "#ffffff",
+        "bgcolor": "#388e3c",
+        "className": "",
+        "icon": "",
+        "payload": "RELEASE",
+        "payloadType": "str",
+        "topic": "emergency_release",
+        "topicType": "str",
+        "x": 140,
+        "y": 720,
+        "wires": [
+            [
+                "emergency_release_function"
+            ]
+        ]
+    },
+    {
+        "id": "emergency_release_function",
+        "type": "function",
+        "z": "main_tab",
+        "name": "긴급 정지 해제",
+        "func": "// 긴급 정지 해제 로직\nmsg.topic = 'actuator/emergency_release';\nmsg.payload = 'RELEASED';\n\n// 모든 관수 관련 컨텍스트 변수 초기화\ncontext.set('autoMode', false, 'default');           // 자동 모드는 수동으로 다시 켜도록\ncontext.set('isIrrigating', false, 'default');       // 관수 중 상태 해제\ncontext.set('irrigationStartTime', 0, 'default');    // 관수 시작 시간 초기화\n// lastIrrigationTime은 유지 (1시간 대기 시간 로직 보존)\n\n// 상태 알림\nnode.warn('✅ 긴급 정지가 해제되었습니다. 시스템이 대기 상태로 전환됩니다.');\nnode.warn('⚠️ 자동 모드를 다시 활성화하려면 \"자동 모드 ON\" 버튼을 눌러주세요.');\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 720,
+        "wires": [
+            [
+                "mqtt_out_actuator"
+            ]
+        ]
+    },
+    {
+        "id": "ui_group_system_status",
+        "type": "ui_group",
+        "name": "시스템 상태 모니터링",
+        "tab": "ui_tab_control",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "mqtt_heartbeat_actuator",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "액추에이터 하트비트",
+        "topic": "actuator/heartbeat",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 880,
+        "wires": [
+            [
+                "heartbeat_processor"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_heartbeat_water",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "물탱크 하트비트",
+        "topic": "sensor/water_tank/heartbeat",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 920,
+        "wires": [
+            [
+                "heartbeat_processor"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_heartbeat_air",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "대기센서 하트비트",
+        "topic": "sensor/air/+/heartbeat",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 960,
+        "wires": [
+            [
+                "heartbeat_processor"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_heartbeat_soil",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "토양센서 하트비트",
+        "topic": "sensor/soil/+/heartbeat",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 1000,
+        "wires": [
+            [
+                "heartbeat_processor"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_heartbeat_system",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "시스템 하트비트",
+        "topic": "system/heartbeat",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 1040,
+        "wires": [
+            [
+                "heartbeat_processor"
+            ]
+        ]
+    },
+    {
+        "id": "heartbeat_processor",
+        "type": "function",
+        "z": "main_tab",
+        "name": "하트비트 처리",
+        "func": "// 토픽에서 노드 ID 추출\nconst topic = msg.topic;\nlet nodeId = '';\n\nif (topic === 'actuator/heartbeat') {\n    nodeId = 'actuator';\n} else if (topic === 'sensor/water_tank/heartbeat') {\n    nodeId = 'water_tank';\n} else if (topic === 'system/heartbeat') {\n    nodeId = 'system_controller';\n} else if (topic.startsWith('sensor/air/')) {\n    const parts = topic.split('/');\n    nodeId = 'air_' + parts[2];\n} else if (topic.startsWith('sensor/soil/')) {\n    const parts = topic.split('/');\n    nodeId = 'soil_' + parts[2];\n}\n\n// 현재 시간 저장 (영구 저장소 사용)\nconst now = Date.now();\ncontext.set('hb_' + nodeId, now, 'default');\n\n// 로그\nnode.log('Heartbeat received from ' + nodeId);\n\n// 상태 정보 전달\nmsg.payload = {\n    node: nodeId,\n    status: 'online',\n    timestamp: now,\n    raw_data: msg.payload\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 960,
+        "wires": [
+            [
+                "heartbeat_debug"
+            ]
+        ]
+    },
+    {
+        "id": "heartbeat_checker",
+        "type": "inject",
+        "z": "main_tab",
+        "name": "60초마다 체크",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 1120,
+        "wires": [
+            [
+                "heartbeat_timeout_check"
+            ]
+        ]
+    },
+    {
+        "id": "heartbeat_timeout_check",
+        "type": "function",
+        "z": "main_tab",
+        "name": "타임아웃 체크 (2분)",
+        "func": "const now = Date.now();\nconst timeout = 120000;  // 2분 (120초)\n\n// 모니터링 대상 노드 목록 (전체 21개)\nconst nodes = [\n    // 액추에이터 노드 (1개)\n    { id: 'actuator', name: '액추에이터 노드', critical: true },\n    \n    // 물탱크 센서 (1개)\n    { id: 'water_tank', name: '물탱크 센서', critical: true },\n    \n    // 시스템 컨트롤러 (1개)\n    { id: 'system_controller', name: '시스템 컨트롤러', critical: false },\n    \n    // 대기센서 (1개)\n    { id: 'air_zone1', name: '대기센서 Zone1', critical: true },\n    \n    // 토양센서 (18개)\n    { id: 'soil_01', name: '토양센서 01', critical: true },\n    { id: 'soil_02', name: '토양센서 02', critical: true },\n    { id: 'soil_03', name: '토양센서 03', critical: true },\n    { id: 'soil_04', name: '토양센서 04', critical: true },\n    { id: 'soil_05', name: '토양센서 05', critical: true },\n    { id: 'soil_06', name: '토양센서 06', critical: true },\n    { id: 'soil_07', name: '토양센서 07', critical: true },\n    { id: 'soil_08', name: '토양센서 08', critical: true },\n    { id: 'soil_09', name: '토양센서 09', critical: true },\n    { id: 'soil_10', name: '토양센서 10', critical: true },\n    { id: 'soil_11', name: '토양센서 11', critical: true },\n    { id: 'soil_12', name: '토양센서 12', critical: true },\n    { id: 'soil_13', name: '토양센서 13', critical: true },\n    { id: 'soil_14', name: '토양센서 14', critical: true },\n    { id: 'soil_15', name: '토양센서 15', critical: true },\n    { id: 'soil_16', name: '토양센서 16', critical: true },\n    { id: 'soil_17', name: '토양센서 17', critical: true },\n    { id: 'soil_18', name: '토양센서 18', critical: true }\n];\n\nconst statuses = [];\nconst alerts = [];\n\nnodes.forEach(node => {\n    const lastHB = context.get('hb_' + node.id, 'default') || 0;\n    const elapsed = now - lastHB;\n    \n    let status = '';\n    let color = '';\n    \n    if (lastHB === 0) {\n        status = '연결 안됨';\n        color = 'gray';\n        if (node.critical) {\n            alerts.push({\n                node: node.name,\n                status: 'never_connected',\n                message: '하트비트를 받지 못했습니다'\n            });\n        }\n    } else if (elapsed > timeout) {\n        status = '타임아웃 (' + Math.floor(elapsed/1000) + '초)';\n        color = 'red';\n        alerts.push({\n            node: node.name,\n            status: 'timeout',\n            elapsed: Math.floor(elapsed/1000) + '초',\n            message: '하트비트 타임아웃 발생'\n        });\n    } else {\n        status = '온라인 (' + Math.floor(elapsed/1000) + '초 전)';\n        color = 'green';\n    }\n    \n    statuses.push({\n        id: node.id,\n        name: node.name,\n        status: status,\n        color: color,\n        elapsed: elapsed,\n        lastHB: lastHB,\n        critical: node.critical\n    });\n});\n\n// 상태 표시용 메시지\nconst statusMsg = { payload: statuses };\n\n// 알림용 메시지\nif (alerts.length > 0) {\n    node.warn('⚠️ Heartbeat timeout detected: ' + alerts.length + ' nodes');\n    const alertMsg = {\n        payload: {\n            alert_type: 'heartbeat_timeout',\n            count: alerts.length,\n            nodes: alerts,\n            timestamp: now\n        }\n    };\n    return [statusMsg, alertMsg];\n}\n\nreturn [statusMsg, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 1120,
+        "wires": [
+            [
+                "heartbeat_status_table"
+            ],
+            [
+                "heartbeat_alert_notification"
+            ]
+        ]
+    },
+    {
+        "id": "heartbeat_status_table",
+        "type": "ui_template",
+        "z": "main_tab",
+        "group": "ui_group_system_status",
+        "name": "노드 상태 테이블",
+        "order": 1,
+        "width": "12",
+        "height": "12",
+        "format": "<style>\n.status-container {\n    font-family: 'Segoe UI', Arial, sans-serif;\n    padding: 15px;\n    background: #f5f5f5;\n    border-radius: 8px;\n}\n\n.status-header {\n    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n    color: white;\n    padding: 15px;\n    border-radius: 8px 8px 0 0;\n    margin: -15px -15px 15px -15px;\n}\n\n.status-header h3 {\n    margin: 0;\n    font-size: 20px;\n    display: flex;\n    align-items: center;\n}\n\n.status-header p {\n    margin: 5px 0 0 0;\n    font-size: 13px;\n    opacity: 0.9;\n}\n\n.node-grid {\n    display: grid;\n    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n    gap: 12px;\n    margin-top: 15px;\n}\n\n.node-card {\n    background: white;\n    border-radius: 6px;\n    padding: 12px;\n    box-shadow: 0 2px 4px rgba(0,0,0,0.1);\n    transition: transform 0.2s, box-shadow 0.2s;\n    border-left: 4px solid #ddd;\n}\n\n.node-card:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 4px 8px rgba(0,0,0,0.15);\n}\n\n.node-card.online {\n    border-left-color: #4CAF50;\n}\n\n.node-card.timeout {\n    border-left-color: #f44336;\n    animation: pulse 2s infinite;\n}\n\n.node-card.never {\n    border-left-color: #9E9E9E;\n}\n\n@keyframes pulse {\n    0%, 100% { opacity: 1; }\n    50% { opacity: 0.7; }\n}\n\n.node-name {\n    font-weight: bold;\n    font-size: 14px;\n    margin-bottom: 8px;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n}\n\n.critical-badge {\n    background-color: #FF9800;\n    color: white;\n    padding: 2px 6px;\n    border-radius: 10px;\n    font-size: 10px;\n    font-weight: bold;\n}\n\n.status-indicator {\n    display: flex;\n    align-items: center;\n    font-size: 13px;\n    margin-bottom: 6px;\n}\n\n.status-dot {\n    width: 10px;\n    height: 10px;\n    border-radius: 50%;\n    margin-right: 6px;\n    animation: blink 1.5s infinite;\n}\n\n.status-dot.green {\n    background-color: #4CAF50;\n}\n\n.status-dot.red {\n    background-color: #f44336;\n}\n\n.status-dot.gray {\n    background-color: #9E9E9E;\n    animation: none;\n}\n\n@keyframes blink {\n    0%, 100% { opacity: 1; }\n    50% { opacity: 0.3; }\n}\n\n.timestamp {\n    font-size: 11px;\n    color: #666;\n    margin-top: 4px;\n}\n\n.summary {\n    display: flex;\n    justify-content: space-around;\n    margin-bottom: 15px;\n    padding: 12px;\n    background: white;\n    border-radius: 6px;\n    box-shadow: 0 2px 4px rgba(0,0,0,0.1);\n}\n\n.summary-item {\n    text-align: center;\n}\n\n.summary-value {\n    font-size: 24px;\n    font-weight: bold;\n    margin-bottom: 4px;\n}\n\n.summary-value.online { color: #4CAF50; }\n.summary-value.timeout { color: #f44336; }\n.summary-value.never { color: #9E9E9E; }\n\n.summary-label {\n    font-size: 12px;\n    color: #666;\n}\n</style>\n\n<div class=\"status-container\">\n    <div class=\"status-header\">\n        <h3>🔍 Arduino 노드 실시간 모니터링</h3>\n        <p>⏱️ 2분 이상 하트비트가 없으면 타임아웃으로 표시됩니다</p>\n    </div>\n    \n    <div class=\"summary\">\n        <div class=\"summary-item\">\n            <div class=\"summary-value online\">{{ (msg.payload | filter: {color: 'green'}).length }}</div>\n            <div class=\"summary-label\">온라인</div>\n        </div>\n        <div class=\"summary-item\">\n            <div class=\"summary-value timeout\">{{ (msg.payload | filter: {color: 'red'}).length }}</div>\n            <div class=\"summary-label\">타임아웃</div>\n        </div>\n        <div class=\"summary-item\">\n            <div class=\"summary-value never\">{{ (msg.payload | filter: {color: 'gray'}).length }}</div>\n            <div class=\"summary-label\">연결 안됨</div>\n        </div>\n        <div class=\"summary-item\">\n            <div class=\"summary-value\">{{ msg.payload.length }}</div>\n            <div class=\"summary-label\">전체 노드</div>\n        </div>\n    </div>\n    \n    <div class=\"node-grid\">\n        <div ng-repeat=\"node in msg.payload\" \n             class=\"node-card\" \n             ng-class=\"{\n                 'online': node.color === 'green', \n                 'timeout': node.color === 'red', \n                 'never': node.color === 'gray'\n             }\">\n            <div class=\"node-name\">\n                <span>{{ node.name }}</span>\n                <span ng-if=\"node.critical\" class=\"critical-badge\">중요</span>\n            </div>\n            <div class=\"status-indicator\">\n                <div class=\"status-dot\" ng-class=\"node.color\"></div>\n                <span>{{ node.status }}</span>\n            </div>\n            <div class=\"timestamp\" ng-if=\"node.lastHB > 0\">\n                {{ node.lastHB | date:'HH:mm:ss' }}\n            </div>\n            <div class=\"timestamp\" ng-if=\"node.lastHB === 0\">\n                연결 대기 중...\n            </div>\n        </div>\n    </div>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 640,
+        "y": 1120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "heartbeat_alert_notification",
+        "type": "ui_toast",
+        "z": "main_tab",
+        "position": "top right",
+        "displayTime": "10",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "확인",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "⚠️ 하트비트 타임아웃 경고",
+        "name": "타임아웃 알림",
+        "x": 640,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "heartbeat_debug",
+        "type": "debug",
+        "z": "main_tab",
+        "name": "하트비트 디버그",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 960,
+        "wires": []
+    }
+]
