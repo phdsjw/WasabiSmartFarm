@@ -1,13 +1,13 @@
-# 🌱 Wasabi Smart Farm 설치 매뉴얼
+# Wasabi Smart Farm 설치 매뉴얼
 
-**버전**: v1.0.0  
-**작성일**: 2025-12-23  
-**대상**: Windows 노트북 신규 설치  
+**버전**: v1.0.0 
+**작성일**: 2025-12-23 
+**대상**: Windows 노트북 신규 설치 
 **예상 소요 시간**: 약 3~4시간
 
 ---
 
-## 📋 목차
+## 목차
 
 1. [시스템 요구사항](#1-시스템-요구사항)
 2. [사전 준비사항](#2-사전-준비사항)
@@ -62,9 +62,9 @@
 1. `시작` 버튼 우클릭 → `Windows PowerShell (관리자)` 선택
 2. 관리자 권한으로 실행되는지 확인 (창 제목에 "관리자" 표시)
 3. 다음 명령어로 사용자 그룹 확인:
-   ```powershell
-   whoami /groups
-   ```
+ ```powershell
+ whoami /groups
+ ```
 4. `BUILTIN\Administrators` 그룹에 속해 있어야 함
 
 ### 2.3 방화벽 설정 확인
@@ -82,11 +82,11 @@
 ```
 C:\
 └── SPB_Data\
-    └── wasabismartfarm\
-        ├── flows_wasabi.json (추후 생성)
-        ├── settings.js (추후 생성)
-        ├── scripts\ (추후 생성)
-        └── logs\ (추후 생성)
+ └── wasabismartfarm\
+ ├── flows_wasabi.json (추후 생성)
+ ├── settings.js (추후 생성)
+ ├── scripts\ (추후 생성)
+ └── logs\ (추후 생성)
 ```
 
 **PowerShell 명령어로 한번에 생성:**
@@ -106,7 +106,7 @@ Node-RED를 실행하려면 Node.js가 필요합니다.
 #### 다운로드
 1. 웹 브라우저에서 https://nodejs.org/ko 접속
 2. **LTS (Long Term Support) 버전** 다운로드 (권장: v20.x.x)
-   - 예: `node-v20.11.0-x64.msi`
+ - 예: `node-v20.11.0-x64.msi`
 3. 다운로드 완료 후 설치 파일 실행
 
 #### 설치 과정
@@ -114,27 +114,27 @@ Node-RED를 실행하려면 Node.js가 필요합니다.
 2. 라이선스 동의 → `I accept...` 체크 → `Next`
 3. 설치 경로 확인 → 기본값 유지 (`C:\Program Files\nodejs\`) → `Next`
 4. 설치 구성 요소 선택:
-   - ✅ Node.js runtime
-   - ✅ npm package manager
-   - ✅ Add to PATH
-   - 모두 선택된 상태로 `Next`
+ - Node.js runtime
+ - npm package manager
+ - Add to PATH
+ - 모두 선택된 상태로 `Next`
 5. `Install` 클릭 → 설치 진행 (약 2~3분)
 6. `Finish` 클릭
 
 #### 설치 확인
 1. `시작` → `PowerShell` 실행
 2. 다음 명령어 입력:
-   ```powershell
-   node --version
-   ```
-   출력 예시: `v20.11.0`
+ ```powershell
+ node --version
+ ```
+ 출력 예시: `v20.11.0`
 3. npm 버전 확인:
-   ```powershell
-   npm --version
-   ```
-   출력 예시: `10.2.4`
+ ```powershell
+ npm --version
+ ```
+ 출력 예시: `10.2.4`
 
-> ⚠️ **주의**: 버전이 출력되지 않으면 PowerShell을 재시작하거나 PC를 재부팅하세요.
+> **주의**: 버전이 출력되지 않으면 PowerShell을 재시작하거나 PC를 재부팅하세요.
 
 ---
 
@@ -143,12 +143,12 @@ Node-RED를 실행하려면 Node.js가 필요합니다.
 #### 글로벌 설치
 1. `PowerShell (관리자)` 실행
 2. 다음 명령어 입력:
-   ```powershell
-   npm install -g --unsafe-perm node-red
-   ```
+ ```powershell
+ npm install -g --unsafe-perm node-red
+ ```
 3. 설치 진행 (약 5~10분 소요)
-   - 경고 메시지는 무시 가능 (빨간색 `WARN` 메시지)
-   - 오류 메시지가 있으면 중단하고 [문제 해결](#11-문제-해결-troubleshooting) 참조
+ - 경고 메시지는 무시 가능 (빨간색 `WARN` 메시지)
+ - 오류 메시지가 있으면 중단하고 [문제 해결](#11-문제-해결-troubleshooting) 참조
 
 #### 설치 확인
 ```powershell
@@ -194,7 +194,7 @@ npm install node-red-contrib-influxdb
 npm install node-red-node-google
 ```
 
-> ℹ️ **설명**:
+> **설명**:
 > - `node-red-dashboard`: 웹 UI 대시보드
 > - `node-red-contrib-influxdb`: 시계열 데이터베이스 연동
 > - `node-red-node-google`: Google Sheets 연동
@@ -216,17 +216,17 @@ dir node_modules | findstr "google"
 
 #### 기본 설정 파일 확인
 1. Node-RED를 한 번 실행하면 자동으로 설정 파일이 생성됩니다:
-   ```
-   C:\Users\[사용자이름]\.node-red\settings.js
-   ```
+ ```
+ C:\Users\[사용자이름]\.node-red\settings.js
+ ```
 
 2. 파일 탐색기에서 해당 경로로 이동:
-   ```
-   %USERPROFILE%\.node-red
-   ```
+ ```
+ %USERPROFILE%\.node-red
+ ```
 
 3. `settings.js` 파일을 찾아서 메모장으로 열기:
-   - 파일 우클릭 → `연결 프로그램` → `메모장` 선택
+ - 파일 우클릭 → `연결 프로그램` → `메모장` 선택
 
 #### Context 영구 저장 설정 추가
 
@@ -238,28 +238,28 @@ dir node_modules | findstr "google"
 2. 기존 내용이 주석 처리되어 있으면 아래 내용으로 교체:
 
 ```javascript
-    contextStorage: {
-        default: {
-            module: "memory"
-        },
-        file: {
-            module: "localfilesystem",
-            config: {
-                dir: "C:\\SPB_Data\\wasabismartfarm\\context",
-                flushInterval: 30
-            }
-        }
-    },
+ contextStorage: {
+ default: {
+ module: "memory"
+ },
+ file: {
+ module: "localfilesystem",
+ config: {
+ dir: "C:\\SPB_Data\\wasabismartfarm\\context",
+ flushInterval: 30
+ }
+ }
+ },
 ```
 
 3. `C:\SPB_Data\wasabismartfarm\context` 폴더 생성:
-   ```powershell
-   New-Item -Path "C:\SPB_Data\wasabismartfarm\context" -ItemType Directory -Force
-   ```
+ ```powershell
+ New-Item -Path "C:\SPB_Data\wasabismartfarm\context" -ItemType Directory -Force
+ ```
 
 4. `settings.js` 파일 저장 후 닫기
 
-> ℹ️ **설명**:
+> **설명**:
 > - `default`: 메모리 기반 (재시작 시 초기화)
 > - `file`: 파일 시스템 영구 저장 (재시작해도 유지)
 > - `flushInterval: 30`: 30초마다 디스크에 기록
@@ -275,28 +275,28 @@ Node-RED가 프로젝트 파일을 사용하도록 설정합니다.
 `settings.js` 파일을 다시 열어서 다음 항목을 확인/수정:
 
 1. **사용자 디렉토리 설정** (파일 상단 부근):
-   ```javascript
-   userDir: 'C:\\SPB_Data\\wasabismartfarm\\',
-   ```
+ ```javascript
+ userDir: 'C:\\SPB_Data\\wasabismartfarm\\',
+ ```
 
 2. **플로우 파일 이름 설정**:
-   ```javascript
-   flowFile: 'flows_wasabi.json',
-   ```
+ ```javascript
+ flowFile: 'flows_wasabi.json',
+ ```
 
 3. **자동 저장 설정**:
-   ```javascript
-   flowFilePretty: true,
-   ```
+ ```javascript
+ flowFilePretty: true,
+ ```
 
 4. **에디터 테마 설정** (선택 사항):
-   ```javascript
-   editorTheme: {
-       projects: {
-           enabled: false
-       }
-   },
-   ```
+ ```javascript
+ editorTheme: {
+ projects: {
+ enabled: false
+ }
+ },
+ ```
 
 #### 최종 settings.js 저장 위치
 
@@ -308,7 +308,7 @@ C:\Users\[사용자이름]\.node-red\settings.js
 **백업 생성**:
 ```powershell
 Copy-Item "C:\Users\$env:USERNAME\.node-red\settings.js" `
-          "C:\SPB_Data\wasabismartfarm\settings.js.backup"
+ "C:\SPB_Data\wasabismartfarm\settings.js.backup"
 ```
 
 ---
@@ -326,7 +326,7 @@ Copy-Item "C:\Users\$env:USERNAME\.node-red\settings.js" `
 @echo off
 title Wasabi Smart Farm - Node-RED Server
 echo ========================================
-echo  Wasabi Smart Farm Node-RED Server
+echo Wasabi Smart Farm Node-RED Server
 echo ========================================
 echo Starting Node-RED...
 echo.
@@ -336,10 +336,10 @@ pause
 ```
 
 3. 다른 이름으로 저장:
-   - 파일명: `start_nodered.bat`
-   - 저장 위치: `C:\SPB_Data\wasabismartfarm\`
-   - 파일 형식: `모든 파일 (*.*)`
-   - 인코딩: `ANSI`
+ - 파일명: `start_nodered.bat`
+ - 저장 위치: `C:\SPB_Data\wasabismartfarm\`
+ - 파일 형식: `모든 파일 (*.*)`
+ - 인코딩: `ANSI`
 
 #### 실행 및 확인
 
@@ -357,7 +357,7 @@ pause
 #### 다운로드
 1. 웹 브라우저에서 https://mosquitto.org/download/ 접속
 2. `Windows` 섹션에서 **64-bit installer** 다운로드
-   - 예: `mosquitto-2.0.18-install-windows-x64.exe`
+ - 예: `mosquitto-2.0.18-install-windows-x64.exe`
 3. 다운로드 완료 후 설치 파일 실행
 
 #### 설치 과정
@@ -365,26 +365,26 @@ pause
 2. 설치 마법사 시작 → `Next`
 3. 라이선스 동의 → `I Agree`
 4. 설치 구성 요소 선택:
-   - ✅ Broker (mosquitto)
-   - ✅ Service
-   - ✅ Client tools (mosquitto_pub, mosquitto_sub)
-   - 모두 선택 → `Next`
+ - Broker (mosquitto)
+ - Service
+ - Client tools (mosquitto_pub, mosquitto_sub)
+ - 모두 선택 → `Next`
 5. 설치 경로 확인:
-   - 기본값: `C:\Program Files\mosquitto\`
-   - `Install` 클릭
+ - 기본값: `C:\Program Files\mosquitto\`
+ - `Install` 클릭
 6. 설치 완료 → `Finish`
 
 #### 설치 확인
 1. `서비스` 확인:
-   - `Win + R` → `services.msc` 입력 → Enter
-   - `Mosquitto Broker` 서비스 찾기
-   - 상태: `실행 중` 확인
+ - `Win + R` → `services.msc` 입력 → Enter
+ - `Mosquitto Broker` 서비스 찾기
+ - 상태: `실행 중` 확인
 
 2. 명령어로 확인:
-   ```powershell
-   cd "C:\Program Files\mosquitto"
-   .\mosquitto.exe --help
-   ```
+ ```powershell
+ cd "C:\Program Files\mosquitto"
+ .\mosquitto.exe --help
+ ```
 
 ---
 
@@ -392,16 +392,16 @@ pause
 
 #### 설정 파일 편집
 1. 경로 이동:
-   ```
-   C:\Program Files\mosquitto\
-   ```
+ ```
+ C:\Program Files\mosquitto\
+ ```
 
 2. `mosquitto.conf` 파일 찾기
-   - 없으면 새로 생성
+ - 없으면 새로 생성
 
 3. 메모장(관리자 권한)으로 열기:
-   - `시작` → `메모장` 우클릭 → `관리자 권한으로 실행`
-   - `파일` → `열기` → `mosquitto.conf` 선택
+ - `시작` → `메모장` 우클릭 → `관리자 권한으로 실행`
+ - `파일` → `열기` → `mosquitto.conf` 선택
 
 4. 다음 내용 추가/수정:
 
@@ -452,8 +452,8 @@ New-Item -Path "C:\Program Files\mosquitto\data" -ItemType Directory -Force
 
 #### 테스트 준비
 1. PowerShell 2개 창 열기
-   - 창 1: Publisher (발행자)
-   - 창 2: Subscriber (구독자)
+ - 창 1: Publisher (발행자)
+ - 창 2: Subscriber (구독자)
 
 #### Subscriber 실행 (창 2)
 ```powershell
@@ -470,11 +470,11 @@ cd "C:\Program Files\mosquitto"
 
 #### 결과 확인
 - **창 2 (Subscriber)**에 다음 메시지 출력:
-  ```
-  test/topic Hello Wasabi Smart Farm
-  ```
+ ```
+ test/topic Hello Wasabi Smart Farm
+ ```
 
-✅ 정상 작동 확인!
+ 정상 작동 확인!
 
 ---
 
@@ -485,25 +485,25 @@ cd "C:\Program Files\mosquitto"
 #### Node-RED 포트 (1880) 개방
 
 1. `Windows Defender 방화벽` 열기:
-   - `제어판` → `시스템 및 보안` → `Windows Defender 방화벽`
+ - `제어판` → `시스템 및 보안` → `Windows Defender 방화벽`
 
 2. 왼쪽 메뉴에서 `고급 설정` 클릭
 
 3. **인바운드 규칙** 생성:
-   - 왼쪽: `인바운드 규칙` 클릭
-   - 오른쪽: `새 규칙...` 클릭
+ - 왼쪽: `인바운드 규칙` 클릭
+ - 오른쪽: `새 규칙...` 클릭
 
 4. 규칙 구성:
-   - **규칙 종류**: `포트` 선택 → `다음`
-   - **프로토콜 및 포트**: 
-     - `TCP` 선택
-     - `특정 로컬 포트`: `1880` 입력
-     - `다음`
-   - **작업**: `연결 허용` → `다음`
-   - **프로필**: 모두 선택 (도메인, 개인, 공용) → `다음`
-   - **이름**: `Node-RED (Port 1880)` 입력
-   - **설명**: `Wasabi Smart Farm Node-RED 웹 서버`
-   - `마침`
+ - **규칙 종류**: `포트` 선택 → `다음`
+ - **프로토콜 및 포트**: 
+ - `TCP` 선택
+ - `특정 로컬 포트`: `1880` 입력
+ - `다음`
+ - **작업**: `연결 허용` → `다음`
+ - **프로필**: 모두 선택 (도메인, 개인, 공용) → `다음`
+ - **이름**: `Node-RED (Port 1880)` 입력
+ - **설명**: `Wasabi Smart Farm Node-RED 웹 서버`
+ - `마침`
 
 #### MQTT 포트 (1883) 개방
 
@@ -539,15 +539,15 @@ TcpTestSucceeded : True
 #### 외부 접속 테스트 (같은 WiFi의 다른 기기)
 
 1. 노트북 IP 주소 확인:
-   ```powershell
-   ipconfig
-   ```
-   출력 예시: `192.168.0.100`
+ ```powershell
+ ipconfig
+ ```
+ 출력 예시: `192.168.0.100`
 
 2. 스마트폰이나 다른 PC에서 접속:
-   ```
-   http://192.168.0.100:1880
-   ```
+ ```
+ http://192.168.0.100:1880
+ ```
 
 3. Node-RED 편집기가 보이면 성공!
 
@@ -560,16 +560,16 @@ TcpTestSucceeded : True
 #### 다운로드
 1. https://www.arduino.cc/en/software 접속
 2. `Arduino IDE 2.3.2` (최신 버전) 다운로드
-   - Windows 10/11: `Windows Win 10 and newer, 64 bits` 선택
-   - 예: `arduino-ide_2.3.2_Windows_64bit.exe`
+ - Windows 10/11: `Windows Win 10 and newer, 64 bits` 선택
+ - 예: `arduino-ide_2.3.2_Windows_64bit.exe`
 
 #### 설치 과정
 1. 설치 파일 실행
 2. 라이선스 동의 → `I Agree`
 3. 설치 옵션:
-   - ✅ Install USB Driver
-   - ✅ Associate .ino files
-   - `Next` → `Install`
+ - Install USB Driver
+ - Associate .ino files
+ - `Next` → `Install`
 4. 설치 완료 (약 5분)
 
 ---
@@ -630,18 +630,18 @@ TcpTestSucceeded : True
 
 ```cpp
 void setup() {
-  Serial.begin(115200);
-  Serial.println("Wasabi Smart Farm - Test OK");
+ Serial.begin(115200);
+ Serial.println("Wasabi Smart Farm - Test OK");
 }
 
 void loop() {
-  delay(1000);
+ delay(1000);
 }
 ```
 
 3. 컴파일: `Sketch` → `Verify/Compile` (또는 `Ctrl + R`)
 4. 하단에 `Done compiling` 메시지 확인
-5. ✅ 성공!
+5. 성공!
 
 ---
 
@@ -657,19 +657,19 @@ void loop() {
 #### 프로젝트 클론
 1. PowerShell 열기
 2. 작업 디렉토리로 이동:
-   ```powershell
-   cd C:\SPB_Data
-   ```
+ ```powershell
+ cd C:\SPB_Data
+ ```
 
 3. Git 클론 실행:
-   ```powershell
-   git clone https://github.com/phdsjw/WasabiSmartFarm.git
-   ```
+ ```powershell
+ git clone https://github.com/phdsjw/WasabiSmartFarm.git
+ ```
 
 4. 클론 완료 확인:
-   ```powershell
-   dir WasabiSmartFarm
-   ```
+ ```powershell
+ dir WasabiSmartFarm
+ ```
 
 ---
 
@@ -678,7 +678,7 @@ void loop() {
 #### 최신 플로우 파일 복사
 ```powershell
 Copy-Item "C:\SPB_Data\WasabiSmartFarm\nodered\flows_wasabi_03.json" `
-          "C:\SPB_Data\wasabismartfarm\flows_wasabi.json"
+ "C:\SPB_Data\wasabismartfarm\flows_wasabi.json"
 ```
 
 #### 파일 확인
@@ -694,9 +694,9 @@ Test-Path "C:\SPB_Data\wasabismartfarm\flows_wasabi.json"
 #### 스크립트 복사
 ```powershell
 Copy-Item "C:\SPB_Data\WasabiSmartFarm\nodered\scripts\monitor_nodered.ps1" `
-          "C:\SPB_Data\wasabismartfarm\scripts\"
+ "C:\SPB_Data\wasabismartfarm\scripts\"
 Copy-Item "C:\SPB_Data\WasabiSmartFarm\nodered\scripts\monitor_mosquitto.ps1" `
-          "C:\SPB_Data\wasabismartfarm\scripts\"
+ "C:\SPB_Data\wasabismartfarm\scripts\"
 ```
 
 #### 실행 정책 설정
@@ -723,11 +723,11 @@ cd C:\SPB_Data\wasabismartfarm\scripts
 #### 펌웨어 위치 확인
 ```
 C:\SPB_Data\WasabiSmartFarm\arduino\
-├── wasabi_controller\       ← 메인 컨트롤러
-├── actuator_node\            ← 액추에이터 노드
-├── soil_sensor_node\         ← 토양 센서 노드
-├── air_sensor_node\          ← 대기 센서 노드
-└── water_tank_sensor_node\   ← 물탱크 센서 노드
+├── wasabi_controller\ ← 메인 컨트롤러
+├── actuator_node\ ← 액추에이터 노드
+├── soil_sensor_node\ ← 토양 센서 노드
+├── air_sensor_node\ ← 대기 센서 노드
+└── water_tank_sensor_node\ ← 물탱크 센서 노드
 ```
 
 #### WiFi 및 MQTT 설정 파일 수정
@@ -737,30 +737,30 @@ C:\SPB_Data\WasabiSmartFarm\arduino\
 **예시: wasabi_controller/config.h**
 
 1. Arduino IDE에서 열기:
-   ```
-   File → Open → C:\SPB_Data\WasabiSmartFarm\arduino\wasabi_controller\wasabi_controller.ino
-   ```
+ ```
+ File → Open → C:\SPB_Data\WasabiSmartFarm\arduino\wasabi_controller\wasabi_controller.ino
+ ```
 
 2. `config.h` 탭 선택
 
 3. WiFi 설정 수정:
-   ```cpp
-   // WiFi 설정
-   const char* WIFI_SSID = "YOUR_WIFI_SSID";        // ← 여기 수정
-   const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD"; // ← 여기 수정
-   ```
+ ```cpp
+ // WiFi 설정
+ const char* WIFI_SSID = "YOUR_WIFI_SSID"; // ← 여기 수정
+ const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD"; // ← 여기 수정
+ ```
 
 4. MQTT 서버 설정 수정:
-   ```cpp
-   // MQTT 설정
-   const char* MQTT_SERVER = "192.168.0.100";  // ← 노트북 IP 주소
-   const int MQTT_PORT = 1883;
-   const char* MQTT_CLIENT_ID = "wasabi_controller_01";
-   ```
+ ```cpp
+ // MQTT 설정
+ const char* MQTT_SERVER = "192.168.0.100"; // ← 노트북 IP 주소
+ const int MQTT_PORT = 1883;
+ const char* MQTT_CLIENT_ID = "wasabi_controller_01";
+ ```
 
 5. 저장: `Ctrl + S`
 
-> ⚠️ **중요**: 모든 Arduino 노드 (actuator_node, soil_sensor_node 등)에서 동일하게 수정!
+> **중요**: 모든 Arduino 노드 (actuator_node, soil_sensor_node 등)에서 동일하게 수정!
 
 ---
 
@@ -768,36 +768,36 @@ C:\SPB_Data\WasabiSmartFarm\arduino\
 
 Phase 1의 4가지 작업을 순서대로 진행합니다.
 
-### 9.1 Phase 1-1: Context 영구 저장 ✅
+### 9.1 Phase 1-1: Context 영구 저장 
 
 이미 [4.1 절](#41-설정-파일-생성-및-수정)에서 완료했습니다.
 
 **확인 사항:**
-- ✅ `settings.js`에 `contextStorage` 설정 추가
-- ✅ `C:\SPB_Data\wasabismartfarm\context\` 폴더 생성
+- `settings.js`에 `contextStorage` 설정 추가
+- `C:\SPB_Data\wasabismartfarm\context\` 폴더 생성
 
 ---
 
-### 9.2 Phase 1-2: WiFi 재연결 로직 개선 ✅
+### 9.2 Phase 1-2: WiFi 재연결 로직 개선 
 
 Arduino 펌웨어에 이미 포함되어 있습니다.
 
 **확인 사항:**
-- ✅ `config.h`에 `WIFI_TIMEOUT`, `WIFI_MAX_RETRY` 설정
-- ✅ `mqtt_handler.cpp`에 재시도 로직 구현
+- `config.h`에 `WIFI_TIMEOUT`, `WIFI_MAX_RETRY` 설정
+- `mqtt_handler.cpp`에 재시도 로직 구현
 
 **별도 작업 없음** - 펌웨어를 그대로 업로드하면 됩니다.
 
 ---
 
-### 9.3 Phase 1-3: Heartbeat 모니터링 ✅
+### 9.3 Phase 1-3: Heartbeat 모니터링 
 
 Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 
 **확인 사항:**
-- ✅ 21개 노드 모니터링 (액추에이터 1, 물탱크 1, 시스템 1, 대기 1, 토양 18)
-- ✅ Dashboard UI에 상태 표시
-- ✅ 2분 타임아웃 설정
+- 21개 노드 모니터링 (액추에이터 1, 물탱크 1, 시스템 1, 대기 1, 토양 18)
+- Dashboard UI에 상태 표시
+- 2분 타임아웃 설정
 
 **별도 작업 없음** - Node-RED 시작 시 자동 적용됩니다.
 
@@ -830,9 +830,9 @@ Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 **5. 프로그램 설정**
 - **프로그램/스크립트**: `powershell.exe`
 - **인수 추가**:
-  ```
-  -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\SPB_Data\wasabismartfarm\scripts\monitor_nodered.ps1"
-  ```
+ ```
+ -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\SPB_Data\wasabismartfarm\scripts\monitor_nodered.ps1"
+ ```
 - **시작 위치**: `C:\SPB_Data\wasabismartfarm\scripts`
 - `다음`
 
@@ -841,24 +841,24 @@ Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 - 작업 속성 창에서 추가 설정:
 
 **7. 일반 탭**
-- ✅ `가장 높은 수준의 권한으로 실행`
-- ✅ `사용자의 로그온 여부에 관계없이 실행`
+- `가장 높은 수준의 권한으로 실행`
+- `사용자의 로그온 여부에 관계없이 실행`
 
 **8. 트리거 탭**
 - 트리거 더블클릭 → `편집`
-- ✅ `사용`
+- `사용`
 - `고급 설정`:
-  - ✅ `다음 시간 간격으로 작업 반복`: `1분`
-  - `기간`: `무한정`
+ - `다음 시간 간격으로 작업 반복`: `1분`
+ - `기간`: `무한정`
 - `확인`
 
 **9. 조건 탭**
-- ❌ `컴퓨터의 AC 전원이 켜져 있을 때만 작업 시작` (체크 해제)
-- ✅ `작업을 실행하기 위해 절전 모드 종료`
+- `컴퓨터의 AC 전원이 켜져 있을 때만 작업 시작` (체크 해제)
+- `작업을 실행하기 위해 절전 모드 종료`
 
 **10. 설정 탭**
-- ✅ `요청 시 작업 실행 허용`
-- ✅ `작업 실패 시 다시 시작 간격`: `1분`
+- `요청 시 작업 실행 허용`
+- `작업 실패 시 다시 시작 간격`: `1분`
 - `확인`
 
 #### Mosquitto 자동 재시작 작업 생성
@@ -874,9 +874,9 @@ Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 1. 작업 스케줄러에서 `Monitor Node-RED` 우클릭
 2. `실행` 클릭
 3. 로그 확인:
-   ```powershell
-   Get-Content "C:\SPB_Data\wasabismartfarm\logs\monitor_nodered.log" -Tail 10
-   ```
+ ```powershell
+ Get-Content "C:\SPB_Data\wasabismartfarm\logs\monitor_nodered.log" -Tail 10
+ ```
 
 출력 예시:
 ```
@@ -892,33 +892,33 @@ Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 #### Node-RED 시작
 1. `C:\SPB_Data\wasabismartfarm\start_nodered.bat` 더블클릭
 2. CMD 창에서 로그 확인:
-   ```
-   [info] Server now running at http://127.0.0.1:1880/
-   [info] Started flows
-   ```
+ ```
+ [info] Server now running at http://127.0.0.1:1880/
+ [info] Started flows
+ ```
 
 #### Dashboard 접속
 1. 브라우저에서 `http://localhost:1880/ui` 접속
 2. 대시보드 탭 확인:
-   - **실시간 모니터링**
-   - **토양 센서 트렌드**
-   - **토양 센서 히트맵**
-   - **환경 센서 트렌드**
-   - **제어 및 알림** ← Heartbeat 모니터링
+ - **실시간 모니터링**
+ - **토양 센서 트렌드**
+ - **토양 센서 히트맵**
+ - **환경 센서 트렌드**
+ - **제어 및 알림** ← Heartbeat 모니터링
 
 #### Heartbeat 상태 확인
 1. `제어 및 알림` 탭 선택
 2. `시스템 상태 모니터링` 섹션 확인
 3. 21개 노드 카드 표시:
-   - 액추에이터 노드
-   - 물탱크 센서
-   - 시스템 컨트롤러
-   - 대기센서 Zone1
-   - 토양센서 01 ~ 18
+ - 액추에이터 노드
+ - 물탱크 센서
+ - 시스템 컨트롤러
+ - 대기센서 Zone1
+ - 토양센서 01 ~ 18
 
 4. 초기 상태:
-   - 모든 노드: ⚪ **회색** (연결 안됨)
-   - 이유: Arduino가 아직 연결되지 않음
+ - 모든 노드: **회색** (연결 안됨)
+ - 이유: Arduino가 아직 연결되지 않음
 
 ---
 
@@ -927,13 +927,13 @@ Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 #### wasabi_controller 업로드
 
 1. Arduino IDE에서 열기:
-   ```
-   C:\SPB_Data\WasabiSmartFarm\arduino\wasabi_controller\wasabi_controller.ino
-   ```
+ ```
+ C:\SPB_Data\WasabiSmartFarm\arduino\wasabi_controller\wasabi_controller.ino
+ ```
 
 2. `config.h` 확인:
-   - WiFi SSID/Password 올바른지 확인
-   - MQTT Server IP 올바른지 확인
+ - WiFi SSID/Password 올바른지 확인
+ - MQTT Server IP 올바른지 확인
 
 3. Arduino Uno R4 WiFi를 USB로 연결
 
@@ -944,21 +944,21 @@ Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 6. 업로드 완료 대기 (약 30초)
 
 7. 시리얼 모니터 확인:
-   - `Tools` → `Serial Monitor` (또는 `Ctrl + Shift + M`)
-   - 보드레이트: `115200`
-   - 출력 확인:
-     ```
-     ==========================================
-     Wasabi Smart Farm Controller
-     Version: 1.0.0 - Step 1
-     ==========================================
-     ...
-     WiFi 연결 중...
-     WiFi 연결 성공!
-     IP: 192.168.0.xxx
-     MQTT 연결 중...
-     MQTT 연결 성공!
-     ```
+ - `Tools` → `Serial Monitor` (또는 `Ctrl + Shift + M`)
+ - 보드레이트: `115200`
+ - 출력 확인:
+ ```
+ ==========================================
+ Wasabi Smart Farm Controller
+ Version: 1.0.0 - Step 1
+ ==========================================
+ ...
+ WiFi 연결 중...
+ WiFi 연결 성공!
+ IP: 192.168.0.xxx
+ MQTT 연결 중...
+ MQTT 연결 성공!
+ ```
 
 #### 다른 노드 업로드 (필요 시)
 
@@ -978,16 +978,16 @@ Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 
 1. PowerShell 열기
 2. 다음 명령어 실행:
-   ```powershell
-   cd "C:\Program Files\mosquitto"
-   .\mosquitto_sub.exe -h localhost -t "sensor/#" -v
-   ```
+ ```powershell
+ cd "C:\Program Files\mosquitto"
+ .\mosquitto_sub.exe -h localhost -t "sensor/#" -v
+ ```
 
 3. Arduino에서 전송하는 센서 데이터 확인:
-   ```
-   sensor/wasabi_controller/env {"airTemp":22.5,"airHumidity":65.0,...}
-   sensor/wasabi_controller/heartbeat {"status":"alive","uptime":12345}
-   ```
+ ```
+ sensor/wasabi_controller/env {"airTemp":22.5,"airHumidity":65.0,...}
+ sensor/wasabi_controller/heartbeat {"status":"alive","uptime":12345}
+ ```
 
 4. `Ctrl + C`로 종료
 
@@ -998,16 +998,16 @@ Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 1. 브라우저에서 Dashboard 새로고침
 2. `제어 및 알림` → `시스템 상태 모니터링`
 3. 연결된 노드 확인:
-   - 시스템 컨트롤러: 🟢 **녹색** (온라인)
-   - 다른 노드: ⚪ **회색** (아직 연결 안됨)
+ - 시스템 컨트롤러: **녹색** (온라인)
+ - 다른 노드: **회색** (아직 연결 안됨)
 
 4. 1분 대기 후 상태 업데이트 확인
 
 5. 2분 이상 Heartbeat가 없으면:
-   - 🔴 **빨간색** (타임아웃)
-   - Toast 알림 표시
+ - **빨간색** (타임아웃)
+ - Toast 알림 표시
 
-✅ 정상 작동!
+ 정상 작동!
 
 ---
 
@@ -1025,7 +1025,7 @@ Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 3. 브라우저에서 `http://localhost:1880/ui` 재접속
 4. Dashboard 정상 작동 확인
 
-✅ 자동 재시작 성공!
+ 자동 재시작 성공!
 
 ---
 
@@ -1038,13 +1038,13 @@ Node-RED 플로우에 이미 포함되어 있습니다 (`flows_wasabi_03.json`).
 **해결책**:
 1. PowerShell 재시작
 2. 환경 변수 확인:
-   ```powershell
-   $env:Path
-   ```
-   출력에 `C:\Program Files\nodejs\` 포함되어 있는지 확인
+ ```powershell
+ $env:Path
+ ```
+ 출력에 `C:\Program Files\nodejs\` 포함되어 있는지 확인
 
 3. 없으면 수동 추가:
-   - `시스템 속성` → `환경 변수` → `Path` 편집 → 추가
+ - `시스템 속성` → `환경 변수` → `Path` 편집 → 추가
 
 ---
 
@@ -1073,21 +1073,21 @@ npm install -g --unsafe-perm node-red
 
 **해결책**:
 1. 로그 파일 확인:
-   ```
-   C:\Program Files\mosquitto\mosquitto.log
-   ```
+ ```
+ C:\Program Files\mosquitto\mosquitto.log
+ ```
 
 2. 설정 파일 문법 오류 확인:
-   ```powershell
-   cd "C:\Program Files\mosquitto"
-   .\mosquitto.exe -c mosquitto.conf -v
-   ```
+ ```powershell
+ cd "C:\Program Files\mosquitto"
+ .\mosquitto.exe -c mosquitto.conf -v
+ ```
 
 3. 포트 충돌 확인:
-   ```powershell
-   netstat -ano | findstr :1883
-   ```
-   다른 프로세스가 1883 포트를 사용 중이면 종료
+ ```powershell
+ netstat -ano | findstr :1883
+ ```
+ 다른 프로세스가 1883 포트를 사용 중이면 종료
 
 ---
 
@@ -1099,8 +1099,8 @@ npm install -g --unsafe-perm node-red
 1. 라이브러리 재설치
 2. Arduino IDE 재시작
 3. 보드 매니저 업데이트:
-   - `Tools` → `Board` → `Boards Manager`
-   - `Arduino UNO R4 Boards` 업데이트
+ - `Tools` → `Board` → `Boards Manager`
+ - `Arduino UNO R4 Boards` 업데이트
 
 ---
 
@@ -1134,14 +1134,14 @@ npm install -g --unsafe-perm node-red
 
 **해결책**:
 1. Node-RED 플로우 확인:
-   - `http://localhost:1880` 접속
-   - `MQTT in` 노드가 연결되어 있는지 확인
+ - `http://localhost:1880` 접속
+ - `MQTT in` 노드가 연결되어 있는지 확인
 
 2. MQTT 토픽 구독 확인:
-   ```powershell
-   cd "C:\Program Files\mosquitto"
-   .\mosquitto_sub.exe -h localhost -t "+/heartbeat" -v
-   ```
+ ```powershell
+ cd "C:\Program Files\mosquitto"
+ .\mosquitto_sub.exe -h localhost -t "+/heartbeat" -v
+ ```
 
 3. Arduino 시리얼 모니터에서 Heartbeat 발송 확인
 
@@ -1179,22 +1179,22 @@ Get-Content "C:\Program Files\mosquitto\mosquitto.log" -Tail 50
 
 #### 백업 대상
 1. Node-RED 플로우 파일:
-   ```powershell
-   Copy-Item "C:\SPB_Data\wasabismartfarm\flows_wasabi.json" `
-             "C:\SPB_Data\wasabismartfarm\flows_wasabi_backup_$(Get-Date -Format 'yyyyMMdd').json"
-   ```
+ ```powershell
+ Copy-Item "C:\SPB_Data\wasabismartfarm\flows_wasabi.json" `
+ "C:\SPB_Data\wasabismartfarm\flows_wasabi_backup_$(Get-Date -Format 'yyyyMMdd').json"
+ ```
 
 2. 설정 파일:
-   ```powershell
-   Copy-Item "C:\Users\$env:USERNAME\.node-red\settings.js" `
-             "C:\SPB_Data\wasabismartfarm\settings_backup_$(Get-Date -Format 'yyyyMMdd').js"
-   ```
+ ```powershell
+ Copy-Item "C:\Users\$env:USERNAME\.node-red\settings.js" `
+ "C:\SPB_Data\wasabismartfarm\settings_backup_$(Get-Date -Format 'yyyyMMdd').js"
+ ```
 
 3. Context 데이터:
-   ```powershell
-   Copy-Item -Recurse "C:\SPB_Data\wasabismartfarm\context" `
-             "C:\SPB_Data\wasabismartfarm\context_backup_$(Get-Date -Format 'yyyyMMdd')"
-   ```
+ ```powershell
+ Copy-Item -Recurse "C:\SPB_Data\wasabismartfarm\context" `
+ "C:\SPB_Data\wasabismartfarm\context_backup_$(Get-Date -Format 'yyyyMMdd')"
+ ```
 
 ---
 
@@ -1224,8 +1224,8 @@ npm update
 ```powershell
 # 30일 이상 된 로그 파일 삭제
 Get-ChildItem "C:\SPB_Data\wasabismartfarm\logs\*.log" | 
-    Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-30) } | 
-    Remove-Item -Force
+ Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-30) } | 
+ Remove-Item -Force
 ```
 
 #### Mosquitto 로그 로테이션
@@ -1260,7 +1260,7 @@ Get-Process node | Select-Object Name, CPU, @{Name="Memory(MB)";Expression={[mat
 
 ---
 
-## 📊 체크리스트
+## 체크리스트
 
 설치 완료 후 다음 항목을 확인하세요:
 
@@ -1292,10 +1292,10 @@ Get-Process node | Select-Object Name, CPU, @{Name="Memory(MB)";Expression={[mat
 
 ### Phase 1 안정화
 ```
-[ ] Phase 1-1: Context 영구 저장 ✅
-[ ] Phase 1-2: WiFi 재연결 로직 ✅
-[ ] Phase 1-3: Heartbeat 모니터링 ✅
-[ ] Phase 1-4: Task Scheduler 자동 재시작 ✅
+[ ] Phase 1-1: Context 영구 저장 
+[ ] Phase 1-2: WiFi 재연결 로직 
+[ ] Phase 1-3: Heartbeat 모니터링 
+[ ] Phase 1-4: Task Scheduler 자동 재시작 
 ```
 
 ### Arduino 펌웨어
@@ -1318,35 +1318,35 @@ Get-Process node | Select-Object Name, CPU, @{Name="Memory(MB)";Expression={[mat
 
 ---
 
-## 🎉 설치 완료!
+## 설치 완료!
 
 축하합니다! Wasabi Smart Farm 시스템 설치가 완료되었습니다.
 
 ### 다음 단계
 
 1. **7일 안정화 테스트**
-   - 24/7 연속 가동
-   - Heartbeat 모니터링 확인
-   - 자동 재시작 동작 확인
+ - 24/7 연속 가동
+ - Heartbeat 모니터링 확인
+ - 자동 재시작 동작 확인
 
 2. **센서 캘리브레이션**
-   - pH 센서 교정
-   - TDS/EC 센서 교정
-   - 온도 센서 검증
+ - pH 센서 교정
+ - TDS/EC 센서 교정
+ - 온도 센서 검증
 
 3. **제어 로직 테스트**
-   - 자동 관수 테스트
-   - 퇴수 테스트
-   - 비상 정지 테스트
+ - 자동 관수 테스트
+ - 퇴수 테스트
+ - 비상 정지 테스트
 
 4. **Phase 2 고도화** (선택)
-   - Arduino Watchdog 타이머
-   - 센서 데이터 검증
-   - 알림 시스템 강화
+ - Arduino Watchdog 타이머
+ - 센서 데이터 검증
+ - 알림 시스템 강화
 
 ---
 
-## 📚 참고 문서
+## 참고 문서
 
 프로젝트 저장소의 다음 문서를 참조하세요:
 
@@ -1359,7 +1359,7 @@ Get-Process node | Select-Object Name, CPU, @{Name="Memory(MB)";Expression={[mat
 
 ---
 
-## 📧 지원
+## 지원
 
 문제가 발생하면 다음 방법으로 지원받으세요:
 
@@ -1368,7 +1368,7 @@ Get-Process node | Select-Object Name, CPU, @{Name="Memory(MB)";Expression={[mat
 
 ---
 
-**Made with 💚 for Wasabi Smart Farm**
+**Made with for Wasabi Smart Farm**
 
-**Document Version**: v1.0.0  
+**Document Version**: v1.0.0 
 **Last Updated**: 2025-12-23
