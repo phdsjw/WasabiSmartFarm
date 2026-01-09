@@ -1,0 +1,638 @@
+# ========================================
+# 와사비 스마트팜 - MQTT 센서/스위치 설정
+# ========================================
+# 버전: v1.0.0
+# 총 센서: 72개 (토양 18×4 + 대기 2 + 물탱크 4)
+# 총 스위치: 4개 (관수펌프, 배수펌프, 팬, LED)
+# ========================================
+
+# ================================================
+# 토양 센서 Tank 01
+# ================================================
+sensor:
+  - name: "와사비 토양 온도 Tank01"
+    unique_id: "wasabi_soil_01_temp"
+    state_topic: "sensor/soil/tank01/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+
+  - name: "와사비 토양 습도 Tank01"
+    unique_id: "wasabi_soil_01_moisture"
+    state_topic: "sensor/soil/tank01/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+
+  - name: "와사비 토양 EC Tank01"
+    unique_id: "wasabi_soil_01_ec"
+    state_topic: "sensor/soil/tank01/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank01"
+    unique_id: "wasabi_soil_01_ph"
+    state_topic: "sensor/soil/tank01/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+# ================================================
+# 토양 센서 Tank 02
+# ================================================
+  - name: "와사비 토양 온도 Tank02"
+    unique_id: "wasabi_soil_02_temp"
+    state_topic: "sensor/soil/tank02/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank02"
+    unique_id: "wasabi_soil_02_moisture"
+    state_topic: "sensor/soil/tank02/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank02"
+    unique_id: "wasabi_soil_02_ec"
+    state_topic: "sensor/soil/tank02/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank02"
+    unique_id: "wasabi_soil_02_ph"
+    state_topic: "sensor/soil/tank02/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+# ================================================
+# 토양 센서 Tank 03 ~ 18 (동일 패턴)
+# ================================================
+  - name: "와사비 토양 온도 Tank03"
+    unique_id: "wasabi_soil_03_temp"
+    state_topic: "sensor/soil/tank03/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank03"
+    unique_id: "wasabi_soil_03_moisture"
+    state_topic: "sensor/soil/tank03/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank03"
+    unique_id: "wasabi_soil_03_ec"
+    state_topic: "sensor/soil/tank03/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank03"
+    unique_id: "wasabi_soil_03_ph"
+    state_topic: "sensor/soil/tank03/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 04
+  - name: "와사비 토양 온도 Tank04"
+    unique_id: "wasabi_soil_04_temp"
+    state_topic: "sensor/soil/tank04/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank04"
+    unique_id: "wasabi_soil_04_moisture"
+    state_topic: "sensor/soil/tank04/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank04"
+    unique_id: "wasabi_soil_04_ec"
+    state_topic: "sensor/soil/tank04/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank04"
+    unique_id: "wasabi_soil_04_ph"
+    state_topic: "sensor/soil/tank04/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 05
+  - name: "와사비 토양 온도 Tank05"
+    unique_id: "wasabi_soil_05_temp"
+    state_topic: "sensor/soil/tank05/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank05"
+    unique_id: "wasabi_soil_05_moisture"
+    state_topic: "sensor/soil/tank05/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank05"
+    unique_id: "wasabi_soil_05_ec"
+    state_topic: "sensor/soil/tank05/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank05"
+    unique_id: "wasabi_soil_05_ph"
+    state_topic: "sensor/soil/tank05/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 06
+  - name: "와사비 토양 온도 Tank06"
+    unique_id: "wasabi_soil_06_temp"
+    state_topic: "sensor/soil/tank06/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank06"
+    unique_id: "wasabi_soil_06_moisture"
+    state_topic: "sensor/soil/tank06/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank06"
+    unique_id: "wasabi_soil_06_ec"
+    state_topic: "sensor/soil/tank06/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank06"
+    unique_id: "wasabi_soil_06_ph"
+    state_topic: "sensor/soil/tank06/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 07
+  - name: "와사비 토양 온도 Tank07"
+    unique_id: "wasabi_soil_07_temp"
+    state_topic: "sensor/soil/tank07/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank07"
+    unique_id: "wasabi_soil_07_moisture"
+    state_topic: "sensor/soil/tank07/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank07"
+    unique_id: "wasabi_soil_07_ec"
+    state_topic: "sensor/soil/tank07/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank07"
+    unique_id: "wasabi_soil_07_ph"
+    state_topic: "sensor/soil/tank07/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 08
+  - name: "와사비 토양 온도 Tank08"
+    unique_id: "wasabi_soil_08_temp"
+    state_topic: "sensor/soil/tank08/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank08"
+    unique_id: "wasabi_soil_08_moisture"
+    state_topic: "sensor/soil/tank08/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank08"
+    unique_id: "wasabi_soil_08_ec"
+    state_topic: "sensor/soil/tank08/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank08"
+    unique_id: "wasabi_soil_08_ph"
+    state_topic: "sensor/soil/tank08/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 09
+  - name: "와사비 토양 온도 Tank09"
+    unique_id: "wasabi_soil_09_temp"
+    state_topic: "sensor/soil/tank09/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank09"
+    unique_id: "wasabi_soil_09_moisture"
+    state_topic: "sensor/soil/tank09/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank09"
+    unique_id: "wasabi_soil_09_ec"
+    state_topic: "sensor/soil/tank09/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank09"
+    unique_id: "wasabi_soil_09_ph"
+    state_topic: "sensor/soil/tank09/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 10
+  - name: "와사비 토양 온도 Tank10"
+    unique_id: "wasabi_soil_10_temp"
+    state_topic: "sensor/soil/tank10/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank10"
+    unique_id: "wasabi_soil_10_moisture"
+    state_topic: "sensor/soil/tank10/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank10"
+    unique_id: "wasabi_soil_10_ec"
+    state_topic: "sensor/soil/tank10/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank10"
+    unique_id: "wasabi_soil_10_ph"
+    state_topic: "sensor/soil/tank10/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 11
+  - name: "와사비 토양 온도 Tank11"
+    unique_id: "wasabi_soil_11_temp"
+    state_topic: "sensor/soil/tank11/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank11"
+    unique_id: "wasabi_soil_11_moisture"
+    state_topic: "sensor/soil/tank11/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank11"
+    unique_id: "wasabi_soil_11_ec"
+    state_topic: "sensor/soil/tank11/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank11"
+    unique_id: "wasabi_soil_11_ph"
+    state_topic: "sensor/soil/tank11/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 12
+  - name: "와사비 토양 온도 Tank12"
+    unique_id: "wasabi_soil_12_temp"
+    state_topic: "sensor/soil/tank12/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank12"
+    unique_id: "wasabi_soil_12_moisture"
+    state_topic: "sensor/soil/tank12/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank12"
+    unique_id: "wasabi_soil_12_ec"
+    state_topic: "sensor/soil/tank12/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank12"
+    unique_id: "wasabi_soil_12_ph"
+    state_topic: "sensor/soil/tank12/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 13
+  - name: "와사비 토양 온도 Tank13"
+    unique_id: "wasabi_soil_13_temp"
+    state_topic: "sensor/soil/tank13/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank13"
+    unique_id: "wasabi_soil_13_moisture"
+    state_topic: "sensor/soil/tank13/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank13"
+    unique_id: "wasabi_soil_13_ec"
+    state_topic: "sensor/soil/tank13/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank13"
+    unique_id: "wasabi_soil_13_ph"
+    state_topic: "sensor/soil/tank13/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 14
+  - name: "와사비 토양 온도 Tank14"
+    unique_id: "wasabi_soil_14_temp"
+    state_topic: "sensor/soil/tank14/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank14"
+    unique_id: "wasabi_soil_14_moisture"
+    state_topic: "sensor/soil/tank14/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank14"
+    unique_id: "wasabi_soil_14_ec"
+    state_topic: "sensor/soil/tank14/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank14"
+    unique_id: "wasabi_soil_14_ph"
+    state_topic: "sensor/soil/tank14/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 15
+  - name: "와사비 토양 온도 Tank15"
+    unique_id: "wasabi_soil_15_temp"
+    state_topic: "sensor/soil/tank15/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank15"
+    unique_id: "wasabi_soil_15_moisture"
+    state_topic: "sensor/soil/tank15/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank15"
+    unique_id: "wasabi_soil_15_ec"
+    state_topic: "sensor/soil/tank15/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank15"
+    unique_id: "wasabi_soil_15_ph"
+    state_topic: "sensor/soil/tank15/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 16
+  - name: "와사비 토양 온도 Tank16"
+    unique_id: "wasabi_soil_16_temp"
+    state_topic: "sensor/soil/tank16/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank16"
+    unique_id: "wasabi_soil_16_moisture"
+    state_topic: "sensor/soil/tank16/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank16"
+    unique_id: "wasabi_soil_16_ec"
+    state_topic: "sensor/soil/tank16/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank16"
+    unique_id: "wasabi_soil_16_ph"
+    state_topic: "sensor/soil/tank16/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 17
+  - name: "와사비 토양 온도 Tank17"
+    unique_id: "wasabi_soil_17_temp"
+    state_topic: "sensor/soil/tank17/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank17"
+    unique_id: "wasabi_soil_17_moisture"
+    state_topic: "sensor/soil/tank17/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank17"
+    unique_id: "wasabi_soil_17_ec"
+    state_topic: "sensor/soil/tank17/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank17"
+    unique_id: "wasabi_soil_17_ph"
+    state_topic: "sensor/soil/tank17/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+  # Tank 18
+  - name: "와사비 토양 온도 Tank18"
+    unique_id: "wasabi_soil_18_temp"
+    state_topic: "sensor/soil/tank18/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+
+  - name: "와사비 토양 습도 Tank18"
+    unique_id: "wasabi_soil_18_moisture"
+    state_topic: "sensor/soil/tank18/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+
+  - name: "와사비 토양 EC Tank18"
+    unique_id: "wasabi_soil_18_ec"
+    state_topic: "sensor/soil/tank18/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 토양 pH Tank18"
+    unique_id: "wasabi_soil_18_ph"
+    state_topic: "sensor/soil/tank18/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+
+# ================================================
+# 대기 센서 (Zone 1)
+# ================================================
+  - name: "와사비 대기 온도 Zone1"
+    unique_id: "wasabi_air_zone1_temp"
+    state_topic: "sensor/air/zone1/data"
+    value_template: "{{ value_json.air_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+
+  - name: "와사비 대기 습도 Zone1"
+    unique_id: "wasabi_air_zone1_humidity"
+    state_topic: "sensor/air/zone1/data"
+    value_template: "{{ value_json.air_humidity | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+
+# ================================================
+# 물탱크 센서
+# ================================================
+  - name: "와사비 수조 수온"
+    unique_id: "wasabi_water_temp"
+    state_topic: "sensor/water_tank/data"
+    value_template: "{{ value_json.water_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+
+  - name: "와사비 수조 pH"
+    unique_id: "wasabi_water_ph"
+    state_topic: "sensor/water_tank/data"
+    value_template: "{{ value_json.water_ph | round(2) }}"
+    icon: mdi:ph
+
+  - name: "와사비 수조 EC"
+    unique_id: "wasabi_water_ec"
+    state_topic: "sensor/water_tank/data"
+    value_template: "{{ value_json.water_ec | round(2) }}"
+    unit_of_measurement: "mS/cm"
+    icon: mdi:flash
+
+  - name: "와사비 수조 TDS"
+    unique_id: "wasabi_water_tds"
+    state_topic: "sensor/water_tank/data"
+    value_template: "{{ value_json.water_tds }}"
+    unit_of_measurement: "ppm"
+    icon: mdi:water
+
+# ================================================
+# 액추에이터 스위치
+# ================================================
+switch:
+  - name: "와사비 관수 펌프"
+    unique_id: "wasabi_irrigation_pump"
+    command_topic: "actuator/irrigation_pump/set"
+    state_topic: "actuator/state"
+    value_template: "{{ value_json.irrigation_pump }}"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: true
+    state_off: false
+    icon: mdi:water-pump
+    optimistic: false
+
+  - name: "와사비 배수 펌프"
+    unique_id: "wasabi_drainage_pump"
+    command_topic: "actuator/drainage_pump/set"
+    state_topic: "actuator/state"
+    value_template: "{{ value_json.drainage_pump }}"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: true
+    state_off: false
+    icon: mdi:water-pump-off
+    optimistic: false
+
+  - name: "와사비 천장 팬"
+    unique_id: "wasabi_ceiling_fan"
+    command_topic: "actuator/fan/set"
+    state_topic: "actuator/state"
+    value_template: "{{ value_json.fan }}"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: true
+    state_off: false
+    icon: mdi:fan
+    optimistic: false
+
+  - name: "와사비 LED 조명"
+    unique_id: "wasabi_led_light"
+    command_topic: "actuator/led/set"
+    state_topic: "actuator/state"
+    value_template: "{{ value_json.led }}"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: true
+    state_off: false
+    icon: mdi:led-on
+    optimistic: false
+
+# ================================================
+# 버튼 (단발성 명령)
+# ================================================
+button:
+  - name: "와사비 비상 정지"
+    unique_id: "wasabi_emergency_stop"
+    command_topic: "actuator/emergency_stop"
+    payload_press: ""
+    icon: mdi:alert-octagon
+
+  - name: "와사비 비상 정지 해제"
+    unique_id: "wasabi_emergency_release"
+    command_topic: "actuator/emergency_release"
+    payload_press: "RELEASED"
+    icon: mdi:check-circle

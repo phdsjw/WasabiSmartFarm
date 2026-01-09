@@ -1,0 +1,163 @@
+# ========================================
+# 와사비 스마트팜 - 스크립트 설정
+# ========================================
+# 수동 제어 및 유틸리티 스크립트
+# ========================================
+
+# ================================================
+# 수동 관수 (설정된 시간)
+# ================================================
+wasabi_manual_irrigation:
+  alias: "와사비 수동 관수"
+  description: "설정된 시간만큼 수동으로 관수합니다"
+  icon: mdi:water
+  mode: single
+  sequence:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.wasabi_irrigation_pump
+    - service: persistent_notification.create
+      data:
+        title: "💧 수동 관수 시작"
+        message: "{{ states('input_number.wasabi_irrigation_duration') }}초 동안 관수합니다."
+        notification_id: wasabi_manual_start
+    - delay:
+        seconds: "{{ states('input_number.wasabi_irrigation_duration') | int(240) }}"
+    - service: switch.turn_off
+      target:
+        entity_id: switch.wasabi_irrigation_pump
+    - service: persistent_notification.create
+      data:
+        title: "✅ 수동 관수 완료"
+        message: "관수가 완료되었습니다."
+        notification_id: wasabi_manual_complete
+
+# ================================================
+# 수동 관수 (1분)
+# ================================================
+wasabi_irrigation_1min:
+  alias: "와사비 관수 1분"
+  description: "1분간 관수합니다"
+  icon: mdi:water
+  mode: single
+  sequence:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.wasabi_irrigation_pump
+    - delay:
+        seconds: 60
+    - service: switch.turn_off
+      target:
+        entity_id: switch.wasabi_irrigation_pump
+
+# ================================================
+# 수동 관수 (4분)
+# ================================================
+wasabi_irrigation_4min:
+  alias: "와사비 관수 4분"
+  description: "4분간 관수합니다 (기본 시간)"
+  icon: mdi:water
+  mode: single
+  sequence:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.wasabi_irrigation_pump
+    - delay:
+        seconds: 240
+    - service: switch.turn_off
+      target:
+        entity_id: switch.wasabi_irrigation_pump
+
+# ================================================
+# 수동 배수 (1분)
+# ================================================
+wasabi_drainage_1min:
+  alias: "와사비 배수 1분"
+  description: "1분간 배수합니다"
+  icon: mdi:water-off
+  mode: single
+  sequence:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.wasabi_drainage_pump
+    - delay:
+        seconds: 60
+    - service: switch.turn_off
+      target:
+        entity_id: switch.wasabi_drainage_pump
+
+# ================================================
+# 모든 액추에이터 정지
+# ================================================
+wasabi_stop_all:
+  alias: "와사비 전체 정지"
+  description: "모든 액추에이터를 정지합니다"
+  icon: mdi:stop-circle
+  mode: single
+  sequence:
+    - service: switch.turn_off
+      target:
+        entity_id:
+          - switch.wasabi_irrigation_pump
+          - switch.wasabi_drainage_pump
+          - switch.wasabi_ceiling_fan
+          - switch.wasabi_led_light
+    - service: persistent_notification.create
+      data:
+        title: "⏹️ 전체 정지"
+        message: "모든 액추에이터가 정지되었습니다."
+        notification_id: wasabi_stop_all
+
+# ================================================
+# 센서 상태 확인
+# ================================================
+wasabi_sensor_status:
+  alias: "와사비 센서 상태 확인"
+  description: "현재 모든 센서 값을 확인합니다"
+  icon: mdi:information
+  mode: single
+  sequence:
+    - service: persistent_notification.create
+      data:
+        title: "📊 와사비 센서 현황"
+        message: >
+          **🌱 토양 센서 평균 ({{ states('sensor.wasabi_valid_sensor_count') }}개 유효)**
+          - 온도: {{ states('sensor.wasabi_soil_temp_avg') }}°C
+          - 습도: {{ states('sensor.wasabi_soil_moisture_avg') }}%
+          - EC: {{ states('sensor.wasabi_soil_ec_avg') }} μS/cm
+          - pH: {{ states('sensor.wasabi_soil_ph_avg') }}
+          
+          **🌡️ 대기 센서**
+          - 온도: {{ states('sensor.wasabi_air_zone1_temp') }}°C
+          - 습도: {{ states('sensor.wasabi_air_zone1_humidity') }}%
+          
+          **💧 수조 센서**
+          - 수온: {{ states('sensor.wasabi_water_temp') }}°C
+          - pH: {{ states('sensor.wasabi_water_ph') }}
+          - EC: {{ states('sensor.wasabi_water_ec') }} mS/cm
+          - TDS: {{ states('sensor.wasabi_water_tds') }} ppm
+          
+          **⚙️ 액추에이터**
+          - 관수 펌프: {{ states('switch.wasabi_irrigation_pump') }}
+          - 배수 펌프: {{ states('switch.wasabi_drainage_pump') }}
+          - 자동 모드: {{ states('input_boolean.wasabi_auto_irrigation') }}
+        notification_id: wasabi_sensor_status
+
+# ================================================
+# 자동 모드 토글
+# ================================================
+wasabi_toggle_auto_mode:
+  alias: "와사비 자동 모드 토글"
+  description: "자동 관수 모드를 켜거나 끕니다"
+  icon: mdi:toggle-switch
+  mode: single
+  sequence:
+    - service: input_boolean.toggle
+      target:
+        entity_id: input_boolean.wasabi_auto_irrigation
+    - service: persistent_notification.create
+      data:
+        title: "⚙️ 자동 모드 변경"
+        message: >
+          자동 관수 모드가 {{ states('input_boolean.wasabi_auto_irrigation') }} 상태로 변경되었습니다.
+        notification_id: wasabi_auto_mode

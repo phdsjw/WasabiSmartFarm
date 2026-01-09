@@ -1,0 +1,184 @@
+# ========================================
+# 와사비 스마트팜 - 자동화 설정
+# ========================================
+# 자동 관수 제어 로직
+# - 토양 습도 ≤ 95% OR
+# - 토양 EC ≥ 5.0 μS/cm OR
+# - 토양 온도 ≥ 22°C
+# ========================================
+
+# ================================================
+# 자동 관수 시작
+# ================================================
+- id: wasabi_auto_irrigation_start
+  alias: "와사비 자동 관수 시작"
+  description: "조건 충족 시 자동으로 관수를 시작합니다"
+  mode: single
+  trigger:
+    # 1분마다 조건 체크
+    - platform: time_pattern
+      minutes: "/1"
+  condition:
+    # 자동 모드가 켜져 있어야 함
+    - condition: state
+      entity_id: input_boolean.wasabi_auto_irrigation
+      state: "on"
+    # 현재 관수 중이 아니어야 함
+    - condition: state
+      entity_id: switch.wasabi_irrigation_pump
+      state: "off"
+    # 마지막 관수 후 최소 시간 경과 (쿨다운)
+    - condition: template
+      value_template: >
+        {% set last = state_attr('automation.wasabi_auto_irrigation_start', 'last_triggered') %}
+        {% if last is none %}
+          true
+        {% else %}
+          {{ (now() - last).total_seconds() > (states('input_number.wasabi_irrigation_cooldown') | float(60) * 60) }}
+        {% endif %}
+    # 관수 조건 (OR)
+    - condition: or
+      conditions:
+        # 습도가 임계값 이하
+        - condition: template
+          value_template: >
+            {{ states('sensor.wasabi_soil_moisture_avg') | float(100) <= states('input_number.wasabi_moisture_threshold') | float(95) }}
+        # EC가 임계값 이상
+        - condition: template
+          value_template: >
+            {{ states('sensor.wasabi_soil_ec_avg') | float(0) >= states('input_number.wasabi_ec_threshold') | float(5.0) }}
+        # 온도가 임계값 이상
+        - condition: template
+          value_template: >
+            {{ states('sensor.wasabi_soil_temp_avg') | float(0) >= states('input_number.wasabi_temp_threshold') | float(22) }}
+  action:
+    # 관수 펌프 켜기
+    - service: switch.turn_on
+      target:
+        entity_id: switch.wasabi_irrigation_pump
+    # 알림
+    - service: persistent_notification.create
+      data:
+        title: "🌱 와사비 자동 관수 시작"
+        message: >
+          **관수 조건 충족**
+          - 토양 습도: {{ states('sensor.wasabi_soil_moisture_avg') }}% (임계값: {{ states('input_number.wasabi_moisture_threshold') }}%)
+          - 토양 EC: {{ states('sensor.wasabi_soil_ec_avg') }} μS/cm (임계값: {{ states('input_number.wasabi_ec_threshold') }} μS/cm)
+          - 토양 온도: {{ states('sensor.wasabi_soil_temp_avg') }}°C (임계값: {{ states('input_number.wasabi_temp_threshold') }}°C)
+          - 관수 시간: {{ states('input_number.wasabi_irrigation_duration') }}초
+        notification_id: wasabi_irrigation_start
+    # 설정된 시간 동안 대기
+    - delay:
+        seconds: "{{ states('input_number.wasabi_irrigation_duration') | int(240) }}"
+    # 관수 펌프 끄기
+    - service: switch.turn_off
+      target:
+        entity_id: switch.wasabi_irrigation_pump
+    # 완료 알림
+    - service: persistent_notification.create
+      data:
+        title: "💧 와사비 자동 관수 완료"
+        message: >
+          {{ states('input_number.wasabi_irrigation_duration') }}초 관수가 완료되었습니다.
+          다음 관수까지 {{ states('input_number.wasabi_irrigation_cooldown') }}분 대기합니다.
+        notification_id: wasabi_irrigation_complete
+
+# ================================================
+# 비상 정지 자동화
+# ================================================
+- id: wasabi_emergency_stop_automation
+  alias: "와사비 비상 정지"
+  description: "비상 정지 시 모든 액추에이터를 즉시 정지합니다"
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: button.wasabi_emergency_stop
+  action:
+    # 모든 스위치 끄기
+    - service: switch.turn_off
+      target:
+        entity_id:
+          - switch.wasabi_irrigation_pump
+          - switch.wasabi_drainage_pump
+          - switch.wasabi_ceiling_fan
+          - switch.wasabi_led_light
+    # 자동 모드 비활성화
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.wasabi_auto_irrigation
+    # 알림
+    - service: persistent_notification.create
+      data:
+        title: "🚨 와사비 비상 정지 활성화"
+        message: >
+          모든 액추에이터가 정지되었습니다.
+          자동 관수 모드가 비활성화되었습니다.
+          정상 운영을 위해 '비상 정지 해제' 후 자동 모드를 다시 활성화하세요.
+        notification_id: wasabi_emergency
+
+# ================================================
+# 이상 온도 경고
+# ================================================
+- id: wasabi_high_temp_alert
+  alias: "와사비 고온 경고"
+  description: "토양 온도가 높을 때 경고 알림"
+  mode: single
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.wasabi_soil_temp_avg
+      above: 25
+      for:
+        minutes: 5
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "🌡️ 와사비 고온 경고"
+        message: >
+          토양 온도가 {{ states('sensor.wasabi_soil_temp_avg') }}°C로 높습니다.
+          환기 또는 냉각 조치가 필요할 수 있습니다.
+        notification_id: wasabi_high_temp
+
+# ================================================
+# 저습도 경고
+# ================================================
+- id: wasabi_low_moisture_alert
+  alias: "와사비 저습도 경고"
+  description: "토양 습도가 낮을 때 경고 알림"
+  mode: single
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.wasabi_soil_moisture_avg
+      below: 85
+      for:
+        minutes: 10
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "💧 와사비 저습도 경고"
+        message: >
+          토양 습도가 {{ states('sensor.wasabi_soil_moisture_avg') }}%로 낮습니다.
+          자동 관수 모드가 활성화되어 있는지 확인하세요.
+        notification_id: wasabi_low_moisture
+
+# ================================================
+# 센서 오프라인 경고
+# ================================================
+- id: wasabi_sensor_offline_alert
+  alias: "와사비 센서 오프라인 경고"
+  description: "유효 센서 수가 12개 미만일 때 경고"
+  mode: single
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.wasabi_valid_sensor_count
+      below: 12
+      for:
+        minutes: 5
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "⚠️ 와사비 센서 경고"
+        message: >
+          유효한 토양 센서 수가 {{ states('sensor.wasabi_valid_sensor_count') }}개입니다.
+          (최소 12개 필요)
+          센서 연결 상태를 확인하세요.
+        notification_id: wasabi_sensor_offline
