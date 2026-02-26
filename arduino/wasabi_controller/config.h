@@ -18,7 +18,7 @@
 // ============================================
 // MQTT 설정
 // ============================================
-#define MQTT_SERVER      "192.168.0.103"       // MQTT Broker IP (Node-RED 서버)
+#define MQTT_SERVER      "192.168.0.104"       // MQTT Broker IP (Node-RED 서버)
 #define MQTT_PORT        1883                  // MQTT 포트
 #define MQTT_CLIENT_ID   "WasabiSmartFarm_Arduino"
 #define MQTT_USER        "wasabi_farm"                    // MQTT 사용자명 (인증 사용 시)

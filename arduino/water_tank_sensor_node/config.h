@@ -19,7 +19,7 @@
 // ============================================
 // 🔌 MQTT 설정
 // ============================================
-#define MQTT_SERVER "192.168.0.103"          // MQTT Broker IP
+#define MQTT_SERVER "192.168.0.104"          // MQTT Broker IP
 #define MQTT_PORT 1883                        // MQTT Broker 포트
 
 // 승인된 노드 ID 규칙

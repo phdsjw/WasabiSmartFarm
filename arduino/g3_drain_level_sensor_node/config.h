@@ -27,7 +27,7 @@
 // ============================================
 // 🔌 MQTT 설정
 // ============================================
-#define MQTT_SERVER "192.168.0.103"          // MQTT Broker IP
+#define MQTT_SERVER "192.168.0.104"          // MQTT Broker IP
 #define MQTT_PORT 1883                        // MQTT Broker 포트
 #define MQTT_CLIENT_ID_PREFIX "WasabiDrain_"  // MQTT 클라이언트 ID 접두사
 
