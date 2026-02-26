@@ -6,74 +6,940 @@
 # ========================================
 
 # ================================================
-# g1 - 대기 온습도 센서 (g1-01)
+# g1 - 대기+토양 통합 센서 (g1-01, 구역 1)
 # ================================================
-sensor:
-  - name: "g1 대기 온도"
-    unique_id: wasabi_g1_01_air_temp
+  - name: "g1 대기 온도 01"
+    object_id: "wasabi_g1-01_air_temp"
+    unique_id: "wasabi_g1-01_air_temp"
     state_topic: "smartfarm/wasabi/g1_air_soil/g1-01/air/data"
     value_template: "{{ value_json.air_temp | round(1) }}"
     unit_of_measurement: "°C"
     device_class: temperature
     icon: mdi:thermometer
-    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
-  - name: "g1 대기 습도"
-    unique_id: wasabi_g1_01_air_humidity
+  - name: "g1 대기 습도 01"
+    object_id: "wasabi_g1-01_air_humidity"
+    unique_id: "wasabi_g1-01_air_humidity"
     state_topic: "smartfarm/wasabi/g1_air_soil/g1-01/air/data"
     value_template: "{{ value_json.air_humidity | round(1) }}"
     unit_of_measurement: "%"
     device_class: humidity
     icon: mdi:water-percent
-    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 온도 01"
+    object_id: "wasabi_soil_01_temp"
+    unique_id: "wasabi_soil_01_temp"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-01/soil/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 습도 01"
+    object_id: "wasabi_soil_01_moisture"
+    unique_id: "wasabi_soil_01_moisture"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-01/soil/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 EC 01"
+    object_id: "wasabi_soil_01_ec"
+    unique_id: "wasabi_soil_01_ec"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-01/soil/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 pH 01"
+    object_id: "wasabi_soil_01_ph"
+    unique_id: "wasabi_soil_01_ph"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-01/soil/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 # ================================================
-# g2 - 토양 센서 (g2-01)
+# g1 - 대기+토양 통합 센서 (g1-02, 구역 2)
 # ================================================
-  - name: "g2 토양 온도"
-    unique_id: wasabi_g2_01_soil_temp
+  - name: "g1 대기 온도 02"
+    object_id: "wasabi_g1-02_air_temp"
+    unique_id: "wasabi_g1-02_air_temp"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-02/air/data"
+    value_template: "{{ value_json.air_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 대기 습도 02"
+    object_id: "wasabi_g1-02_air_humidity"
+    unique_id: "wasabi_g1-02_air_humidity"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-02/air/data"
+    value_template: "{{ value_json.air_humidity | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 온도 02"
+    object_id: "wasabi_soil_02_temp"
+    unique_id: "wasabi_soil_02_temp"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-02/soil/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 습도 02"
+    object_id: "wasabi_soil_02_moisture"
+    unique_id: "wasabi_soil_02_moisture"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-02/soil/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 EC 02"
+    object_id: "wasabi_soil_02_ec"
+    unique_id: "wasabi_soil_02_ec"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-02/soil/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 pH 02"
+    object_id: "wasabi_soil_02_ph"
+    unique_id: "wasabi_soil_02_ph"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-02/soil/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g1 - 대기+토양 통합 센서 (g1-03, 구역 3)
+# ================================================
+  - name: "g1 대기 온도 03"
+    object_id: "wasabi_g1-03_air_temp"
+    unique_id: "wasabi_g1-03_air_temp"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-03/air/data"
+    value_template: "{{ value_json.air_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 대기 습도 03"
+    object_id: "wasabi_g1-03_air_humidity"
+    unique_id: "wasabi_g1-03_air_humidity"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-03/air/data"
+    value_template: "{{ value_json.air_humidity | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 온도 03"
+    object_id: "wasabi_soil_03_temp"
+    unique_id: "wasabi_soil_03_temp"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-03/soil/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 습도 03"
+    object_id: "wasabi_soil_03_moisture"
+    unique_id: "wasabi_soil_03_moisture"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-03/soil/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 EC 03"
+    object_id: "wasabi_soil_03_ec"
+    unique_id: "wasabi_soil_03_ec"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-03/soil/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g1 토양 pH 03"
+    object_id: "wasabi_soil_03_ph"
+    unique_id: "wasabi_soil_03_ph"
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-03/soil/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-01, 구역 4)
+# ================================================
+  - name: "g2 토양 온도 04"
+    object_id: "wasabi_soil_04_temp"
+    unique_id: "wasabi_soil_04_temp"
     state_topic: "smartfarm/wasabi/g2_soil/g2-01/data"
     value_template: "{{ value_json.soil_temp | round(1) }}"
     unit_of_measurement: "°C"
     device_class: temperature
     icon: mdi:thermometer
-    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
-  - name: "g2 토양 습도"
-    unique_id: wasabi_g2_01_soil_moisture
+  - name: "g2 토양 습도 04"
+    object_id: "wasabi_soil_04_moisture"
+    unique_id: "wasabi_soil_04_moisture"
     state_topic: "smartfarm/wasabi/g2_soil/g2-01/data"
     value_template: "{{ value_json.soil_moisture | round(1) }}"
     unit_of_measurement: "%"
     device_class: humidity
     icon: mdi:water-percent
-    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
-  - name: "g2 토양 EC"
-    unique_id: wasabi_g2_01_soil_ec
+  - name: "g2 토양 EC 04"
+    object_id: "wasabi_soil_04_ec"
+    unique_id: "wasabi_soil_04_ec"
     state_topic: "smartfarm/wasabi/g2_soil/g2-01/data"
     value_template: "{{ value_json.soil_ec | round(2) }}"
     unit_of_measurement: "μS/cm"
     icon: mdi:flash
-    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
-  - name: "g2 토양 pH"
-    unique_id: wasabi_g2_01_soil_ph
+  - name: "g2 토양 pH 04"
+    object_id: "wasabi_soil_04_ph"
+    unique_id: "wasabi_soil_04_ph"
     state_topic: "smartfarm/wasabi/g2_soil/g2-01/data"
     value_template: "{{ value_json.soil_ph | round(2) }}"
     icon: mdi:ph
-    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-02, 구역 5)
+# ================================================
+  - name: "g2 토양 온도 05"
+    object_id: "wasabi_soil_05_temp"
+    unique_id: "wasabi_soil_05_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-02/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-02/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 05"
+    object_id: "wasabi_soil_05_moisture"
+    unique_id: "wasabi_soil_05_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-02/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-02/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 05"
+    object_id: "wasabi_soil_05_ec"
+    unique_id: "wasabi_soil_05_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-02/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-02/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 05"
+    object_id: "wasabi_soil_05_ph"
+    unique_id: "wasabi_soil_05_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-02/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-02/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-03, 구역 6)
+# ================================================
+  - name: "g2 토양 온도 06"
+    object_id: "wasabi_soil_06_temp"
+    unique_id: "wasabi_soil_06_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-03/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-03/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 06"
+    object_id: "wasabi_soil_06_moisture"
+    unique_id: "wasabi_soil_06_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-03/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-03/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 06"
+    object_id: "wasabi_soil_06_ec"
+    unique_id: "wasabi_soil_06_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-03/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-03/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 06"
+    object_id: "wasabi_soil_06_ph"
+    unique_id: "wasabi_soil_06_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-03/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-03/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-04, 구역 7)
+# ================================================
+  - name: "g2 토양 온도 07"
+    object_id: "wasabi_soil_07_temp"
+    unique_id: "wasabi_soil_07_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-04/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-04/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 07"
+    object_id: "wasabi_soil_07_moisture"
+    unique_id: "wasabi_soil_07_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-04/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-04/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 07"
+    object_id: "wasabi_soil_07_ec"
+    unique_id: "wasabi_soil_07_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-04/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-04/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 07"
+    object_id: "wasabi_soil_07_ph"
+    unique_id: "wasabi_soil_07_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-04/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-04/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-05, 구역 8)
+# ================================================
+  - name: "g2 토양 온도 08"
+    object_id: "wasabi_soil_08_temp"
+    unique_id: "wasabi_soil_08_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-05/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-05/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 08"
+    object_id: "wasabi_soil_08_moisture"
+    unique_id: "wasabi_soil_08_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-05/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-05/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 08"
+    object_id: "wasabi_soil_08_ec"
+    unique_id: "wasabi_soil_08_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-05/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-05/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 08"
+    object_id: "wasabi_soil_08_ph"
+    unique_id: "wasabi_soil_08_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-05/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-05/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-06, 구역 9)
+# ================================================
+  - name: "g2 토양 온도 09"
+    object_id: "wasabi_soil_09_temp"
+    unique_id: "wasabi_soil_09_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-06/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-06/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 09"
+    object_id: "wasabi_soil_09_moisture"
+    unique_id: "wasabi_soil_09_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-06/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-06/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 09"
+    object_id: "wasabi_soil_09_ec"
+    unique_id: "wasabi_soil_09_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-06/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-06/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 09"
+    object_id: "wasabi_soil_09_ph"
+    unique_id: "wasabi_soil_09_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-06/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-06/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-07, 구역 10)
+# ================================================
+  - name: "g2 토양 온도 10"
+    object_id: "wasabi_soil_10_temp"
+    unique_id: "wasabi_soil_10_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-07/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-07/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 10"
+    object_id: "wasabi_soil_10_moisture"
+    unique_id: "wasabi_soil_10_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-07/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-07/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 10"
+    object_id: "wasabi_soil_10_ec"
+    unique_id: "wasabi_soil_10_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-07/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-07/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 10"
+    object_id: "wasabi_soil_10_ph"
+    unique_id: "wasabi_soil_10_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-07/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-07/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-08, 구역 11)
+# ================================================
+  - name: "g2 토양 온도 11"
+    object_id: "wasabi_soil_11_temp"
+    unique_id: "wasabi_soil_11_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-08/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-08/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 11"
+    object_id: "wasabi_soil_11_moisture"
+    unique_id: "wasabi_soil_11_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-08/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-08/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 11"
+    object_id: "wasabi_soil_11_ec"
+    unique_id: "wasabi_soil_11_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-08/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-08/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 11"
+    object_id: "wasabi_soil_11_ph"
+    unique_id: "wasabi_soil_11_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-08/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-08/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-09, 구역 12)
+# ================================================
+  - name: "g2 토양 온도 12"
+    object_id: "wasabi_soil_12_temp"
+    unique_id: "wasabi_soil_12_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-09/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-09/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 12"
+    object_id: "wasabi_soil_12_moisture"
+    unique_id: "wasabi_soil_12_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-09/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-09/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 12"
+    object_id: "wasabi_soil_12_ec"
+    unique_id: "wasabi_soil_12_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-09/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-09/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 12"
+    object_id: "wasabi_soil_12_ph"
+    unique_id: "wasabi_soil_12_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-09/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-09/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-10, 구역 13)
+# ================================================
+  - name: "g2 토양 온도 13"
+    object_id: "wasabi_soil_13_temp"
+    unique_id: "wasabi_soil_13_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-10/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-10/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 13"
+    object_id: "wasabi_soil_13_moisture"
+    unique_id: "wasabi_soil_13_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-10/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-10/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 13"
+    object_id: "wasabi_soil_13_ec"
+    unique_id: "wasabi_soil_13_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-10/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-10/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 13"
+    object_id: "wasabi_soil_13_ph"
+    unique_id: "wasabi_soil_13_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-10/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-10/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-11, 구역 14)
+# ================================================
+  - name: "g2 토양 온도 14"
+    object_id: "wasabi_soil_14_temp"
+    unique_id: "wasabi_soil_14_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-11/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-11/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 14"
+    object_id: "wasabi_soil_14_moisture"
+    unique_id: "wasabi_soil_14_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-11/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-11/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 14"
+    object_id: "wasabi_soil_14_ec"
+    unique_id: "wasabi_soil_14_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-11/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-11/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 14"
+    object_id: "wasabi_soil_14_ph"
+    unique_id: "wasabi_soil_14_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-11/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-11/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-12, 구역 15)
+# ================================================
+  - name: "g2 토양 온도 15"
+    object_id: "wasabi_soil_15_temp"
+    unique_id: "wasabi_soil_15_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-12/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-12/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 15"
+    object_id: "wasabi_soil_15_moisture"
+    unique_id: "wasabi_soil_15_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-12/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-12/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 15"
+    object_id: "wasabi_soil_15_ec"
+    unique_id: "wasabi_soil_15_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-12/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-12/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 15"
+    object_id: "wasabi_soil_15_ph"
+    unique_id: "wasabi_soil_15_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-12/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-12/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-13, 구역 16)
+# ================================================
+  - name: "g2 토양 온도 16"
+    object_id: "wasabi_soil_16_temp"
+    unique_id: "wasabi_soil_16_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-13/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-13/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 16"
+    object_id: "wasabi_soil_16_moisture"
+    unique_id: "wasabi_soil_16_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-13/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-13/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 16"
+    object_id: "wasabi_soil_16_ec"
+    unique_id: "wasabi_soil_16_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-13/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-13/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 16"
+    object_id: "wasabi_soil_16_ph"
+    unique_id: "wasabi_soil_16_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-13/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-13/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-14, 구역 17)
+# ================================================
+  - name: "g2 토양 온도 17"
+    object_id: "wasabi_soil_17_temp"
+    unique_id: "wasabi_soil_17_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-14/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-14/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 17"
+    object_id: "wasabi_soil_17_moisture"
+    unique_id: "wasabi_soil_17_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-14/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-14/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 17"
+    object_id: "wasabi_soil_17_ec"
+    unique_id: "wasabi_soil_17_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-14/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-14/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 17"
+    object_id: "wasabi_soil_17_ph"
+    unique_id: "wasabi_soil_17_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-14/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-14/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+# ================================================
+# g2 - 단독 토양 센서 (g2-15, 구역 18)
+# ================================================
+  - name: "g2 토양 온도 18"
+    object_id: "wasabi_soil_18_temp"
+    unique_id: "wasabi_soil_18_temp"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-15/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-15/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 습도 18"
+    object_id: "wasabi_soil_18_moisture"
+    unique_id: "wasabi_soil_18_moisture"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-15/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-15/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 EC 18"
+    object_id: "wasabi_soil_18_ec"
+    unique_id: "wasabi_soil_18_ec"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-15/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-15/status"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - name: "g2 토양 pH 18"
+    object_id: "wasabi_soil_18_ph"
+    unique_id: "wasabi_soil_18_ph"
+    state_topic: "smartfarm/wasabi/g2_soil/g2-15/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-15/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 # ================================================
 # g3 - 배수수위 센서 (g3-01)
@@ -85,9 +951,9 @@ sensor:
     unit_of_measurement: "%"
     device_class: humidity
     icon: mdi:water
-    availability_topic: "smartfarm/wasabi/g3_drain_level/g3-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g3_drain_level/g3-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - name: "g3 거리"
     unique_id: wasabi_g3_01_distance
@@ -95,9 +961,9 @@ sensor:
     value_template: "{{ value_json.distance_cm | round(1) }}"
     unit_of_measurement: "cm"
     icon: mdi:arrow-collapse-vertical
-    availability_topic: "smartfarm/wasabi/g3_drain_level/g3-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g3_drain_level/g3-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 # ================================================
 # g4 - 수중 센서 (g4-01)
@@ -109,18 +975,18 @@ sensor:
     unit_of_measurement: "°C"
     device_class: temperature
     icon: mdi:thermometer
-    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - name: "g4 수온 pH"
     unique_id: wasabi_g4_01_water_ph
     state_topic: "smartfarm/wasabi/g4_water_quality/g4-01/data"
     value_template: "{{ value_json.water_ph | round(2) }}"
     icon: mdi:ph
-    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - name: "g4 수온 EC"
     unique_id: wasabi_g4_01_water_ec
@@ -128,9 +994,9 @@ sensor:
     value_template: "{{ value_json.water_ec | round(2) }}"
     unit_of_measurement: "mS/cm"
     icon: mdi:flash
-    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - name: "g4 수온 TDS"
     unique_id: wasabi_g4_01_water_tds
@@ -138,9 +1004,9 @@ sensor:
     value_template: "{{ value_json.water_tds }}"
     unit_of_measurement: "ppm"
     icon: mdi:water
-    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
-    payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 # ================================================
 # g5 - 밸브 제어 (g5-01)
@@ -157,13 +1023,15 @@ switch:
     state_off: "off"
     icon: mdi:valve
     optimistic: false
-    availability_topic: "smartfarm/wasabi/g5_water_level_valve/g5-01/heartbeat"
-    payload_available: "alive"
+    availability_topic: "smartfarm/wasabi/g5_water_level_valve/g5-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 # ================================================
 # g6 - 펌프 제어 (g6-01)
 # ================================================
   - name: "g6 관수 펌프"
+    object_id: "wasabi_irrigation_pump"
     unique_id: wasabi_g6_01_irrigation
     command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/irrigation"
     state_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/state"
@@ -174,10 +1042,12 @@ switch:
     state_off: "off"
     icon: mdi:water-pump
     optimistic: false
-    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
-    payload_available: "alive"
+    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - name: "g6 배수 펌프"
+    object_id: "wasabi_drainage_pump"
     unique_id: wasabi_g6_01_drainage
     command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/drainage"
     state_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/state"
@@ -188,10 +1058,12 @@ switch:
     state_off: "off"
     icon: mdi:water-pump-off
     optimistic: false
-    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
-    payload_available: "alive"
+    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - name: "g6 팬"
+    object_id: "wasabi_ceiling_fan"
     unique_id: wasabi_g6_01_fan
     command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/fan"
     state_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/state"
@@ -202,10 +1074,12 @@ switch:
     state_off: "off"
     icon: mdi:fan
     optimistic: false
-    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
-    payload_available: "alive"
+    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - name: "g6 LED"
+    object_id: "wasabi_led_light"
     unique_id: wasabi_g6_01_led
     command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/led"
     state_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/state"
@@ -216,8 +1090,9 @@ switch:
     state_off: "off"
     icon: mdi:led-on
     optimistic: false
-    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
-    payload_available: "alive"
+    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 # ================================================
 # g7 - 조명 제어 (g7-01)
@@ -233,20 +1108,23 @@ switch:
     state_off: "off"
     icon: mdi:lightbulb
     optimistic: false
-    availability_topic: "smartfarm/wasabi/g7_light_ctrl/g7-01/heartbeat"
-    payload_available: "alive"
+    availability_topic: "smartfarm/wasabi/g7_light_ctrl/g7-01/status"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 # ================================================
 # 비상 정지 버튼
 # ================================================
 button:
   - name: "비상 정지"
+    object_id: "wasabi_emergency_stop"
     unique_id: wasabi_emergency_stop
     command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/emergency_stop"
     payload_press: ""
     icon: mdi:alert-octagon
 
   - name: "비상 정지 해제"
+    object_id: "wasabi_emergency_release"
     unique_id: wasabi_emergency_release
     command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/emergency_release"
     payload_press: "RELEASED"
