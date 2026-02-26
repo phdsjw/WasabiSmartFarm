@@ -2,10 +2,8 @@
  * Configuration File
  * WiFi, MQTT, Sensor Settings
  */
-
-#ifndef CONFIG_H
-#define CONFIG_H
-
+#ifndef ARDUINO_WASABI_CONTROLLER_CONFIG_H
+#define ARDUINO_WASABI_CONTROLLER_CONFIG_H
 #include <Arduino.h>
 
 // ============================================
@@ -117,4 +115,4 @@
 #ifndef MQTT_PASSWORD
 #define MQTT_PASSWORD "ha_password"
 #endif
-#endif // CONFIG_H
+#endif // ARDUINO_WASABI_CONTROLLER_CONFIG_H

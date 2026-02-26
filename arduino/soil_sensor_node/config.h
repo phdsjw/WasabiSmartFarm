@@ -4,10 +4,8 @@
  * 18개 노드에서 공통으로 사용
  * TANK_ID만 각 노드마다 변경하여 업로드
  */
-
-#ifndef CONFIG_H
-#define CONFIG_H
-
+#ifndef ARDUINO_SOIL_SENSOR_NODE_CONFIG_H
+#define ARDUINO_SOIL_SENSOR_NODE_CONFIG_H
 #include <Arduino.h>
 
 // ============================================
@@ -118,5 +116,5 @@ struct SoilSensorData {
 #ifndef MQTT_PASSWORD
 #define MQTT_PASSWORD "ha_password"
 #endif
-#endif // CONFIG_H
+#endif // ARDUINO_SOIL_SENSOR_NODE_CONFIG_H
 #define NODE_ID "g2-01"

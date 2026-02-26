@@ -8,10 +8,8 @@
  * 버전: v1.0.0
  * 날짜: 2026-02-25
  */
-
-#ifndef CONFIG_H
-#define CONFIG_H
-
+#ifndef ARDUINO_G5_VALVE_CONTROL_NODE_CONFIG_H
+#define ARDUINO_G5_VALVE_CONTROL_NODE_CONFIG_H
 // ============================================
 // 🏷️ 노드 식별 정보 (g5-밸브제어)
 // ============================================
@@ -95,4 +93,4 @@ struct ValveState {
 #ifndef MQTT_PASSWORD
 #define MQTT_PASSWORD "ha_password"
 #endif
-#endif // CONFIG_H
+#endif // ARDUINO_G5_VALVE_CONTROL_NODE_CONFIG_H

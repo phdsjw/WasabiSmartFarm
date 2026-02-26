@@ -13,10 +13,8 @@
  * 버전  : v1.1.0 (HA Edition)
  * 날짜  : 2026-02-20
  */
-
-#ifndef CONFIG_HA_H
-#define CONFIG_HA_H
-
+#ifndef ARDUINO_WATER_LEVEL_SENSOR_NODE_R4_CONFIG_H
+#define ARDUINO_WATER_LEVEL_SENSOR_NODE_R4_CONFIG_H
 #include <Arduino.h>
 
 // ============================================
@@ -154,4 +152,4 @@ struct WaterLevelData {
 #ifndef MQTT_PASSWORD
 #define MQTT_PASSWORD "ha_password"
 #endif
-#endif // CONFIG_HA_H
+#endif // ARDUINO_WATER_LEVEL_SENSOR_NODE_R4_CONFIG_H

@@ -18,6 +18,10 @@
 #include <Wire.h>
 #include "config.h"
 
+#ifndef SHT30_I2C_ADDRESS
+#define SHT30_I2C_ADDRESS 0x44
+#endif
+
 class SHT30Sensor {
 private:
   uint8_t _i2c_address;

@@ -5,10 +5,8 @@
  * 버전: v1.0.0
  * 날짜: 2024-12-11
  */
-
-#ifndef CONFIG_H
-#define CONFIG_H
-
+#ifndef ARDUINO_WATER_TANK_SENSOR_NODE_CONFIG_H
+#define ARDUINO_WATER_TANK_SENSOR_NODE_CONFIG_H
 // ============================================
 // 📡 WiFi 설정
 // ============================================
@@ -160,4 +158,4 @@ struct WaterTankSensorData {
 #ifndef MQTT_PASSWORD
 #define MQTT_PASSWORD "ha_password"
 #endif
-#endif // CONFIG_H
+#endif // ARDUINO_WATER_TANK_SENSOR_NODE_CONFIG_H

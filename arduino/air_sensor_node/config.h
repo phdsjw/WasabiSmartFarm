@@ -5,10 +5,8 @@
  * 버전: v1.0.0
  * 날짜: 2024-12-11
  */
-
-#ifndef CONFIG_H
-#define CONFIG_H
-
+#ifndef ARDUINO_AIR_SENSOR_NODE_CONFIG_H
+#define ARDUINO_AIR_SENSOR_NODE_CONFIG_H
 // ============================================
 // 🏷️ 센서 노드 고유 ID (각 노드마다 변경 필요!)
 // ============================================
@@ -110,4 +108,4 @@ struct AirSensorData {
 #ifndef MQTT_PASSWORD
 #define MQTT_PASSWORD "ha_password"
 #endif
-#endif // CONFIG_H
+#endif // ARDUINO_AIR_SENSOR_NODE_CONFIG_H
