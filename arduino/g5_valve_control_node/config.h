@@ -83,4 +83,16 @@ struct ValveState {
   #define DEBUG_PRINTLN(...)
 #endif
 
+#ifndef MQTT_WILL_TOPIC
+#define MQTT_WILL_TOPIC "homeassistant/status"
+#endif
+#ifndef MQTT_WILL_MESSAGE
+#define MQTT_WILL_MESSAGE "offline"
+#endif
+#ifndef MQTT_USER
+#define MQTT_USER "ha_user"
+#endif
+#ifndef MQTT_PASSWORD
+#define MQTT_PASSWORD "ha_password"
+#endif
 #endif // CONFIG_H
