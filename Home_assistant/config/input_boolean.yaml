@@ -1,0 +1,7 @@
+wasabi_auto_irrigation:
+  name: "와사비 자동 관수 모드"
+  icon: mdi:water-auto
+
+wasabi_maintenance_mode:
+  name: "와사비 유지보수 모드"
+  icon: mdi:wrench

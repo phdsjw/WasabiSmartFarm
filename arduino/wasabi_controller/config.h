@@ -18,11 +18,11 @@
 // ============================================
 // MQTT 설정
 // ============================================
-#define MQTT_SERVER      "192.168.0.100"       // MQTT Broker IP (Node-RED 서버)
+#define MQTT_SERVER      "192.168.0.103"       // MQTT Broker IP (Node-RED 서버)
 #define MQTT_PORT        1883                  // MQTT 포트
 #define MQTT_CLIENT_ID   "WasabiSmartFarm_Arduino"
-#define MQTT_USER        ""                    // MQTT 사용자명 (인증 사용 시)
-#define MQTT_PASSWORD    ""                    // MQTT 비밀번호 (인증 사용 시)
+#define MQTT_USER        "wasabi_farm"                    // MQTT 사용자명 (인증 사용 시)
+#define MQTT_PASSWORD    "your_secure_password"                    // MQTT 비밀번호 (인증 사용 시)
 
 // ============================================
 // 센서 읽기 주기 (밀리초)
@@ -110,9 +110,9 @@
 #define MQTT_WILL_MESSAGE "offline"
 #endif
 #ifndef MQTT_USER
-#define MQTT_USER "ha_user"
+#define MQTT_USER "wasabi_farm"
 #endif
 #ifndef MQTT_PASSWORD
-#define MQTT_PASSWORD "ha_password"
+#define MQTT_PASSWORD "your_secure_password"
 #endif
 #endif // ARDUINO_WASABI_CONTROLLER_CONFIG_H

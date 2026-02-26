@@ -63,8 +63,8 @@ mqtt: !include mqtt.yaml
 template: !include template.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
-input_boolean: !include input_helpers.yaml
-input_number: !include input_helpers.yaml
+input_boolean: !include input_boolean.yaml
+input_number: !include input_number.yaml
 
 # 대시보드
 lovelace:
