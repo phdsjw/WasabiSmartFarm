@@ -1,0 +1,233 @@
+# ========================================
+# 와사비 스마트팜 대시보드 (g1~g7)
+# ========================================
+# 버전: v1.0.0
+# 작성일: 2026-02-25
+# ========================================
+
+title: 와사비 스마트팜
+theme: default
+views:
+  - title: Overview
+    path: overview
+    icon: mdi:home
+    cards:
+      # ========================================
+      # 상태 요약 카드
+      # ========================================
+      - type: entities
+        title: 시스템 상태
+        show_header_toggle: false
+        entities:
+          - entity: sensor.wasabi_g1_01_air_temp
+            name: g1 대기온도
+          - entity: sensor.wasabi_g1_01_air_humidity
+            name: g1 대기습도
+          - entity: binary_sensor.wasabi_system_status
+            name: 시스템 상태
+
+      # ========================================
+      # g1 - 대기 센서
+      # ========================================
+      - type: vertical-stack
+        title: g1 - 대기 환경
+        cards:
+          - type: glance
+            title: g1 대기 환경
+            entities:
+              - entity: sensor.wasabi_g1_01_air_temp
+                name: 온도
+              - entity: sensor.wasabi_g1_01_air_humidity
+                name: 습도
+
+          - type: gauge
+            name: g1 온도
+            entity: sensor.wasabi_g1_01_air_temp
+            min: -10
+            max: 50
+            unit: °C
+
+          - type: gauge
+            name: g1 습도
+            entity: sensor.wasabi_g1_01_air_humidity
+            min: 0
+            max: 100
+            unit: "%"
+
+      # ========================================
+      # g2 - 토양 센서
+      # ========================================
+      - type: vertical-stack
+        title: g2 - 토양 환경
+        cards:
+          - type: glance
+            title: g2 토양 환경
+            entities:
+              - entity: sensor.wasabi_g2_01_soil_temp
+                name: 온도
+              - entity: sensor.wasabi_g2_01_soil_moisture
+                name: 습도
+              - entity: sensor.wasabi_g2_01_soil_ec
+                name: EC
+              - entity: sensor.wasabi_g2_01_soil_ph
+                name: pH
+
+          - type: gauge
+            name: g2 토양 온도
+            entity: sensor.wasabi_g2_01_soil_temp
+            min: 0
+            max: 50
+            unit: °C
+
+          - type: gauge
+            name: g2 토양 습도
+            entity: sensor.wasabi_g2_01_soil_moisture
+            min: 0
+            max: 100
+            unit: "%"
+
+      # ========================================
+      # g3 - 배수수위
+      # ========================================
+      - type: vertical-stack
+        title: g3 - 배수수위
+        cards:
+          - type: gauge
+            name: g3 수위
+            entity: sensor.wasabi_g3_01_water_level
+            min: 0
+            max: 100
+            unit: "%"
+            severity:
+              green: 30
+              yellow: 60
+              red: 80
+
+          - type: entities
+            title: g3 상태
+            entities:
+              - entity: sensor.wasabi_g3_01_water_level
+                name: 수위
+              - entity: sensor.wasabi_g3_01_distance
+                name: 거리
+
+      # ================================================
+      # g4 - 수중 환경
+      # ================================================
+      - type: vertical-stack
+        title: g4 - 수중 환경
+        cards:
+          - type: glance
+            title: g4 수중 환경
+            entities:
+              - entity: sensor.wasabi_g4_01_water_temp
+                name: 수온
+              - entity: sensor.wasabi_g4_01_water_ph
+                name: pH
+              - entity: sensor.wasabi_g4_01_water_ec
+                name: EC
+              - entity: sensor.wasabi_g4_01_water_tds
+                name: TDS
+
+          - type: gauge
+            name: g4 수온
+            entity: sensor.wasabi_g4_01_water_temp
+            min: 0
+            max: 40
+            unit: °C
+
+          - type: gauge
+            name: g4 pH
+            entity: sensor.wasabi_g4_01_water_ph
+            min: 0
+            max: 14
+
+      # ================================================
+      # g5 - 밸브 제어
+      # ================================================
+      - type: vertical-stack
+        title: g5 - 수조 뺄브
+        cards:
+          - type: entities
+            title: 뺄브 제어
+            entities:
+              - entity: switch.wasabi_g5_01_valve
+                name: 수조 뺄브
+                secondary_info: last-changed
+              - type: divider
+              - entity: switch.wasabi_g5_01_valve
+                name: 토글
+                show_toggle_switch: true
+
+      # ================================================
+      # g6 - 펌프 제어
+      # ================================================
+      - type: vertical-stack
+        title: g6 - 펌프 제어
+        cards:
+          - type: entities
+            title: 펌프 상태
+            entities:
+              - entity: switch.wasabi_g6_01_irrigation
+                name: 관수 펌프
+                secondary_info: last-changed
+              - entity: switch.wasabi_g6_01_drainage
+                name: 배수 펌프
+                secondary_info: last-changed
+              - entity: switch.wasabi_g6_01_fan
+                name: 팬
+                secondary_info: last-changed
+              - entity: switch.wasabi_g6_01_led
+                name: LED
+                secondary_info: last-changed
+
+          - type: horizontal-stack
+            title: 관수/배수
+            cards:
+              - type: entity-button
+                entity: switch.wasabi_g6_01_irrigation
+                name: 관수 ON
+                icon: mdi:water
+                show_state: true
+              - type: entity-button
+                entity: switch.wasabi_g6_01_drainage
+                name: 배수 ON
+                icon: mdi:water-off
+                show_state: true
+
+      # ================================================
+      # g7 - 조명 제어
+      # ================================================
+      - type: vertical-stack
+        title: g7 - 조명 제어
+        cards:
+          - type: entities
+            title: 조명 제어
+            entities:
+              - entity: switch.wasabi_g7_01_light
+                name: Grow Light
+                secondary_info: last-changed
+              - type: divider
+              - entity: switch.wasabi_g7_01_light
+                name: 토글
+                show_toggle_switch: true
+
+          - type: entity-button
+            name: 조명 토글
+            entity: switch.wasabi_g7_01_light
+            icon: mdi:lightbulb
+            show_state: true
+
+      # ================================================
+      # 비상 정지
+      # ================================================
+      - type: vertical-stack
+        title: 비상 정지
+        cards:
+          - type: entities
+            title: 안전 제어
+            entities:
+              - entity: button.wasabi_emergency_stop
+                name: 🚨 비상 정지
+              - entity: button.wasabi_emergency_release
+                name: ✅ 정지 해제

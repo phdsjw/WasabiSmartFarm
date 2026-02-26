@@ -1,0 +1,254 @@
+# 변경 이력 (Changelog)
+
+## v2.0.1 (2024-12-17) - ModbusMaster 생성자 오류 수정
+
+### 🐛 버그 수정
+
+#### 1. **ModbusMaster 생성자 호출 오류 수정** ⭐⭐⭐
+- **문제**: `no matching function for call to 'ModbusMaster::ModbusMaster(int)'`
+- **원인**: ModbusMaster는 파라미터가 없는 기본 생성자만 제공
+- **수정**: 
+  ```cpp
+  // 수정 전 (오류)
+  SEN0604Modbus::SEN0604Modbus() : _modbus(MODBUS_SLAVE_ID) { }
+  
+  // 수정 후 (정상)
+  SEN0604Modbus::SEN0604Modbus() { }
+  
+  // begin()에서 Slave ID 설정
+  _modbus.begin(MODBUS_SLAVE_ID, Serial1);
+  ```
+- **참고**: ModbusMaster API는 `begin(uint8_t slave, Stream &serial)` 사용
+
+---
+
+## v2.0.0 (2024-12-17) - ModbusMaster 라이브러리로 전환 ⭐⭐⭐
+
+### 🔧 중대 변경 (Breaking Changes)
+
+#### 1. **ArduinoModbus → ModbusMaster 라이브러리 전환** ⭐⭐⭐ (중요)
+- **문제**: ArduinoModbus 라이브러리가 Arduino Uno R4 WiFi (renesas_uno)와 호환되지 않음
+- **증상**: 
+  ```
+  error: field 'it_interval' has incomplete type 'timeval'
+  error: 'fd_set' has not been declared
+  Compilation error: exit status 1
+  ```
+- **원인**: ArduinoModbus가 `sys/time.h` 타입 정의 오류 발생
+- **해결**: **ModbusMaster 라이브러리** (by Doc Walker) 사용으로 전환
+- **장점**:
+  - ✅ Arduino Uno R4 WiFi 완벽 지원
+  - ✅ 간단한 API
+  - ✅ RS485 송수신 제어 콜백 지원
+  - ✅ 안정적인 Modbus RTU 통신
+
+#### 2. **DEBUG 매크로 가변 인자 지원** ⭐⭐
+- **문제**: `DEBUG_PRINT(value, precision)` 호출 시 컴파일 에러
+- **수정**: 
+  ```cpp
+  // 수정 전
+  #define DEBUG_PRINT(x) Serial.print(x)
+  
+  // 수정 후
+  #define DEBUG_PRINT(...) Serial.print(__VA_ARGS__)
+  ```
+- **효과**: 소수점 자릿수 지정 가능 (`DEBUG_PRINT(data.soil_temp, 1)`)
+
+### 📝 코드 변경 사항
+
+#### sen0604_modbus.h
+```cpp
+// 라이브러리 변경
+#include <ModbusMaster.h>  // ArduinoModbus 대신
+
+class SEN0604Modbus {
+public:
+    // RS485 송수신 제어 콜백 추가
+    static void preTransmission();
+    static void postTransmission();
+    
+private:
+    ModbusMaster _modbus;  // ModbusMaster 객체 추가
+};
+```
+
+#### sen0604_modbus.cpp
+```cpp
+// 생성자에서 Slave ID 설정
+SEN0604Modbus::SEN0604Modbus() : _modbus(MODBUS_SLAVE_ID) {
+}
+
+// RS485 제어 콜백 구현
+void SEN0604Modbus::preTransmission() {
+    digitalWrite(RS485_TX_ENABLE_PIN, HIGH);
+    delayMicroseconds(100);
+}
+
+void SEN0604Modbus::postTransmission() {
+    delayMicroseconds(100);
+    digitalWrite(RS485_TX_ENABLE_PIN, LOW);
+}
+
+// Modbus 읽기 API 변경
+uint8_t result = _modbus.readHoldingRegisters(address, count);
+if (result == _modbus.ku8MBSuccess) {
+    return _modbus.getResponseBuffer(0);
+}
+```
+
+### 📦 라이브러리 설치
+
+**필수 라이브러리:**
+- ❌ ~~ArduinoModbus~~ (제거)
+- ✅ **ModbusMaster** (by Doc Walker, v2.0.1 이상)
+
+**설치 방법:**
+```
+Arduino IDE → 도구 → 라이브러리 관리 → "ModbusMaster" 검색 → 설치
+```
+
+### 📚 문서 추가
+
+- `MODBUSMASTER_MIGRATION_GUIDE.md` - ModbusMaster 마이그레이션 가이드
+- `COMPILATION_FIX_GUIDE.md` - 컴파일 오류 해결 가이드 (업데이트)
+
+### 🔄 마이그레이션 가이드
+
+#### v1.0.x → v2.0.0 업그레이드
+
+**필수 조치:**
+
+1. **라이브러리 교체**
+   ```
+   ArduinoModbus 제거 → ModbusMaster 설치
+   ```
+
+2. **최신 코드 다운로드**
+   ```
+   GitHub: https://github.com/phdsjw/WasabiSmartFarm
+   또는: git pull origin main
+   ```
+
+3. **펌웨어 재업로드**
+   - Arduino IDE에서 펌웨어 검증 (Ctrl+R)
+   - 보드에 업로드 (Ctrl+U)
+
+**하위 호환성:**
+- ✅ `config.h` 설정 그대로 사용 가능
+- ✅ MQTT 메시지 포맷 변경 없음
+- ✅ 기존 Node-RED 플로우 그대로 사용 가능
+- ✅ WiFi/MQTT 설정 호환
+
+---
+
+## v1.0.1 (2024-12-11) - 공식 문서 기반 개선
+
+### 🐛 버그 수정
+
+#### 1. **음수 온도 처리 추가** ⭐⭐⭐ (중요)
+- **문제**: 0°C 이하 온도 측정 시 잘못된 값 표시
+- **원인**: SEN0604는 음수 온도를 2의 보수(complement) 형식으로 전송
+- **수정**: `int16_t` 캐스팅으로 음수 온도 올바르게 처리
+- **예시**:
+  ```cpp
+  // 수정 전
+  data.soil_temp = buffer[1] * 0.1;  // FF9B → 65435 → 6543.5°C (잘못됨!)
+  
+  // 수정 후
+  int16_t temp_raw = (int16_t)buffer[1];  // FF9B → -101
+  data.soil_temp = temp_raw * 0.1;        // -101 * 0.1 = -10.1°C (올바름!)
+  ```
+
+#### 2. **pH 변환 배율 수정** ⭐⭐
+- **문제**: pH 값이 실제의 1/10로 표시됨
+- **원인**: 변환 배율 잘못 설정 (×0.01 → ×0.1)
+- **수정**: pH 변환 배율을 0.01에서 0.1로 수정
+- **공식 문서 예시**:
+  ```
+  PH: 0x0038 (56 decimal) = 5.6 pH  (×0.1)
+  ```
+- **코드 수정**:
+  ```cpp
+  // 수정 전
+  data.soil_ph = buffer[3] * 0.01;  // 0x0038 → 0.56 pH (잘못됨!)
+  
+  // 수정 후
+  data.soil_ph = buffer[3] * 0.1;   // 0x0038 → 5.6 pH (올바름!)
+  ```
+
+### 📝 문서 개선
+
+#### 3. **EC 단위 주석 수정**
+- **변경**: 주석 "mS/cm" → "μS/cm"
+- **이유**: SEN0604는 μS/cm 단위로 직접 전송 (변환 불필요)
+- **측정 범위**: 0~20,000 μS/cm
+
+#### 4. **보드레이트 정보 업데이트**
+- **공장 기본값**: **9600 bps** (이전 문서: 4800)
+- **지원 보드레이트**: 2400 / 4800 / 9600
+- **설정 방법**: 레지스터 0x07D1 (42002) 수정으로 변경 가능
+- **config.h 주석 추가**: 보드레이트 옵션 명시
+
+---
+
+## v1.0.0 (2024-12-11) - 초기 릴리스
+
+### ✨ 주요 기능
+- SEN0604 4-in-1 토양 센서 지원
+- Modbus RTU 통신 (RS485)
+- WiFi + MQTT 데이터 전송
+- 10초 주기 센서 읽기
+- 하트비트 전송 (1분)
+- LED 상태 표시
+- 자동 재연결 (WiFi/MQTT)
+
+### 📊 측정 데이터
+- 토양 온도: -40~80°C (해상도 0.1°C, 정확도 ±0.5°C)
+- 토양 습도: 0~100% (해상도 0.1%, 정확도 ±2~3%)
+- 토양 EC: 0~20,000 μS/cm (해상도 1 μS/cm)
+- 토양 pH: 3~9 (해상도 0.1 pH)
+
+### 🔧 하드웨어
+- Arduino Uno R4 WiFi
+- RS485 확장보드 (DFR0259)
+- SEN0604 토양 센서
+
+---
+
+## 📌 참고 자료
+
+- **SEN0604 공식 Wiki**: https://wiki.dfrobot.com/RS485_Soil_Sensor_Temperature_Humidity_EC_PH_SKU_SEN0604
+- **Modbus RTU 프로토콜**: Function Code 0x03 (Read Holding Registers)
+- **레지스터 맵**:
+  - 0x0000: 토양 습도 (×10)
+  - 0x0001: 토양 온도 (×10, 2의 보수)
+  - 0x0002: 토양 EC (×1)
+  - 0x0003: 토양 pH (×10)
+
+---
+
+## 🔄 마이그레이션 가이드
+
+### v1.0.0 → v1.0.1 업그레이드
+
+#### 필수 변경사항
+1. **펌웨어 재업로드**: 음수 온도 및 pH 수정 포함
+2. **보드레이트 확인**: 센서가 9600으로 설정되어 있다면 `config.h`에서 변경
+   ```cpp
+   #define MODBUS_BAUDRATE 9600  // 공장 기본값
+   ```
+
+#### 하위 호환성
+- ✅ MQTT 메시지 포맷 변경 없음
+- ✅ WiFi/MQTT 설정 호환
+- ✅ 기존 Node-RED 플로우 그대로 사용 가능
+
+#### 테스트 권장 사항
+- 음수 온도 환경에서 테스트 (냉동실 등)
+- pH 6.0~7.0 표준 용액으로 보정 확인
+
+---
+
+**문서 정보**  
+**작성자**: 서준원  
+**최종 수정**: 2024-12-17

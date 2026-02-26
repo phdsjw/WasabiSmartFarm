@@ -1,0 +1,253 @@
+# ========================================
+# 와사비 스마트팜 - MQTT 센서/스위치 설정 (g1~g7)
+# ========================================
+# 버전: v2.0.0 (g1~g7 토픽 구조)
+# 작성일: 2026-02-25
+# ========================================
+
+# ================================================
+# g1 - 대기 온습도 센서 (g1-01)
+# ================================================
+sensor:
+  - name: "g1 대기 온도"
+    unique_id: wasabi_g1_01_air_temp
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-01/air/data"
+    value_template: "{{ value_json.air_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+  - name: "g1 대기 습도"
+    unique_id: wasabi_g1_01_air_humidity
+    state_topic: "smartfarm/wasabi/g1_air_soil/g1-01/air/data"
+    value_template: "{{ value_json.air_humidity | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+# ================================================
+# g2 - 토양 센서 (g2-01)
+# ================================================
+  - name: "g2 토양 온도"
+    unique_id: wasabi_g2_01_soil_temp
+    state_topic: "smartfarm/wasabi/g2_soil/g2-01/data"
+    value_template: "{{ value_json.soil_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+  - name: "g2 토양 습도"
+    unique_id: wasabi_g2_01_soil_moisture
+    state_topic: "smartfarm/wasabi/g2_soil/g2-01/data"
+    value_template: "{{ value_json.soil_moisture | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+  - name: "g2 토양 EC"
+    unique_id: wasabi_g2_01_soil_ec
+    state_topic: "smartfarm/wasabi/g2_soil/g2-01/data"
+    value_template: "{{ value_json.soil_ec | round(2) }}"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+  - name: "g2 토양 pH"
+    unique_id: wasabi_g2_01_soil_ph
+    state_topic: "smartfarm/wasabi/g2_soil/g2-01/data"
+    value_template: "{{ value_json.soil_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+# ================================================
+# g3 - 배수수위 센서 (g3-01)
+# ================================================
+  - name: "g3 수위"
+    unique_id: wasabi_g3_01_water_level
+    state_topic: "smartfarm/wasabi/g3_drain_level/g3-01/data"
+    value_template: "{{ value_json.water_level_percent | round(1) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water
+    availability_topic: "smartfarm/wasabi/g3_drain_level/g3-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+  - name: "g3 거리"
+    unique_id: wasabi_g3_01_distance
+    state_topic: "smartfarm/wasabi/g3_drain_level/g3-01/data"
+    value_template: "{{ value_json.distance_cm | round(1) }}"
+    unit_of_measurement: "cm"
+    icon: mdi:arrow-collapse-vertical
+    availability_topic: "smartfarm/wasabi/g3_drain_level/g3-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+# ================================================
+# g4 - 수중 센서 (g4-01)
+# ================================================
+  - name: "g4 수온"
+    unique_id: wasabi_g4_01_water_temp
+    state_topic: "smartfarm/wasabi/g4_water_quality/g4-01/data"
+    value_template: "{{ value_json.water_temp | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+  - name: "g4 수온 pH"
+    unique_id: wasabi_g4_01_water_ph
+    state_topic: "smartfarm/wasabi/g4_water_quality/g4-01/data"
+    value_template: "{{ value_json.water_ph | round(2) }}"
+    icon: mdi:ph
+    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+  - name: "g4 수온 EC"
+    unique_id: wasabi_g4_01_water_ec
+    state_topic: "smartfarm/wasabi/g4_water_quality/g4-01/data"
+    value_template: "{{ value_json.water_ec | round(2) }}"
+    unit_of_measurement: "mS/cm"
+    icon: mdi:flash
+    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+  - name: "g4 수온 TDS"
+    unique_id: wasabi_g4_01_water_tds
+    state_topic: "smartfarm/wasabi/g4_water_quality/g4-01/data"
+    value_template: "{{ value_json.water_tds }}"
+    unit_of_measurement: "ppm"
+    icon: mdi:water
+    availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
+    payload_available: "alive"
+    value_template_availability: "{{ value_json.status }}"
+
+# ================================================
+# g5 - 밸브 제어 (g5-01)
+# ================================================
+switch:
+  - name: "g5 수조 뺄브"
+    unique_id: wasabi_g5_01_valve
+    command_topic: "smartfarm/wasabi/g5_water_level_valve/g5-01/valve/cmd"
+    state_topic: "smartfarm/wasabi/g5_water_level_valve/g5-01/valve/state"
+    value_template: "{{ value_json.valve }}"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    icon: mdi:valve
+    optimistic: false
+    availability_topic: "smartfarm/wasabi/g5_water_level_valve/g5-01/heartbeat"
+    payload_available: "alive"
+
+# ================================================
+# g6 - 펌프 제어 (g6-01)
+# ================================================
+  - name: "g6 관수 펌프"
+    unique_id: wasabi_g6_01_irrigation
+    command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/irrigation"
+    state_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/state"
+    value_template: "{{ value_json.irrigation_pump }}"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    icon: mdi:water-pump
+    optimistic: false
+    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
+    payload_available: "alive"
+
+  - name: "g6 배수 펌프"
+    unique_id: wasabi_g6_01_drainage
+    command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/drainage"
+    state_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/state"
+    value_template: "{{ value_json.drainage_pump }}"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    icon: mdi:water-pump-off
+    optimistic: false
+    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
+    payload_available: "alive"
+
+  - name: "g6 팬"
+    unique_id: wasabi_g6_01_fan
+    command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/fan"
+    state_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/state"
+    value_template: "{{ value_json.fan }}"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    icon: mdi:fan
+    optimistic: false
+    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
+    payload_available: "alive"
+
+  - name: "g6 LED"
+    unique_id: wasabi_g6_01_led
+    command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/led"
+    state_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/state"
+    value_template: "{{ value_json.led }}"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    icon: mdi:led-on
+    optimistic: false
+    availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
+    payload_available: "alive"
+
+# ================================================
+# g7 - 조명 제어 (g7-01)
+# ================================================
+  - name: "g7 조명"
+    unique_id: wasabi_g7_01_light
+    command_topic: "smartfarm/wasabi/g7_light_ctrl/g7-01/cmd/light"
+    state_topic: "smartfarm/wasabi/g7_light_ctrl/g7-01/state"
+    value_template: "{{ value_json.light }}"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    icon: mdi:lightbulb
+    optimistic: false
+    availability_topic: "smartfarm/wasabi/g7_light_ctrl/g7-01/heartbeat"
+    payload_available: "alive"
+
+# ================================================
+# 비상 정지 버튼
+# ================================================
+button:
+  - name: "비상 정지"
+    unique_id: wasabi_emergency_stop
+    command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/emergency_stop"
+    payload_press: ""
+    icon: mdi:alert-octagon
+
+  - name: "비상 정지 해제"
+    unique_id: wasabi_emergency_release
+    command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/emergency_release"
+    payload_press: "RELEASED"
+    icon: mdi:check-circle

@@ -1,0 +1,77 @@
+# ========================================
+# 와사비 스마트팜 - Home Assistant 설정
+# ========================================
+# 버전: v1.0.0
+# 작성일: 2026-01-06
+# ========================================
+
+homeassistant:
+  name: 와사비 스마트팜
+  unit_system: metric
+  time_zone: Asia/Seoul
+  currency: KRW
+  country: KR
+
+# 기본 통합
+default_config:
+
+# 로거 설정
+logger:
+  default: warning
+  logs:
+    homeassistant.components.mqtt: info
+    homeassistant.components.automation: info
+
+# Recorder 설정 (데이터베이스)
+recorder:
+  purge_keep_days: 30
+  commit_interval: 10
+  include:
+    domains:
+      - sensor
+      - switch
+      - binary_sensor
+      - input_boolean
+      - input_number
+    entity_globs:
+      - sensor.wasabi_*
+      - switch.wasabi_*
+      - binary_sensor.wasabi_*
+
+# History 설정
+history:
+  include:
+    domains:
+      - sensor
+      - switch
+    entity_globs:
+      - sensor.wasabi_*
+      - switch.wasabi_*
+
+# Logbook 설정
+logbook:
+  include:
+    domains:
+      - automation
+      - switch
+    entity_globs:
+      - switch.wasabi_*
+      - automation.wasabi_*
+
+# 외부 설정 파일 포함
+mqtt: !include mqtt.yaml
+template: !include template.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+input_boolean: !include input_helpers.yaml
+input_number: !include input_helpers.yaml
+
+# 대시보드
+lovelace:
+  mode: yaml
+  dashboards:
+    wasabi-smartfarm:
+      title: 와사비 스마트팜
+      icon: mdi:leaf
+      show_in_sidebar: true
+      filename: dashboard.yaml

@@ -1,0 +1,68 @@
+mqtt:
+  sensor:
+    - name: "Air Temp G1-01"
+      unique_id: wasabi_g1_01_air_temp
+      state_topic: "smartfarm/wasabi/g1_air_soil/g1-01/air/data"
+      value_template: "{{ value_json.air_temp }}"
+      unit_of_measurement: "°C"
+      availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
+      payload_available: "alive"
+      value_template_availability: "{{ value_json.status }}"
+
+    - name: "Soil EC G2-01"
+      unique_id: wasabi_g2_01_soil_ec
+      state_topic: "smartfarm/wasabi/g2_soil/g2-01/data"
+      value_template: "{{ value_json.soil_ec }}"
+      unit_of_measurement: "uS/cm"
+      availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
+      payload_available: "alive"
+      value_template_availability: "{{ value_json.status }}"
+
+    - name: "Water Temp G4-01"
+      unique_id: wasabi_g4_01_water_temp
+      state_topic: "smartfarm/wasabi/g4_water_quality/g4-01/data"
+      value_template: "{{ value_json.water_temp }}"
+      unit_of_measurement: "°C"
+      availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
+      payload_available: "alive"
+      value_template_availability: "{{ value_json.status }}"
+
+    - name: "Water Level G3-01"
+      unique_id: wasabi_g3_01_level
+      state_topic: "smartfarm/wasabi/g3_drain_level/g3-01/data"
+      value_template: "{{ value_json.water_level_percent }}"
+      unit_of_measurement: "%"
+      availability_topic: "smartfarm/wasabi/g3_drain_level/g3-01/heartbeat"
+      payload_available: "alive"
+      value_template_availability: "{{ value_json.status }}"
+
+  switch:
+    - name: "Irrigation Pump"
+      unique_id: wasabi_g6_01_irrigation
+      command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/irrigation"
+      state_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/state"
+      value_template: "{{ value_json.irrigation_pump }}"
+      payload_on: "on"
+      payload_off: "off"
+
+    - name: "Drainage Pump"
+      unique_id: wasabi_g6_01_drainage
+      command_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/cmd/drainage"
+      state_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/state"
+      value_template: "{{ value_json.drainage_pump }}"
+      payload_on: "on"
+      payload_off: "off"
+
+    - name: "Water Tank Valve"
+      unique_id: wasabi_g5_01_valve
+      command_topic: "smartfarm/wasabi/g5_water_level_valve/g5-01/valve/cmd"
+      state_topic: "smartfarm/wasabi/g5_water_level_valve/g5-01/valve/state"
+      payload_on: "on"
+      payload_off: "off"
+
+    - name: "Grow Light"
+      unique_id: wasabi_g7_01_light
+      command_topic: "smartfarm/wasabi/g7_light_ctrl/g7-01/cmd/light"
+      state_topic: "smartfarm/wasabi/g7_light_ctrl/g7-01/state"
+      payload_on: "on"
+      payload_off: "off"

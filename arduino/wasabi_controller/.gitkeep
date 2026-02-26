@@ -1,0 +1,11 @@
+# Arduino 펌웨어 디렉토리
+
+이 폴더에는 Arduino Uno R4 WiFi용 펌웨어가 위치합니다.
+
+## 예정된 파일
+
+- `wasabi_controller.ino` - 메인 스케치 파일
+- `config.h` - 설정 파일 (WiFi, MQTT 등)
+- `mqtt.cpp` / `mqtt.h` - MQTT 통신 관련
+- `sensors.cpp` / `sensors.h` - 센서 데이터 수집
+- `actuators.cpp` / `actuators.h` - 구동기 제어

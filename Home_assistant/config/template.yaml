@@ -1,0 +1,200 @@
+# ========================================
+# 와사비 스마트팜 - 템플릿 센서 설정
+# ========================================
+# 18개 토양 센서의 평균값 계산
+# 최소 12개 센서 유효 데이터 필요
+# ========================================
+
+sensor:
+  # ================================================
+  # 토양 온도 평균
+  # ================================================
+  - name: "와사비 토양 온도 평균"
+    unique_id: "wasabi_soil_temp_avg"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    state: >
+      {% set sensors = [
+        states('sensor.wasabi_soil_01_temp'),
+        states('sensor.wasabi_soil_02_temp'),
+        states('sensor.wasabi_soil_03_temp'),
+        states('sensor.wasabi_soil_04_temp'),
+        states('sensor.wasabi_soil_05_temp'),
+        states('sensor.wasabi_soil_06_temp'),
+        states('sensor.wasabi_soil_07_temp'),
+        states('sensor.wasabi_soil_08_temp'),
+        states('sensor.wasabi_soil_09_temp'),
+        states('sensor.wasabi_soil_10_temp'),
+        states('sensor.wasabi_soil_11_temp'),
+        states('sensor.wasabi_soil_12_temp'),
+        states('sensor.wasabi_soil_13_temp'),
+        states('sensor.wasabi_soil_14_temp'),
+        states('sensor.wasabi_soil_15_temp'),
+        states('sensor.wasabi_soil_16_temp'),
+        states('sensor.wasabi_soil_17_temp'),
+        states('sensor.wasabi_soil_18_temp')
+      ] %}
+      {% set valid = sensors | select('is_number') | list %}
+      {% if valid | length >= 12 %}
+        {{ (valid | map('float') | sum / valid | length) | round(1) }}
+      {% else %}
+        unavailable
+      {% endif %}
+    availability: >
+      {% set sensors = [
+        states('sensor.wasabi_soil_01_temp'),
+        states('sensor.wasabi_soil_02_temp'),
+        states('sensor.wasabi_soil_03_temp'),
+        states('sensor.wasabi_soil_04_temp'),
+        states('sensor.wasabi_soil_05_temp'),
+        states('sensor.wasabi_soil_06_temp'),
+        states('sensor.wasabi_soil_07_temp'),
+        states('sensor.wasabi_soil_08_temp'),
+        states('sensor.wasabi_soil_09_temp'),
+        states('sensor.wasabi_soil_10_temp'),
+        states('sensor.wasabi_soil_11_temp'),
+        states('sensor.wasabi_soil_12_temp'),
+        states('sensor.wasabi_soil_13_temp'),
+        states('sensor.wasabi_soil_14_temp'),
+        states('sensor.wasabi_soil_15_temp'),
+        states('sensor.wasabi_soil_16_temp'),
+        states('sensor.wasabi_soil_17_temp'),
+        states('sensor.wasabi_soil_18_temp')
+      ] %}
+      {% set valid = sensors | select('is_number') | list %}
+      {{ valid | length >= 12 }}
+
+  # ================================================
+  # 토양 습도 평균
+  # ================================================
+  - name: "와사비 토양 습도 평균"
+    unique_id: "wasabi_soil_moisture_avg"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    state: >
+      {% set sensors = [
+        states('sensor.wasabi_soil_01_moisture'),
+        states('sensor.wasabi_soil_02_moisture'),
+        states('sensor.wasabi_soil_03_moisture'),
+        states('sensor.wasabi_soil_04_moisture'),
+        states('sensor.wasabi_soil_05_moisture'),
+        states('sensor.wasabi_soil_06_moisture'),
+        states('sensor.wasabi_soil_07_moisture'),
+        states('sensor.wasabi_soil_08_moisture'),
+        states('sensor.wasabi_soil_09_moisture'),
+        states('sensor.wasabi_soil_10_moisture'),
+        states('sensor.wasabi_soil_11_moisture'),
+        states('sensor.wasabi_soil_12_moisture'),
+        states('sensor.wasabi_soil_13_moisture'),
+        states('sensor.wasabi_soil_14_moisture'),
+        states('sensor.wasabi_soil_15_moisture'),
+        states('sensor.wasabi_soil_16_moisture'),
+        states('sensor.wasabi_soil_17_moisture'),
+        states('sensor.wasabi_soil_18_moisture')
+      ] %}
+      {% set valid = sensors | select('is_number') | list %}
+      {% if valid | length >= 12 %}
+        {{ (valid | map('float') | sum / valid | length) | round(1) }}
+      {% else %}
+        unavailable
+      {% endif %}
+
+  # ================================================
+  # 토양 EC 평균
+  # ================================================
+  - name: "와사비 토양 EC 평균"
+    unique_id: "wasabi_soil_ec_avg"
+    unit_of_measurement: "μS/cm"
+    icon: mdi:flash
+    state: >
+      {% set sensors = [
+        states('sensor.wasabi_soil_01_ec'),
+        states('sensor.wasabi_soil_02_ec'),
+        states('sensor.wasabi_soil_03_ec'),
+        states('sensor.wasabi_soil_04_ec'),
+        states('sensor.wasabi_soil_05_ec'),
+        states('sensor.wasabi_soil_06_ec'),
+        states('sensor.wasabi_soil_07_ec'),
+        states('sensor.wasabi_soil_08_ec'),
+        states('sensor.wasabi_soil_09_ec'),
+        states('sensor.wasabi_soil_10_ec'),
+        states('sensor.wasabi_soil_11_ec'),
+        states('sensor.wasabi_soil_12_ec'),
+        states('sensor.wasabi_soil_13_ec'),
+        states('sensor.wasabi_soil_14_ec'),
+        states('sensor.wasabi_soil_15_ec'),
+        states('sensor.wasabi_soil_16_ec'),
+        states('sensor.wasabi_soil_17_ec'),
+        states('sensor.wasabi_soil_18_ec')
+      ] %}
+      {% set valid = sensors | select('is_number') | list %}
+      {% if valid | length >= 12 %}
+        {{ (valid | map('float') | sum / valid | length) | round(2) }}
+      {% else %}
+        unavailable
+      {% endif %}
+
+  # ================================================
+  # 토양 pH 평균
+  # ================================================
+  - name: "와사비 토양 pH 평균"
+    unique_id: "wasabi_soil_ph_avg"
+    icon: mdi:ph
+    state: >
+      {% set sensors = [
+        states('sensor.wasabi_soil_01_ph'),
+        states('sensor.wasabi_soil_02_ph'),
+        states('sensor.wasabi_soil_03_ph'),
+        states('sensor.wasabi_soil_04_ph'),
+        states('sensor.wasabi_soil_05_ph'),
+        states('sensor.wasabi_soil_06_ph'),
+        states('sensor.wasabi_soil_07_ph'),
+        states('sensor.wasabi_soil_08_ph'),
+        states('sensor.wasabi_soil_09_ph'),
+        states('sensor.wasabi_soil_10_ph'),
+        states('sensor.wasabi_soil_11_ph'),
+        states('sensor.wasabi_soil_12_ph'),
+        states('sensor.wasabi_soil_13_ph'),
+        states('sensor.wasabi_soil_14_ph'),
+        states('sensor.wasabi_soil_15_ph'),
+        states('sensor.wasabi_soil_16_ph'),
+        states('sensor.wasabi_soil_17_ph'),
+        states('sensor.wasabi_soil_18_ph')
+      ] %}
+      {% set valid = sensors | select('is_number') | list %}
+      {% if valid | length >= 12 %}
+        {{ (valid | map('float') | sum / valid | length) | round(2) }}
+      {% else %}
+        unavailable
+      {% endif %}
+
+  # ================================================
+  # 유효 센서 개수
+  # ================================================
+  - name: "와사비 유효 센서 수"
+    unique_id: "wasabi_valid_sensor_count"
+    icon: mdi:counter
+    state: >
+      {% set sensors = [
+        states('sensor.wasabi_soil_01_temp'),
+        states('sensor.wasabi_soil_02_temp'),
+        states('sensor.wasabi_soil_03_temp'),
+        states('sensor.wasabi_soil_04_temp'),
+        states('sensor.wasabi_soil_05_temp'),
+        states('sensor.wasabi_soil_06_temp'),
+        states('sensor.wasabi_soil_07_temp'),
+        states('sensor.wasabi_soil_08_temp'),
+        states('sensor.wasabi_soil_09_temp'),
+        states('sensor.wasabi_soil_10_temp'),
+        states('sensor.wasabi_soil_11_temp'),
+        states('sensor.wasabi_soil_12_temp'),
+        states('sensor.wasabi_soil_13_temp'),
+        states('sensor.wasabi_soil_14_temp'),
+        states('sensor.wasabi_soil_15_temp'),
+        states('sensor.wasabi_soil_16_temp'),
+        states('sensor.wasabi_soil_17_temp'),
+        states('sensor.wasabi_soil_18_temp')
+      ] %}
+      {{ sensors | select('is_number') | list | length }}

@@ -1,0 +1,796 @@
+[
+    {
+        "id": "main_tab",
+        "type": "tab",
+        "label": "와사비 스마트팜 메인",
+        "disabled": false,
+        "info": "와사비 스마트팜 메인 제어 플로우\n\n기능:\n- 센서 데이터 수집 (22개 노드)\n- 평균값 계산\n- 자동 관수 제어\n- Dashboard UI\n- InfluxDB 저장\n- 알림",
+        "env": []
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "name": "Mosquitto Broker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "nodered_wasabi_farm",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "nodered/status",
+        "birthQos": "0",
+        "birthPayload": "online",
+        "birthMsg": {},
+        "closeTopic": "nodered/status",
+        "closeQos": "0",
+        "closePayload": "offline",
+        "closeMsg": {},
+        "willTopic": "nodered/status",
+        "willQos": "0",
+        "willPayload": "offline",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ui_base",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "와사비 스마트팜",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "YYYY-MM-DD",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "ui_tab_overview",
+        "type": "ui_tab",
+        "name": "개요",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_tab_soil",
+        "type": "ui_tab",
+        "name": "토양 센서",
+        "icon": "spa",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_tab_air",
+        "type": "ui_tab",
+        "name": "대기 센서",
+        "icon": "air",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_tab_water",
+        "type": "ui_tab",
+        "name": "수조 센서",
+        "icon": "opacity",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_tab_control",
+        "type": "ui_tab",
+        "name": "제어",
+        "icon": "settings_remote",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_group_overview_status",
+        "type": "ui_group",
+        "name": "시스템 상태",
+        "tab": "ui_tab_overview",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_overview_avg",
+        "type": "ui_group",
+        "name": "평균값",
+        "tab": "ui_tab_overview",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_soil_chart",
+        "type": "ui_group",
+        "name": "토양 센서 차트",
+        "tab": "ui_tab_soil",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_air_chart",
+        "type": "ui_group",
+        "name": "대기 센서 차트",
+        "tab": "ui_tab_air",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_water_gauges",
+        "type": "ui_group",
+        "name": "수조 수질",
+        "tab": "ui_tab_water",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_control_manual",
+        "type": "ui_group",
+        "name": "수동 제어",
+        "tab": "ui_tab_control",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ui_group_control_auto",
+        "type": "ui_group",
+        "name": "자동 제어 설정",
+        "tab": "ui_tab_control",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "mqtt_in_soil_all",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "토양 센서 전체",
+        "topic": "sensor/soil/+/data",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 100,
+        "wires": [
+            ["process_soil_data"]
+        ]
+    },
+    {
+        "id": "process_soil_data",
+        "type": "function",
+        "z": "main_tab",
+        "name": "토양 데이터 처리",
+        "func": "// 토양 센서 데이터 처리\nconst tankId = msg.topic.split('/')[2];\nconst data = msg.payload;\n\n// 전역 컨텍스트에 저장\nconst soilData = global.get('soilData') || {};\nsoilData[tankId] = {\n    tank_id: data.tank_id,\n    soil_temp: data.soil_temp,\n    soil_moisture: data.soil_moisture,\n    soil_ec: data.soil_ec,\n    soil_ph: data.soil_ph,\n    timestamp: data.timestamp,\n    rssi: data.rssi,\n    updated: new Date()\n};\nglobal.set('soilData', soilData);\n\n// 평균값 계산 트리거\nnode.send([msg, {payload: 'calculate_avg'}]);\n\nreturn null;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 100,
+        "wires": [
+            ["save_to_influx_soil"],
+            ["calculate_soil_avg"]
+        ]
+    },
+    {
+        "id": "calculate_soil_avg",
+        "type": "function",
+        "z": "main_tab",
+        "name": "토양 평균값 계산",
+        "func": "// 토양 센서 평균값 계산 (18개)\nconst soilData = global.get('soilData') || {};\nconst tankIds = Object.keys(soilData);\n\nif (tankIds.length === 0) {\n    return null;\n}\n\nlet sumTemp = 0;\nlet sumMoisture = 0;\nlet sumEC = 0;\nlet sumPH = 0;\nlet validCount = 0;\n\n// 최근 1분 이내 데이터만 사용\nconst oneMinuteAgo = new Date(Date.now() - 60000);\n\ntankIds.forEach(tankId => {\n    const data = soilData[tankId];\n    if (data.updated > oneMinuteAgo) {\n        sumTemp += data.soil_temp;\n        sumMoisture += data.soil_moisture;\n        sumEC += data.soil_ec;\n        sumPH += data.soil_ph;\n        validCount++;\n    }\n});\n\n// 최소 12개 센서 필요\nif (validCount < 12) {\n    node.warn(`유효한 센서 ${validCount}개 (최소 12개 필요)`);\n    return null;\n}\n\nconst avgData = {\n    avg_soil_temp: (sumTemp / validCount).toFixed(1),\n    avg_soil_moisture: (sumMoisture / validCount).toFixed(1),\n    avg_soil_ec: (sumEC / validCount).toFixed(2),\n    avg_soil_ph: (sumPH / validCount).toFixed(2),\n    valid_sensor_count: validCount,\n    total_sensors: 18,\n    timestamp: Date.now()\n};\n\n// 전역 컨텍스트에 저장\nglobal.set('soilAvg', avgData);\n\nmsg.payload = avgData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 140,
+        "wires": [
+            ["display_soil_avg", "check_irrigation_condition"]
+        ]
+    },
+    {
+        "id": "mqtt_in_air_all",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "대기 센서 전체",
+        "topic": "sensor/air/+/data",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 200,
+        "wires": [
+            ["process_air_data"]
+        ]
+    },
+    {
+        "id": "process_air_data",
+        "type": "function",
+        "z": "main_tab",
+        "name": "대기 데이터 처리",
+        "func": "// 대기 센서 데이터 처리\nconst zoneId = msg.topic.split('/')[2];\nconst data = msg.payload;\n\n// 전역 컨텍스트에 저장\nconst airData = global.get('airData') || {};\nairData[zoneId] = {\n    zone_id: data.zone_id,\n    air_temp: data.air_temp,\n    air_humidity: data.air_humidity,\n    timestamp: data.timestamp,\n    rssi: data.rssi,\n    updated: new Date()\n};\nglobal.set('airData', airData);\n\n// 평균값 계산 트리거\nnode.send([msg, {payload: 'calculate_avg'}]);\n\nreturn null;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 200,
+        "wires": [
+            ["save_to_influx_air"],
+            ["calculate_air_avg"]
+        ]
+    },
+    {
+        "id": "calculate_air_avg",
+        "type": "function",
+        "z": "main_tab",
+        "name": "대기 평균값 계산",
+        "func": "// 대기 센서 평균값 계산 (3개)\nconst airData = global.get('airData') || {};\nconst zoneIds = Object.keys(airData);\n\nif (zoneIds.length === 0) {\n    return null;\n}\n\nlet sumTemp = 0;\nlet sumHumidity = 0;\nlet validCount = 0;\n\n// 최근 1분 이내 데이터만 사용\nconst oneMinuteAgo = new Date(Date.now() - 60000);\n\nzoneIds.forEach(zoneId => {\n    const data = airData[zoneId];\n    if (data.updated > oneMinuteAgo) {\n        sumTemp += data.air_temp;\n        sumHumidity += data.air_humidity;\n        validCount++;\n    }\n});\n\nif (validCount === 0) {\n    return null;\n}\n\nconst avgData = {\n    avg_air_temp: (sumTemp / validCount).toFixed(1),\n    avg_air_humidity: (sumHumidity / validCount).toFixed(1),\n    valid_sensor_count: validCount,\n    total_sensors: 3,\n    timestamp: Date.now()\n};\n\n// 전역 컨텍스트에 저장\nglobal.set('airAvg', avgData);\n\nmsg.payload = avgData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 240,
+        "wires": [
+            ["display_air_avg"]
+        ]
+    },
+    {
+        "id": "mqtt_in_water",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "수조 센서",
+        "topic": "sensor/water_tank/data",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 300,
+        "wires": [
+            ["process_water_data"]
+        ]
+    },
+    {
+        "id": "process_water_data",
+        "type": "function",
+        "z": "main_tab",
+        "name": "수조 데이터 처리",
+        "func": "// 수조 센서 데이터 처리\nconst data = msg.payload;\n\n// 전역 컨텍스트에 저장\nglobal.set('waterData', {\n    water_temp: data.water_temp,\n    water_ph: data.water_ph,\n    water_tds: data.water_tds,\n    water_ec: data.water_ec,\n    timestamp: data.timestamp,\n    rssi: data.rssi,\n    updated: new Date()\n});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 300,
+        "wires": [
+            ["save_to_influx_water", "display_water_data"]
+        ]
+    },
+    {
+        "id": "mqtt_in_actuator_state",
+        "type": "mqtt in",
+        "z": "main_tab",
+        "name": "액추에이터 상태",
+        "topic": "actuator/state",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 400,
+        "wires": [
+            ["process_actuator_state"]
+        ]
+    },
+    {
+        "id": "process_actuator_state",
+        "type": "function",
+        "z": "main_tab",
+        "name": "액추에이터 상태 처리",
+        "func": "// 액추에이터 상태 처리\nconst data = msg.payload;\n\n// 전역 컨텍스트에 저장\nglobal.set('actuatorState', {\n    irrigation_pump: data.irrigation_pump,\n    drainage_pump: data.drainage_pump,\n    fan: data.fan,\n    led: data.led,\n    emergency_stop: data.emergency_stop,\n    total_irrigation_time: data.total_irrigation_time,\n    total_drainage_time: data.total_drainage_time,\n    irrigation_count: data.irrigation_count,\n    drainage_count: data.drainage_count,\n    uptime: data.uptime,\n    rssi: data.rssi,\n    updated: new Date()\n});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 400,
+        "wires": [
+            ["display_actuator_state"]
+        ]
+    },
+    {
+        "id": "check_irrigation_condition",
+        "type": "function",
+        "z": "main_tab",
+        "name": "관수 조건 체크",
+        "func": "// 자동 관수 제어 로직\nconst autoMode = global.get('autoIrrigationMode') || false;\n\nif (!autoMode) {\n    return null;\n}\n\nconst soilAvg = msg.payload;\nconst lastIrrigation = global.get('lastIrrigationTime') || 0;\nconst now = Date.now();\n\n// 최소 1시간 간격\nconst oneHour = 3600000;\nif (now - lastIrrigation < oneHour) {\n    node.status({fill:\"yellow\", shape:\"ring\", text:`대기중 (${Math.round((oneHour - (now - lastIrrigation))/60000)}분 남음)`});\n    return null;\n}\n\n// 조건 체크\nconst moisture = parseFloat(soilAvg.avg_soil_moisture);\nconst ec = parseFloat(soilAvg.avg_soil_ec);\nconst temp = parseFloat(soilAvg.avg_soil_temp);\n\nconst moistureThreshold = global.get('irrigationMoistureThreshold') || 95;\nconst ecThreshold = global.get('irrigationECThreshold') || 5.0;\nconst tempThreshold = global.get('irrigationTempThreshold') || 22;\n\nlet needsIrrigation = false;\nlet reason = \"\";\n\nif (moisture <= moistureThreshold) {\n    needsIrrigation = true;\n    reason = `토양 습도 낮음 (${moisture}% <= ${moistureThreshold}%)`;\n} else if (ec >= ecThreshold) {\n    needsIrrigation = true;\n    reason = `토양 EC 높음 (${ec} >= ${ecThreshold})`;\n} else if (temp >= tempThreshold) {\n    needsIrrigation = true;\n    reason = `토양 온도 높음 (${temp}°C >= ${tempThreshold}°C)`;\n}\n\nif (needsIrrigation) {\n    node.status({fill:\"green\", shape:\"dot\", text:`관수 시작: ${reason}`});\n    global.set('lastIrrigationTime', now);\n    global.set('lastIrrigationReason', reason);\n    \n    msg.payload = {\n        action: \"start_irrigation\",\n        reason: reason,\n        moisture: moisture,\n        ec: ec,\n        temp: temp,\n        duration: 240000  // 4분 (240초)\n    };\n    return msg;\n} else {\n    node.status({fill:\"blue\", shape:\"ring\", text:\"조건 미충족\"});\n    return null;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 140,
+        "wires": [
+            ["start_irrigation"]
+        ]
+    },
+    {
+        "id": "start_irrigation",
+        "type": "mqtt out",
+        "z": "main_tab",
+        "name": "관수 펌프 ON",
+        "topic": "actuator/irrigation_pump/on",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "mqtt_broker",
+        "x": 1020,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "stop_irrigation",
+        "type": "mqtt out",
+        "z": "main_tab",
+        "name": "관수 펌프 OFF",
+        "topic": "actuator/irrigation_pump/off",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "mqtt_broker",
+        "x": 1020,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "irrigation_timer",
+        "type": "delay",
+        "z": "main_tab",
+        "name": "4분 타이머",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1020,
+        "y": 140,
+        "wires": [
+            ["stop_irrigation", "log_irrigation"]
+        ]
+    },
+    {
+        "id": "save_to_influx_soil",
+        "type": "function",
+        "z": "main_tab",
+        "name": "InfluxDB 저장 준비 (토양)",
+        "func": "// InfluxDB 포맷으로 변환\nconst data = msg.payload;\nconst tankId = msg.topic.split('/')[2];\n\nmsg.payload = [\n    {\n        measurement: 'soil_sensor',\n        tags: {\n            tank_id: tankId\n        },\n        fields: {\n            soil_temp: data.soil_temp,\n            soil_moisture: data.soil_moisture,\n            soil_ec: data.soil_ec,\n            soil_ph: data.soil_ph,\n            rssi: data.rssi\n        },\n        timestamp: new Date(data.timestamp)\n    }\n];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "save_to_influx_air",
+        "type": "function",
+        "z": "main_tab",
+        "name": "InfluxDB 저장 준비 (대기)",
+        "func": "// InfluxDB 포맷으로 변환\nconst data = msg.payload;\nconst zoneId = msg.topic.split('/')[2];\n\nmsg.payload = [\n    {\n        measurement: 'air_sensor',\n        tags: {\n            zone_id: zoneId\n        },\n        fields: {\n            air_temp: data.air_temp,\n            air_humidity: data.air_humidity,\n            rssi: data.rssi\n        },\n        timestamp: new Date(data.timestamp)\n    }\n];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "save_to_influx_water",
+        "type": "function",
+        "z": "main_tab",
+        "name": "InfluxDB 저장 준비 (수조)",
+        "func": "// InfluxDB 포맷으로 변환\nconst data = msg.payload;\n\nmsg.payload = [\n    {\n        measurement: 'water_tank_sensor',\n        tags: {\n            location: 'main_tank'\n        },\n        fields: {\n            water_temp: data.water_temp,\n            water_ph: data.water_ph,\n            water_tds: data.water_tds,\n            water_ec: data.water_ec,\n            rssi: data.rssi\n        },\n        timestamp: new Date(data.timestamp)\n    }\n];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "log_irrigation",
+        "type": "function",
+        "z": "main_tab",
+        "name": "관수 로그 저장",
+        "func": "const reason = global.get('lastIrrigationReason') || '수동';\nconst soilAvg = global.get('soilAvg') || {};\n\nmsg.payload = [\n    {\n        measurement: 'irrigation_log',\n        fields: {\n            reason: reason,\n            avg_soil_moisture: parseFloat(soilAvg.avg_soil_moisture) || 0,\n            avg_soil_ec: parseFloat(soilAvg.avg_soil_ec) || 0,\n            avg_soil_temp: parseFloat(soilAvg.avg_soil_temp) || 0,\n            duration_seconds: 240\n        },\n        timestamp: new Date()\n    }\n];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1220,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "display_soil_avg",
+        "type": "ui_text",
+        "z": "main_tab",
+        "group": "ui_group_overview_avg",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "name": "토양 평균",
+        "label": "토양 평균",
+        "format": "{{msg.payload.avg_soil_temp}}°C | {{msg.payload.avg_soil_moisture}}% | {{msg.payload.avg_soil_ec}} μS/cm | pH {{msg.payload.avg_soil_ph}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 780,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "display_air_avg",
+        "type": "ui_text",
+        "z": "main_tab",
+        "group": "ui_group_overview_avg",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "name": "대기 평균",
+        "label": "대기 평균",
+        "format": "{{msg.payload.avg_air_temp}}°C | {{msg.payload.avg_air_humidity}}%",
+        "layout": "row-spread",
+        "className": "",
+        "x": 780,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "display_water_data",
+        "type": "ui_text",
+        "z": "main_tab",
+        "group": "ui_group_water_gauges",
+        "order": 1,
+        "width": "12",
+        "height": "1",
+        "name": "수조 데이터",
+        "label": "수조",
+        "format": "{{msg.payload.water_temp}}°C | pH {{msg.payload.water_ph}} | {{msg.payload.water_tds}} ppm | {{msg.payload.water_ec}} mS/cm",
+        "layout": "row-spread",
+        "className": "",
+        "x": 570,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "display_actuator_state",
+        "type": "ui_text",
+        "z": "main_tab",
+        "group": "ui_group_overview_status",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "name": "액추에이터 상태",
+        "label": "펌프 상태",
+        "format": "관수: {{msg.payload.irrigation_pump ? 'ON' : 'OFF'}} | 배수: {{msg.payload.drainage_pump ? 'ON' : 'OFF'}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 590,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "btn_irrigation_on",
+        "type": "ui_button",
+        "z": "main_tab",
+        "name": "관수 시작",
+        "group": "ui_group_control_manual",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "관수 시작",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "green",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "actuator/irrigation_pump/on",
+        "topicType": "str",
+        "x": 120,
+        "y": 500,
+        "wires": [
+            ["mqtt_cmd"]
+        ]
+    },
+    {
+        "id": "btn_irrigation_off",
+        "type": "ui_button",
+        "z": "main_tab",
+        "name": "관수 정지",
+        "group": "ui_group_control_manual",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "관수 정지",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "actuator/irrigation_pump/off",
+        "topicType": "str",
+        "x": 120,
+        "y": 540,
+        "wires": [
+            ["mqtt_cmd"]
+        ]
+    },
+    {
+        "id": "btn_emergency_stop",
+        "type": "ui_button",
+        "z": "main_tab",
+        "name": "긴급 정지",
+        "group": "ui_group_control_manual",
+        "order": 5,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "label": "🚨 긴급 정지",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "actuator/emergency_stop",
+        "topicType": "str",
+        "x": 120,
+        "y": 620,
+        "wires": [
+            ["mqtt_cmd"]
+        ]
+    },
+    {
+        "id": "mqtt_cmd",
+        "type": "mqtt out",
+        "z": "main_tab",
+        "name": "MQTT 명령 전송",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "mqtt_broker",
+        "x": 350,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "switch_auto_mode",
+        "type": "ui_switch",
+        "z": "main_tab",
+        "name": "자동 모드",
+        "label": "자동 관수",
+        "tooltip": "",
+        "group": "ui_group_control_auto",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "auto_mode",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 120,
+        "y": 720,
+        "wires": [
+            ["set_auto_mode"]
+        ]
+    },
+    {
+        "id": "set_auto_mode",
+        "type": "function",
+        "z": "main_tab",
+        "name": "자동 모드 설정",
+        "func": "const autoMode = msg.payload;\nglobal.set('autoIrrigationMode', autoMode);\n\nnode.status({\n    fill: autoMode ? \"green\" : \"grey\",\n    shape: \"dot\",\n    text: autoMode ? \"자동 모드 활성\" : \"수동 모드\"\n});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "comment_header",
+        "type": "comment",
+        "z": "main_tab",
+        "name": "와사비 스마트팜 메인 플로우 v1.0.0",
+        "info": "작성자: 서준원\n날짜: 2024-12-11\n\n주요 기능:\n- 센서 데이터 수집 (토양 18개, 대기 3개, 수조 1개)\n- 평균값 계산\n- 자동 관수 제어\n- Dashboard UI\n- InfluxDB 저장\n- 수동 제어",
+        "x": 180,
+        "y": 40,
+        "wires": []
+    }
+]

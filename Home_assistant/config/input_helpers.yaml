@@ -1,0 +1,98 @@
+# ========================================
+# 와사비 스마트팜 - 입력 헬퍼 설정
+# ========================================
+# 관수 제어 임계값 및 타이머 설정
+# ========================================
+
+# ================================================
+# Input Boolean (스위치)
+# ================================================
+input_boolean:
+  wasabi_auto_irrigation:
+    name: "와사비 자동 관수 모드"
+    icon: mdi:water-auto
+    
+  wasabi_maintenance_mode:
+    name: "와사비 유지보수 모드"
+    icon: mdi:wrench
+    
+# ================================================
+# Input Number (숫자 슬라이더)
+# ================================================
+input_number:
+  # 토양 습도 임계값 (관수 시작 조건)
+  wasabi_moisture_threshold:
+    name: "토양 습도 임계값"
+    min: 80
+    max: 100
+    step: 1
+    initial: 95
+    unit_of_measurement: "%"
+    mode: slider
+    icon: mdi:water-percent
+
+  # 토양 EC 임계값 (관수 시작 조건)
+  wasabi_ec_threshold:
+    name: "토양 EC 임계값"
+    min: 1
+    max: 10
+    step: 0.1
+    initial: 5.0
+    unit_of_measurement: "μS/cm"
+    mode: slider
+    icon: mdi:flash
+
+  # 토양 온도 임계값 (관수 시작 조건)
+  wasabi_temp_threshold:
+    name: "토양 온도 임계값"
+    min: 15
+    max: 30
+    step: 0.5
+    initial: 22
+    unit_of_measurement: "°C"
+    mode: slider
+    icon: mdi:thermometer
+
+  # 관수 지속 시간 (초)
+  wasabi_irrigation_duration:
+    name: "관수 지속 시간"
+    min: 60
+    max: 600
+    step: 30
+    initial: 240
+    unit_of_measurement: "초"
+    mode: slider
+    icon: mdi:timer
+
+  # 관수 최소 간격 (분)
+  wasabi_irrigation_cooldown:
+    name: "관수 최소 간격"
+    min: 30
+    max: 120
+    step: 5
+    initial: 60
+    unit_of_measurement: "분"
+    mode: slider
+    icon: mdi:timer-off
+
+  # 고온 경고 임계값
+  wasabi_high_temp_alert:
+    name: "고온 경고 임계값"
+    min: 20
+    max: 35
+    step: 1
+    initial: 25
+    unit_of_measurement: "°C"
+    mode: slider
+    icon: mdi:thermometer-alert
+
+  # 저습도 경고 임계값
+  wasabi_low_moisture_alert:
+    name: "저습도 경고 임계값"
+    min: 70
+    max: 95
+    step: 1
+    initial: 85
+    unit_of_measurement: "%"
+    mode: slider
+    icon: mdi:water-alert

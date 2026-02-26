@@ -1,0 +1,9 @@
+# Node-RED Flow 디렉토리
+
+이 폴더에는 Node-RED Flow 파일이 위치합니다.
+
+## 예정된 파일
+
+- `flows.json` - Node-RED Flow 정의 파일
+- `settings.js` - Node-RED 설정 파일
+- `package.json` - Node-RED 패키지 의존성
