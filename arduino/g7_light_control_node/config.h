@@ -91,6 +91,6 @@ struct LightState {
 #define MQTT_USER "wasabi_farm"
 #endif
 #ifndef MQTT_PASSWORD
-#define MQTT_PASSWORD "your_secure_password"
+#define MQTT_PASSWORD "1qazxsw2"
 #endif
 #endif // ARDUINO_G7_LIGHT_CONTROL_NODE_CONFIG_H

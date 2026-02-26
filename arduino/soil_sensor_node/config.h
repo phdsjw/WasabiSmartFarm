@@ -32,7 +32,7 @@
 #define MQTT_SERVER      "192.168.0.104"        // MQTT Broker IP
 #define MQTT_PORT        1883                   // MQTT 포트
 #define MQTT_USER        "wasabi_farm"                     // MQTT 사용자명 (인증 사용 시)
-#define MQTT_PASSWORD    "your_secure_password"                     // MQTT 비밀번호 (인증 사용 시)
+#define MQTT_PASSWORD    "1qazxsw2"                     // MQTT 비밀번호 (인증 사용 시)
 
 // MQTT Client ID (자동 생성: WasabiSoil_Tank01)
 #define MQTT_CLIENT_ID_PREFIX  "WasabiSoil_"
@@ -114,7 +114,7 @@ struct SoilSensorData {
 #define MQTT_USER "wasabi_farm"
 #endif
 #ifndef MQTT_PASSWORD
-#define MQTT_PASSWORD "your_secure_password"
+#define MQTT_PASSWORD "1qazxsw2"
 #endif
 #endif // ARDUINO_SOIL_SENSOR_NODE_CONFIG_H
 #define NODE_ID "g2-01"

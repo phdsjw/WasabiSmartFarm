@@ -156,6 +156,6 @@ struct WaterTankSensorData {
 #define MQTT_USER "wasabi_farm"
 #endif
 #ifndef MQTT_PASSWORD
-#define MQTT_PASSWORD "your_secure_password"
+#define MQTT_PASSWORD "1qazxsw2"
 #endif
 #endif // ARDUINO_WATER_TANK_SENSOR_NODE_CONFIG_H

@@ -19,7 +19,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 대기 습도 01"
     object_id: "wasabi_g1-01_air_humidity"
@@ -31,7 +31,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 온도 01"
     object_id: "wasabi_soil_01_temp"
@@ -43,7 +43,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 습도 01"
     object_id: "wasabi_soil_01_moisture"
@@ -55,7 +55,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 EC 01"
     object_id: "wasabi_soil_01_ec"
@@ -66,7 +66,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 pH 01"
     object_id: "wasabi_soil_01_ph"
@@ -76,7 +76,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g1 - 대기+토양 통합 센서 (g1-02, 구역 2)
@@ -91,7 +91,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 대기 습도 02"
     object_id: "wasabi_g1-02_air_humidity"
@@ -103,7 +103,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 온도 02"
     object_id: "wasabi_soil_02_temp"
@@ -115,7 +115,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 습도 02"
     object_id: "wasabi_soil_02_moisture"
@@ -127,7 +127,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 EC 02"
     object_id: "wasabi_soil_02_ec"
@@ -138,7 +138,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 pH 02"
     object_id: "wasabi_soil_02_ph"
@@ -148,7 +148,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-02/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g1 - 대기+토양 통합 센서 (g1-03, 구역 3)
@@ -163,7 +163,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 대기 습도 03"
     object_id: "wasabi_g1-03_air_humidity"
@@ -175,7 +175,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 온도 03"
     object_id: "wasabi_soil_03_temp"
@@ -187,7 +187,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 습도 03"
     object_id: "wasabi_soil_03_moisture"
@@ -199,7 +199,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 EC 03"
     object_id: "wasabi_soil_03_ec"
@@ -210,7 +210,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g1 토양 pH 03"
     object_id: "wasabi_soil_03_ph"
@@ -220,7 +220,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g1_air_soil/g1-03/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-01, 구역 4)
@@ -235,7 +235,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 04"
     object_id: "wasabi_soil_04_moisture"
@@ -247,7 +247,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 04"
     object_id: "wasabi_soil_04_ec"
@@ -258,7 +258,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 04"
     object_id: "wasabi_soil_04_ph"
@@ -268,7 +268,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-02, 구역 5)
@@ -283,7 +283,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-02/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 05"
     object_id: "wasabi_soil_05_moisture"
@@ -295,7 +295,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-02/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 05"
     object_id: "wasabi_soil_05_ec"
@@ -306,7 +306,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-02/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 05"
     object_id: "wasabi_soil_05_ph"
@@ -316,7 +316,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-02/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-03, 구역 6)
@@ -331,7 +331,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-03/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 06"
     object_id: "wasabi_soil_06_moisture"
@@ -343,7 +343,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-03/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 06"
     object_id: "wasabi_soil_06_ec"
@@ -354,7 +354,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-03/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 06"
     object_id: "wasabi_soil_06_ph"
@@ -364,7 +364,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-03/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-04, 구역 7)
@@ -379,7 +379,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-04/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 07"
     object_id: "wasabi_soil_07_moisture"
@@ -391,7 +391,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-04/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 07"
     object_id: "wasabi_soil_07_ec"
@@ -402,7 +402,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-04/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 07"
     object_id: "wasabi_soil_07_ph"
@@ -412,7 +412,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-04/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-05, 구역 8)
@@ -427,7 +427,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-05/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 08"
     object_id: "wasabi_soil_08_moisture"
@@ -439,7 +439,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-05/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 08"
     object_id: "wasabi_soil_08_ec"
@@ -450,7 +450,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-05/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 08"
     object_id: "wasabi_soil_08_ph"
@@ -460,7 +460,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-05/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-06, 구역 9)
@@ -475,7 +475,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-06/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 09"
     object_id: "wasabi_soil_09_moisture"
@@ -487,7 +487,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-06/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 09"
     object_id: "wasabi_soil_09_ec"
@@ -498,7 +498,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-06/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 09"
     object_id: "wasabi_soil_09_ph"
@@ -508,7 +508,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-06/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-07, 구역 10)
@@ -523,7 +523,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-07/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 10"
     object_id: "wasabi_soil_10_moisture"
@@ -535,7 +535,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-07/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 10"
     object_id: "wasabi_soil_10_ec"
@@ -546,7 +546,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-07/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 10"
     object_id: "wasabi_soil_10_ph"
@@ -556,7 +556,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-07/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-08, 구역 11)
@@ -571,7 +571,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-08/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 11"
     object_id: "wasabi_soil_11_moisture"
@@ -583,7 +583,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-08/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 11"
     object_id: "wasabi_soil_11_ec"
@@ -594,7 +594,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-08/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 11"
     object_id: "wasabi_soil_11_ph"
@@ -604,7 +604,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-08/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-09, 구역 12)
@@ -619,7 +619,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-09/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 12"
     object_id: "wasabi_soil_12_moisture"
@@ -631,7 +631,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-09/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 12"
     object_id: "wasabi_soil_12_ec"
@@ -642,7 +642,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-09/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 12"
     object_id: "wasabi_soil_12_ph"
@@ -652,7 +652,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-09/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-10, 구역 13)
@@ -667,7 +667,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-10/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 13"
     object_id: "wasabi_soil_13_moisture"
@@ -679,7 +679,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-10/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 13"
     object_id: "wasabi_soil_13_ec"
@@ -690,7 +690,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-10/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 13"
     object_id: "wasabi_soil_13_ph"
@@ -700,7 +700,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-10/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-11, 구역 14)
@@ -715,7 +715,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-11/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 14"
     object_id: "wasabi_soil_14_moisture"
@@ -727,7 +727,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-11/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 14"
     object_id: "wasabi_soil_14_ec"
@@ -738,7 +738,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-11/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 14"
     object_id: "wasabi_soil_14_ph"
@@ -748,7 +748,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-11/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-12, 구역 15)
@@ -763,7 +763,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-12/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 15"
     object_id: "wasabi_soil_15_moisture"
@@ -775,7 +775,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-12/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 15"
     object_id: "wasabi_soil_15_ec"
@@ -786,7 +786,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-12/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 15"
     object_id: "wasabi_soil_15_ph"
@@ -796,7 +796,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-12/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-13, 구역 16)
@@ -811,7 +811,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-13/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 16"
     object_id: "wasabi_soil_16_moisture"
@@ -823,7 +823,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-13/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 16"
     object_id: "wasabi_soil_16_ec"
@@ -834,7 +834,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-13/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 16"
     object_id: "wasabi_soil_16_ph"
@@ -844,7 +844,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-13/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-14, 구역 17)
@@ -859,7 +859,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-14/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 17"
     object_id: "wasabi_soil_17_moisture"
@@ -871,7 +871,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-14/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 17"
     object_id: "wasabi_soil_17_ec"
@@ -882,7 +882,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-14/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 17"
     object_id: "wasabi_soil_17_ph"
@@ -892,7 +892,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-14/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g2 - 단독 토양 센서 (g2-15, 구역 18)
@@ -907,7 +907,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g2_soil/g2-15/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 습도 18"
     object_id: "wasabi_soil_18_moisture"
@@ -919,7 +919,7 @@ sensor:
     icon: mdi:water-percent
     availability_topic: "smartfarm/wasabi/g2_soil/g2-15/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 EC 18"
     object_id: "wasabi_soil_18_ec"
@@ -930,7 +930,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g2_soil/g2-15/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g2 토양 pH 18"
     object_id: "wasabi_soil_18_ph"
@@ -940,7 +940,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g2_soil/g2-15/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g3 - 배수수위 센서 (g3-01)
@@ -954,7 +954,7 @@ sensor:
     icon: mdi:water
     availability_topic: "smartfarm/wasabi/g3_drain_level/g3-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g3 거리"
     unique_id: wasabi_g3_01_distance
@@ -964,7 +964,7 @@ sensor:
     icon: mdi:arrow-collapse-vertical
     availability_topic: "smartfarm/wasabi/g3_drain_level/g3-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g4 - 수중 센서 (g4-01)
@@ -978,7 +978,7 @@ sensor:
     icon: mdi:thermometer
     availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g4 수온 pH"
     unique_id: wasabi_g4_01_water_ph
@@ -987,7 +987,7 @@ sensor:
     icon: mdi:ph
     availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g4 수온 EC"
     unique_id: wasabi_g4_01_water_ec
@@ -997,7 +997,7 @@ sensor:
     icon: mdi:flash
     availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g4 수온 TDS"
     unique_id: wasabi_g4_01_water_tds
@@ -1007,7 +1007,7 @@ sensor:
     icon: mdi:water
     availability_topic: "smartfarm/wasabi/g4_water_quality/g4-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g5 - 밸브 제어 (g5-01)
@@ -1026,7 +1026,7 @@ switch:
     optimistic: false
     availability_topic: "smartfarm/wasabi/g5_water_level_valve/g5-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g6 - 펌프 제어 (g6-01)
@@ -1045,7 +1045,7 @@ switch:
     optimistic: false
     availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g6 배수 펌프"
     object_id: "wasabi_drainage_pump"
@@ -1061,7 +1061,7 @@ switch:
     optimistic: false
     availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g6 팬"
     object_id: "wasabi_ceiling_fan"
@@ -1077,7 +1077,7 @@ switch:
     optimistic: false
     availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
   - name: "g6 LED"
     object_id: "wasabi_led_light"
@@ -1093,7 +1093,7 @@ switch:
     optimistic: false
     availability_topic: "smartfarm/wasabi/g6_pump_ctrl/g6-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # g7 - 조명 제어 (g7-01)
@@ -1111,7 +1111,7 @@ switch:
     optimistic: false
     availability_topic: "smartfarm/wasabi/g7_light_ctrl/g7-01/heartbeat"
     payload_available: "alive"
-    value_template_availability: "{{ value_json.status }}"
+    availability_template: "{{ value_json.status }}"
 
 # ================================================
 # 비상 정지 버튼

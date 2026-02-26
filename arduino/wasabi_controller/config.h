@@ -22,7 +22,7 @@
 #define MQTT_PORT        1883                  // MQTT 포트
 #define MQTT_CLIENT_ID   "WasabiSmartFarm_Arduino"
 #define MQTT_USER        "wasabi_farm"                    // MQTT 사용자명 (인증 사용 시)
-#define MQTT_PASSWORD    "your_secure_password"                    // MQTT 비밀번호 (인증 사용 시)
+#define MQTT_PASSWORD    "1qazxsw2"                    // MQTT 비밀번호 (인증 사용 시)
 
 // ============================================
 // 센서 읽기 주기 (밀리초)
@@ -113,6 +113,6 @@
 #define MQTT_USER "wasabi_farm"
 #endif
 #ifndef MQTT_PASSWORD
-#define MQTT_PASSWORD "your_secure_password"
+#define MQTT_PASSWORD "1qazxsw2"
 #endif
 #endif // ARDUINO_WASABI_CONTROLLER_CONFIG_H
