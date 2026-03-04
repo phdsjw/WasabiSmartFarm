@@ -182,7 +182,7 @@ bool MQTTHandler::publishHeartbeat() {
     StaticJsonDocument<128> doc;
     
     doc["tank_id"] = String(TANK_ID);
-    doc["status"] = "online";
+  doc["status"] = "alive";
     doc["uptime"] = millis() / 1000;  // 초 단위
     doc["timestamp"] = millis();
     

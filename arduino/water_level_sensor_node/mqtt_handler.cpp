@@ -230,6 +230,7 @@ bool MQTTHandler::publishHeartbeat() {
   StaticJsonDocument<256> doc;
   doc["node_id"] = NODE_ID;
   doc["node_type"] = "water_level";
+  doc["status"] = "alive";
   doc["uptime"] = millis();
   doc["wifi_rssi"] = WiFi.RSSI();
   doc["free_heap"] = ESP.getFreeHeap();

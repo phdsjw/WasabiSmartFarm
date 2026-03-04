@@ -291,6 +291,7 @@ bool MQTTHandler::publishHeartbeat() {
   doc["zone_id"] = ZONE_ID;
   doc["tank_id"] = TANK_ID;
   doc["node_type"] = "combined";
+  doc["status"] = "alive";
   doc["uptime"] = millis();
   doc["wifi_rssi"] = WiFi.RSSI();
   doc["free_memory"] = freeMemory();
