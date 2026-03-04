@@ -63,6 +63,14 @@ bool MQTTHandler::connectWiFi() {
   if (WiFi.status() == WL_CONNECTED) {
     return true;
   }
+
+#if WIFI_USE_STATIC_IP
+  IPAddress localIp(WIFI_STATIC_IP_A, WIFI_STATIC_IP_B, WIFI_STATIC_IP_C, WIFI_STATIC_IP_D);
+  IPAddress gateway(WIFI_GATEWAY_A, WIFI_GATEWAY_B, WIFI_GATEWAY_C, WIFI_GATEWAY_D);
+  IPAddress subnet(WIFI_SUBNET_A, WIFI_SUBNET_B, WIFI_SUBNET_C, WIFI_SUBNET_D);
+  IPAddress dns(WIFI_DNS_A, WIFI_DNS_B, WIFI_DNS_C, WIFI_DNS_D);
+  WiFi.config(localIp, dns, gateway, subnet);
+#endif
   
   DEBUG_PRINT(F("[WiFi] Connecting to: "));
   DEBUG_PRINTLN(WIFI_SSID);

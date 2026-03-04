@@ -29,6 +29,24 @@
 #define WIFI_MAX_RETRY   5                      // 최대 재시도 횟수
 #define WIFI_RETRY_INTERVAL 10000               // 재시도 간격 (10초)
 
+#define WIFI_USE_STATIC_IP  true
+#define WIFI_STATIC_IP_A    192
+#define WIFI_STATIC_IP_B    168
+#define WIFI_STATIC_IP_C    0
+#define WIFI_STATIC_IP_D    201
+#define WIFI_GATEWAY_A      192
+#define WIFI_GATEWAY_B      168
+#define WIFI_GATEWAY_C      0
+#define WIFI_GATEWAY_D      1
+#define WIFI_SUBNET_A       255
+#define WIFI_SUBNET_B       255
+#define WIFI_SUBNET_C       255
+#define WIFI_SUBNET_D       0
+#define WIFI_DNS_A          8
+#define WIFI_DNS_B          8
+#define WIFI_DNS_C          8
+#define WIFI_DNS_D          8
+
 // ============================================
 // MQTT 설정
 // ============================================
