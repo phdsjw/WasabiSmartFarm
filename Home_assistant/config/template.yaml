@@ -6,7 +6,7 @@
 # ========================================
 
 sensor:
-  - name: "와사비 대기 온도 평균"
+  - name: "wasabi_air_temp_avg"
     unique_id: "wasabi_air_temp_avg"
     unit_of_measurement: "°C"
     device_class: temperature
@@ -24,7 +24,7 @@ sensor:
         unavailable
       {% endif %}
 
-  - name: "와사비 대기 습도 평균"
+  - name: "wasabi_air_humidity_avg"
     unique_id: "wasabi_air_humidity_avg"
     unit_of_measurement: "%"
     device_class: humidity
@@ -45,7 +45,7 @@ sensor:
   # ================================================
   # 토양 온도 평균
   # ================================================
-  - name: "와사비 토양 온도 평균"
+  - name: "wasabi_soil_temp_avg"
     unique_id: "wasabi_soil_temp_avg"
     unit_of_measurement: "°C"
     device_class: temperature
@@ -104,7 +104,7 @@ sensor:
   # ================================================
   # 토양 습도 평균
   # ================================================
-  - name: "와사비 토양 습도 평균"
+  - name: "wasabi_soil_moisture_avg"
     unique_id: "wasabi_soil_moisture_avg"
     unit_of_measurement: "%"
     device_class: humidity
@@ -140,7 +140,7 @@ sensor:
   # ================================================
   # 토양 EC 평균
   # ================================================
-  - name: "와사비 토양 EC 평균"
+  - name: "wasabi_soil_ec_avg"
     unique_id: "wasabi_soil_ec_avg"
     unit_of_measurement: "μS/cm"
     icon: mdi:flash
@@ -175,7 +175,7 @@ sensor:
   # ================================================
   # 토양 pH 평균
   # ================================================
-  - name: "와사비 토양 pH 평균"
+  - name: "wasabi_soil_ph_avg"
     unique_id: "wasabi_soil_ph_avg"
     icon: mdi:ph
     state: >
@@ -209,7 +209,7 @@ sensor:
   # ================================================
   # 유효 센서 개수
   # ================================================
-  - name: "와사비 유효 센서 수"
+  - name: "wasabi_valid_sensor_count"
     unique_id: "wasabi_valid_sensor_count"
     icon: mdi:counter
     state: >
