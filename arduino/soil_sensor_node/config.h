@@ -52,7 +52,7 @@
 // Modbus RTU 설정 (SEN0604)
 // ============================================
 #define MODBUS_SLAVE_ID        1       // SEN0604 기본 Slave ID (변경 가능)
-#define MODBUS_BAUDRATE        4800    // SEN0604 보드레이트 (지원: 2400/4800/9600, 공장 기본 9600)
+#define MODBUS_BAUDRATE        9600    // SEN0604 보드레이트 (지원: 2400/4800/9600, 공장 기본 9600)
 #define MODBUS_TIMEOUT         1000    // Modbus 응답 타임아웃 (1초)
 
 // RS485 핀 설정 (Arduino Uno R4 + DFR0259)

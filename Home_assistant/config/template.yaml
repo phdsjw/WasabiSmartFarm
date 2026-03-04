@@ -6,6 +6,42 @@
 # ========================================
 
 sensor:
+  - name: "와사비 대기 온도 평균"
+    unique_id: "wasabi_air_temp_avg"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    icon: mdi:thermometer
+    state: >
+      {% set sensors = [
+        states('sensor.wasabi_g1_01_air_temp'),
+        states('sensor.wasabi_g1_02_air_temp'),
+        states('sensor.wasabi_g1_03_air_temp')
+      ] %}
+      {% set valid = sensors | select('is_number') | list %}
+      {% if valid | length >= 2 %}
+        {{ (valid | map('float') | sum / valid | length) | round(1) }}
+      {% else %}
+        unavailable
+      {% endif %}
+
+  - name: "와사비 대기 습도 평균"
+    unique_id: "wasabi_air_humidity_avg"
+    unit_of_measurement: "%"
+    device_class: humidity
+    icon: mdi:water-percent
+    state: >
+      {% set sensors = [
+        states('sensor.wasabi_g1_01_air_humidity'),
+        states('sensor.wasabi_g1_02_air_humidity'),
+        states('sensor.wasabi_g1_03_air_humidity')
+      ] %}
+      {% set valid = sensors | select('is_number') | list %}
+      {% if valid | length >= 2 %}
+        {{ (valid | map('float') | sum / valid | length) | round(1) }}
+      {% else %}
+        unavailable
+      {% endif %}
+
   # ================================================
   # 토양 온도 평균
   # ================================================
